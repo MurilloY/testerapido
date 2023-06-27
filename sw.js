@@ -5,14 +5,12 @@ self.addEventListener('install', function(event){
             cache.addAll([
                 './',
                 './index.html',
-                './manifest.webmanifest',
+                './manifest.json',
                 './index.js'
-
-
             ])
         })
-)
-return self.skipWaiting()
+    )
+    return self.skipWaiting()
 })
 
 self.addEventListener('activate', e =>{
@@ -28,8 +26,6 @@ self.addEventListener('fetch', async e => {
     } else {
         e.respondWith(networkAndCache(req));
     }
-    
-
 })
 
 async function cacheFirst(req){
