@@ -1,0 +1,27 @@
+{
+  "background_color": "#30d6e5",
+  "description": "Clique aqui e utilize a plataforma de saúde e bem estar da i9 Care.",
+  "dir": "auto",
+  "display": "standalone",
+  "name": "i9 Care",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "i9 Care",
+  "start_url": ".",
+  "theme_color": "#30d6e5",
+  "categories": [
+    "health"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "./gato.jpg",
+      "type": "image/jpg"
+    },
+    {
+      "src": "./gato.jpg",
+      "type": "image/jpg"
+    }
+  ]
+
+}
