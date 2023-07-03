@@ -19,7 +19,11 @@
 
         {
           "icons": [
-
+            {
+              "src":"instalogo.png",
+              "type": "image/png",
+              "sizes": "512x512"
+            },
             {
               "src": "windows11/SmallTile.scale-100.png",
               "sizes": "71x71"
