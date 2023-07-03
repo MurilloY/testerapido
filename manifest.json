@@ -12,7 +12,12 @@
   "categories": [
     "health"
   ],
-  "screenshots": [],
+  "screenshots": [{
+    "src": "screenshot.jpg",
+    "sizes": "1280x720",
+    "type": "image/jpg",
+    "platform": "wide"
+  }],
   "icons": [
     {
       "icons": [
@@ -99,7 +104,8 @@
             },
             {
               "src": "windows11/LargeTile.scale-200.png",
-              "sizes": "620x620"
+              "sizes": "620x620",
+              "purpose": "any"
             },
             {
               "src": "windows11/LargeTile.scale-400.png",
@@ -147,7 +153,8 @@
             },
             {
               "src": "windows11/SplashScreen.scale-100.png",
-              "sizes": "620x300"
+              "sizes": "620x300",
+              "purpose": "any"
             },
             {
               "src": "windows11/SplashScreen.scale-125.png",
@@ -347,7 +354,8 @@
             },
             {
               "src": "android/android-launchericon-512-512.png",
-              "sizes": "512x512"
+              "sizes": "512x512",
+              "purpose": "any"
             },
             {
               "src": "android/android-launchericon-192-192.png",
@@ -467,7 +475,8 @@
             },
             {
               "src": "ios/512.png",
-              "sizes": "512x512"
+              "sizes": "512x512",
+              "purpose": "any"
             },
             {
               "src": "ios/1024.png",
