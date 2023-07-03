@@ -22,7 +22,8 @@
             {
               "src":"instalogo.png",
               "type": "image/png",
-              "sizes": "512x512"
+              "sizes": "512x512",
+              "purpose": "any"
             },
             {
               "src": "windows11/SmallTile.scale-100.png",
