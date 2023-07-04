@@ -30,7 +30,7 @@
         },
 
         {
-          "src": "https://api.i9care.com.br/system/logo/logo2",
+          "src": "instalogo.png",
           "sizes": "512x512",
           "type": "image/png"
         }
