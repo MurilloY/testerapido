@@ -37,8 +37,8 @@
 
   "display_override": [
     "window-controls-overlay",
-    "browser",
     "standalone",
+    "browser",
     "fullscreen",
     "minimal-ui"
   ],
