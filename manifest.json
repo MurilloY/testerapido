@@ -12,29 +12,25 @@
   "categories": [
     "health"
   ],
-  "screenshots": [{
-    "src": "screenshot.jpg",
-    "sizes": "1280x720",
-    "type": "image/jpg",
-    "platform": "wide"
-  }],
+  "screenshots": [
+    {
+      "src": "screenshot.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpg",
+      "platform": "wide"
+    }
+  ],
   "icons": [
-
-        {
-          "src": "https://api.i9care.com.br/system/logo/logo2",
-          "sizes": "512x512",
-          "type": "image/png",
-          "purpose": "any"
-        },
-
-        {
-          "src": "instalogo.png",
-          "sizes": "512x512",
-          "type": "image/png"
-        }
-          
-
-
-      ] 
-
+    {
+      "src": "https://api.i9care.com.br/system/logo/logo2",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "instalogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
