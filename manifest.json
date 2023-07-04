@@ -27,6 +27,12 @@
           "sizes": "512x512",
           "type": "image/png",
           "purpose": "any"
+        },
+
+        {
+          "src": "https://api.i9care.com.br/system/logo/logo2",
+          "sizes": "512x512",
+          "type": "image/png"
         }
           
 
