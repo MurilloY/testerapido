@@ -19,8 +19,6 @@
     "platform": "wide"
   }],
   "icons": [
-    {
-      "icons": [
 
         {
           "src": "https://api.i9care.com.br/system/logo/logo2",
@@ -37,8 +35,6 @@
           
 
 
-      ]
-    }
-  ]
+      ] 
 
 }
