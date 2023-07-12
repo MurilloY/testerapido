@@ -1,0 +1,361 @@
+<app-header-nova-consulta [fixedHeader]="true" [showProgress]="false" [showBtnClose]="true" [dialogVersion]="2" (closeEvent)="onDismiss()"></app-header-nova-consulta>
+
+
+<!-- Início Etapa 5 -->
+<ng-container>
+
+    <section class="container container2">
+
+        <div *ngIf="showCpf">
+            <h1 class="titulo-acao">Identifique o paciente</h1>
+
+            <div *ngIf="showErrorCPF" class="info-error tp2">
+                <span class="material-symbols-outlined">error</span>
+                {{errorCPFMsg}}
+            </div>
+
+            <div class="box-input">
+                <input matInput [dropSpecialCharacters]="false" placeholder="CPF" mask="000.000.000-00"
+                    (keyup)="onKeypressEventCPF($event)" required>
+            </div>
+        </div>
+
+
+        <div class="cadastro-novo" *ngIf="showForm">
+
+            <h1 class="titulo-acao">Informações do paciente</h1>
+
+            <form [formGroup]="CadastroPacienteForm">
+                <div id="informacoes-paciente">
+
+                    <div class="avatar-upload">
+                        <div class="avatar-edit" >
+                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" (change)="uploadFile($event)" #fileInput/>
+            
+                            <label for="imageUpload" *ngIf="editFile" [ngClass]="['custom-label', 'upload-image']"></label>
+                            <label *ngIf="removeUpload"  [ngClass]="['custom-label', 'remove-image']" (click)="removeUploadedFile()"></label>
+                        </div>
+                        <div class="avatar-preview">
+                            <img id="imagePreview" style="height: 120px; width: 120px; object-fit: cover;" [attr.src]="imageUrl | secure | async">
+                        </div>
+            
+                    </div>
+
+                    <div>
+                        <mat-form-field>
+                            <input matInput formControlName="user_name" placeholder="Nome Completo">
+                        </mat-form-field>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field>
+                                <!-- <input matInput formControlName="birth_data" placeholder="Data do aniversário"> -->
+                                <input matInput [matDatepicker]="picker2" [max]="maxDate" formControlName="birth_data" placeholder="Data do aniversário">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-b">
+                            <mat-form-field>
+                                <input matInput formControlName="user_rg" placeholder="RG">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field>
+                                <input matInput formControlName="user_cpf" [dropSpecialCharacters]="false"
+                                    placeholder="CPF" mask="000.000.000-00">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-b">
+                            <mat-form-field>
+                                <mat-select formControlName="user_gender" placeholder="Gênero">
+                                    <mat-option value="F">Feminino </mat-option>
+                                    <mat-option value="M">Masculino</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field>
+                                <input matInput formControlName="ua_cep" placeholder="CEP" mask="00.000-000">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-b">
+                            <mat-form-field class="example-full-width">
+                                <mat-select matNativeControl formControlName="ua_uf" placeholder="Estado" (selectionChange)="selectedState($event.value)">
+                                    <mat-option value="AC">Acre</mat-option>
+                                    <mat-option value="AL">Alagoas</mat-option>
+                                    <mat-option value="AP">Amapá</mat-option>
+                                    <mat-option value="AM">Amazonas</mat-option>
+                                    <mat-option value="BA">Bahia</mat-option>
+                                    <mat-option value="CE">Ceará</mat-option>
+                                    <mat-option value="DF">Distrito Federal</mat-option>
+                                    <mat-option value="ES">Espírito Santo</mat-option>
+                                    <mat-option value="GO">Goiás</mat-option>
+                                    <mat-option value="MA">Maranhão</mat-option>
+                                    <mat-option value="MT">Mato Grosso</mat-option>
+                                    <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                                    <mat-option value="MG">Minas Gerais</mat-option>
+                                    <mat-option value="PA">Pará</mat-option>
+                                    <mat-option value="PB">Paraíba</mat-option>
+                                    <mat-option value="PR">Paraná</mat-option>
+                                    <mat-option value="PE">Pernambuco</mat-option>
+                                    <mat-option value="PI">Piauí</mat-option>
+                                    <mat-option value="RJ">Rio de Janeiro</mat-option>
+                                    <mat-option value="RN">Rio Grande do Norte</mat-option>
+                                    <mat-option value="RS">Rio Grande do Sul</mat-option>
+                                    <mat-option value="RO">Rondônia</mat-option>
+                                    <mat-option value="RR">Roraima</mat-option>
+                                    <mat-option value="SC">Santa Catarina</mat-option>
+                                    <mat-option value="SP">São Paulo</mat-option>
+                                    <mat-option value="SE">Sergipe</mat-option>
+                                    <mat-option value="TO">Tocantins</mat-option>
+                                </mat-select>
+                                
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field >
+                                <mat-label>Cidade</mat-label>
+                                <mat-select placeholder="Cidade" formControlName="ua_city">
+                                    <mat-option *ngFor="let item of cities" [value]="item">
+                                        {{item}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-b">
+                            <mat-form-field>
+                                <input matInput formControlName="ua_district" placeholder="Bairro">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-c">
+                            <mat-form-field>
+                                <input matInput formControlName="ua_name_street" placeholder="Nome da rua">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-d">
+                            <mat-form-field>
+                                <input matInput formControlName="ua_house_number" placeholder="Número">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field>
+                                <input matInput placeholder="Telefone/WhatsApp" formControlName="user_phone" [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 0 0000-0000">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-b">
+                            <mat-form-field>
+                                <input matInput formControlName="user_email" placeholder="E-mail">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <p class="txt">O paciente possui convênio ou plano de saúde?</p>
+
+                        <div class="opcoes">
+                            <mat-radio-group formControlName="has_insurance" (change)="radioChangeInsurance($event)">
+                                <mat-radio-button value="1">Sim</mat-radio-button>
+                                <mat-radio-button value="0">Não</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="checkError('has_insurance', 'required')">
+                                Selecione uma opção
+                            </mat-error>
+                        </div>
+
+                        <div *ngIf="CadastroPacienteForm.value.has_insurance == '1'">
+                            <mat-form-field>
+                                <mat-select placeholder="Plano de Saúde" formControlName="insurance" required>
+                                    <mat-option *ngFor="let ins of insurances" [value]="ins.ins_id">
+                                        {{ins.ins_name}} - {{ins.ins_city}}-{{ins.ins_state}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-error *ngIf="checkError('insurance', 'required')">
+                                Selecione uma opção
+                            </mat-error>
+                        </div>
+
+                    <p class="txt">O paciente precisa de acompanhante?</p>
+
+                    <div class="opcoes">
+                        <mat-radio-group (change)="radioChangeTitular($event)" formControlName="companion" required>
+                                <mat-radio-button value="1">Sim</mat-radio-button>
+                                <mat-radio-button value="0">Não</mat-radio-button>
+                            <mat-error *ngIf="checkError('companion', 'required')">
+                                Selecione uma opção
+                            </mat-error>
+                        </mat-radio-group>
+                    </div>
+
+                    <ng-container *ngIf="CadastroPacienteForm.value.companion === '1'">
+                        <h2>Dados do responsável legal ou acompanhante</h2>
+
+
+
+                        <div class="formulario">
+                            <div class="form-a">
+                                <mat-form-field>
+                                    <input matInput formControlName="titular_cpf" [dropSpecialCharacters]="false"
+                                        placeholder="CPF" mask="000.000.000-00"
+                                        (keyup)="onKeypressEventCPFacc($event)" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-b">
+                                <mat-form-field>
+                                    <mat-select formControlName="titular_gender" placeholder="Gênero">
+                                        <mat-option value="F">Feminino </mat-option>
+                                        <mat-option value="M">Masculino</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <input matInput formControlName="titular_name" placeholder="Nome Completo">
+                            </mat-form-field>
+                        </div>
+                        <div class="formulario">
+                            <div class="form-a">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker2" formControlName="titular_birthdate" placeholder="Data do aniversário">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-b">
+                                <mat-form-field>
+                                    <input matInput formControlName="titular_rg" mask="0.000.000-00" placeholder="RG">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="formulario">
+                            <div class="form-a">
+                                <mat-form-field>
+                                    <input matInput formControlName="titular_phone"
+                                    [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 0 0000-0000" placeholder="Telefone/WhatsApp" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-b">
+                                <mat-form-field>
+                                    <input matInput formControlName="titular_email" placeholder="E-mail">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <p class="txt">O endereço do paciente é o mesmo do representante legal?</p>
+
+                        <div class="opcoes">
+                            <mat-radio-group formControlName="titular_same_address" name="endereco">
+                                <mat-radio-button value="1">Mesmo endereço</mat-radio-button>
+                                <mat-radio-button value="0">Outro endereço</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <ng-container *ngIf="CadastroPacienteForm.value.titular_same_address == '0'">
+                            <div class="formulario">
+                                <div class="form-a">
+                                    <mat-form-field>
+                                        <input matInput formControlName="titular_cep" mask="00.000-000" placeholder="CEP">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-b">
+                                    <mat-form-field>
+                                        <mat-select matNativeControl formControlName="titular_uf" placeholder="Estado"(selectionChange)="selectedStateTitular($event.value)">
+                                            <mat-option value="AC">Acre</mat-option>
+                                            <mat-option value="AL">Alagoas</mat-option>
+                                            <mat-option value="AP">Amapá</mat-option>
+                                            <mat-option value="AM">Amazonas</mat-option>
+                                            <mat-option value="BA">Bahia</mat-option>
+                                            <mat-option value="CE">Ceará</mat-option>
+                                            <mat-option value="DF">Distrito Federal</mat-option>
+                                            <mat-option value="ES">Espírito Santo</mat-option>
+                                            <mat-option value="GO">Goiás</mat-option>
+                                            <mat-option value="MA">Maranhão</mat-option>
+                                            <mat-option value="MT">Mato Grosso</mat-option>
+                                            <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                                            <mat-option value="MG">Minas Gerais</mat-option>
+                                            <mat-option value="PA">Pará</mat-option>
+                                            <mat-option value="PB">Paraíba</mat-option>
+                                            <mat-option value="PR">Paraná</mat-option>
+                                            <mat-option value="PE">Pernambuco</mat-option>
+                                            <mat-option value="PI">Piauí</mat-option>
+                                            <mat-option value="RJ">Rio de Janeiro</mat-option>
+                                            <mat-option value="RN">Rio Grande do Norte</mat-option>
+                                            <mat-option value="RS">Rio Grande do Sul</mat-option>
+                                            <mat-option value="RO">Rondônia</mat-option>
+                                            <mat-option value="RR">Roraima</mat-option>
+                                            <mat-option value="SC">Santa Catarina</mat-option>
+                                            <mat-option value="SP">São Paulo</mat-option>
+                                            <mat-option value="SE">Sergipe</mat-option>
+                                            <mat-option value="TO">Tocantins</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="formulario">
+                                <div class="form-a">
+                                    <mat-form-field>
+                                <mat-label>Cidade</mat-label>
+                                <mat-select placeholder="Cidade" formControlName="titular_city">
+                                    <mat-option *ngFor="let item of cities" [value]="item">
+                                        {{item}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                                </div>
+                                <div class="form-b">
+                                    <mat-form-field>
+                                        <input matInput formControlName="titular_district" placeholder="Bairro">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="formulario">
+                                <div class="form-c">
+                                    <mat-form-field>
+                                        <input matInput formControlName="titular_name_street"
+                                            placeholder="Nome da rua">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-d">
+                                    <mat-form-field>
+                                        <input matInput formControlName="titular_house_number"
+                                            placeholder="Número">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- <div class="aceito">
+                        <mat-checkbox>
+                            Aceito receber informações pelos meios cadastrados, durante o agendamento de consultas.
+                        </mat-checkbox>
+                    </div> -->
+
+                    <div class="acoes">
+                        <div class="btn-continuar">
+                            <button mat-button class="btn-padrao" (click)="enviarDados()">
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</ng-container>
+<!-- Fim Etapa 5 -->

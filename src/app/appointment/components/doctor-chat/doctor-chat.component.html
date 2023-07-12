@@ -1,0 +1,133 @@
+<app-header-appointment [fixedHeader]="true"></app-header-appointment>
+
+
+<div class="container container2">
+
+    <section id="doctor-chat">
+        <div class="pricipal">
+
+            <div class="containerr" #videoAviso style="height: 480px; width: 100%; text-align: center; background: #e5e7f1;
+            ">
+                <div class="btn-shine" target="_blank">Aguardando {{appointment?.prof_name}} para conexão </div>
+
+            </div>
+            <div id="remote" class="destaque" #remoteVideo></div>
+            <div class="position-fixed-local" #localVideo></div>
+
+        </div>
+
+        <div class="informacao">
+
+            <div *ngIf="participant === 0;else professional" class="profissional">
+                <div class="img">
+                    <img [src]="blob_photo_profissional == null ? 'assets/images/user.png' :  getImageCorrect(blob_photo_profissional!)" style="height: 80px; width: 80px; object-fit: cover;">
+                    <span class="online"></span>
+                </div>
+                <div class="info">
+                    <h2>Dr.(a){{appointment?.prof_name}}</h2>
+                    <h3>{{appointment?.cat_name}}</h3>
+                </div>
+            </div>
+            <ng-template #professional>
+                <div class="profissional">
+
+                    <div class="img">
+                        <!-- <img [src]="getImageCorrect(blob_photo_pacient)" style="height: 80px;"> -->
+                        <img [src]="blob_photo_pacient == null ? 'assets/images/user.png' :  getImageCorrect(blob_photo_pacient!)" style="height: 80px; width: 80px; object-fit: cover;">
+                        <span class="online"></span>
+                    </div>
+                    <div class="info">
+                        <h2>{{appointment?.pc_name}}</h2>
+                        <h3>Paciente</h3>
+                    </div>
+                </div>
+            </ng-template>
+
+            <!-- <div class="avaliacao">
+                <img src="assets/images/star.svg" alt="">
+                <img src="assets/images/star.svg" alt="">
+                <img src="assets/images/star.svg" alt="">
+                <img src="assets/images/star.svg" alt="">
+                <img src="assets/images/star2.svg" alt="">
+                <span>64 avaliações</span>
+            </div> -->
+
+            <div class="acoes">
+                <div class="ligar">
+                    <button mat-fab color="phone" aria-label="Example icon button with a delete icon"
+                        (click)="disconnect()">
+                        <mat-icon>call_end</mat-icon>
+                    </button>
+                    <!-- <img (click)="disconnect()" src="assets/images/icone-telefone.svg" alt=""> -->
+                </div>
+                <div class="video">
+                    <button mat-fab color="mute" aria-label="Example icon button with a delete icon"
+                        (click)="muteunmute()">
+                        <div *ngIf="mute_unmute;else other_content1">
+                            <mat-icon>mic</mat-icon>
+                        </div>
+                        <ng-template #other_content1>
+                            <mat-icon>mic_off</mat-icon>
+                        </ng-template>
+                    </button>
+                </div>
+                <div class="video">
+                    <button mat-fab color="cam" aria-label="Example icon button with a delete icon"
+                        (click)="OnOffCam()">
+                        <div *ngIf="cam;else other_content">
+                            <mat-icon>videocam</mat-icon>
+                        </div>
+                        <ng-template #other_content>
+                            <mat-icon>videocam_off</mat-icon>
+                        </ng-template>
+                    </button>
+
+                </div>
+
+                <!-- <div (click)="desligarCam()" class="video">
+                    <img src="assets/images/icone-video.svg" alt="">
+                </div> -->
+            </div>
+
+        </div>
+
+        <section id="nav-prontuario">
+            <div class="containerr">
+                <div class="acoes">
+                    <nav>
+                        <a routerLink="/agendamento/sala/{{url}}/mensagens"
+                            [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                            <img src="assets/images/icone-conversas.svg" alt="">
+                            Conversas
+                        </a>
+                        <a routerLink="/agendamento/sala/{{url}}/anamnese"
+                            [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                            <img src="assets/images/icone-anamnese.svg" alt="">
+                            Anamnese
+                        </a>
+                        <a routerLink="/agendamento/sala/{{url}}/receituario" 
+                            [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                            <img src="assets/images/icone-receituario.svg" alt="">
+                            Receituário
+                        </a>
+                        <a routerLink="/agendamento/sala/{{url}}/atestado"
+                            [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                            <img src="assets/images/icone-atestado.svg" alt="">
+                            Atestado
+                        </a>
+                        <a routerLink="/agendamento/sala/{{url}}/anexos"
+                            [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                            <img src="assets/images/icone-anexos.svg" alt="">
+                            Anexos
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <router-outlet></router-outlet>
+    </section>
+
+</div>
+
+<!-- <app-footer></app-footer> -->

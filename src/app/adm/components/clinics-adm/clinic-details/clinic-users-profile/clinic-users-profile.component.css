@@ -1,0 +1,25 @@
+.example-container {
+    max-height: 700px;
+    overflow: auto;
+  }
+  
+  table {
+    text-align: center !important;
+    width: 100%;
+  }
+  
+  .mat-header-cell {
+    text-align: center;
+  }
+  
+  .mat-cell {
+    text-align: center;
+  }
+  
+  .top {
+    margin: 16px 0px;
+  }
+  
+  .mat-row:hover {
+    background: #f5f5f5;
+  }

@@ -1,0 +1,101 @@
+<section id="box-modal" class="emitir-receita">
+    <form [formGroup]="formAnamnese" #ngForm="ngForm">
+        <mat-dialog-content>
+            <div class="box-message">
+                <h2 class="tit">Detalhamento do quadro atual do paciente</h2>
+
+                <div class="btn-close">
+                    <img src="assets/images/icone-close.svg" alt="" (click)="onCloseClick()">
+                </div>
+
+                <p class="msg">Já fez terapia? Se sim, por quanto tempo?</p>
+
+                <div style="margin-top: 5px; margin-bottom: 20px;" fxLayout="row">
+                    <mat-radio-group formControlName="therapy" (change)="radioChangeTherapy($event)" required [ngClass]="{'invalid': ngForm.submitted && formAnamnese.get('therapy')!.invalid}">
+                        <mat-radio-button value="0">Não</mat-radio-button>
+                        <mat-radio-button value="1">Sim</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div class="form-anexar-anamnese">
+
+                    <div *ngIf="formAnamnese.get('therapy')!.value == '1'">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <input type="text" matInput formControlName="therapy_desc" placeholder="Descrever aqui..." required>
+                        </mat-form-field>
+
+                    </div>
+                    
+                    <p class="msg">Pratica atividade física?</p>
+
+                    <div style="margin-top: 5px; margin-bottom: 20px;" fxLayout="row">
+                        <mat-radio-group formControlName="practice_exercises" [ngClass]="{'invalid': ngForm.submitted && formAnamnese.get('practice_exercises')!.invalid}">
+                            <mat-radio-button value="0">Não</mat-radio-button>
+                            <mat-radio-button value="1">Sim</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <p class="msg">Realiza acompanhamento médico?</p>
+
+                    <div style="margin-top: 5px; margin-bottom: 20px;" fxLayout="row">
+                        <mat-radio-group formControlName="medical_follow_up" [ngClass]="{'invalid': ngForm.submitted && formAnamnese.get('medical_follow_up')!.invalid}">
+                            <mat-radio-button value="0">Não</mat-radio-button>
+                            <mat-radio-button value="1">Sim</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <p class="msg">Quando surgiram os sintomas?</p>
+
+
+                    <div class="form-anexar-anamnese">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <input type="text" matInput formControlName="symptoms" placeholder="Descrever aqui..." required>
+                        </mat-form-field>
+                    </div>
+
+                    <p class="msg">Possui antecedentes familiares?</p>
+
+                    <div style="margin-top: 5px; margin-bottom: 20px;" fxLayout="row">
+                        <mat-radio-group formControlName="family_history" [ngClass]="{'invalid': ngForm.submitted && formAnamnese.get('family_history')!.invalid}">
+                            <mat-radio-button value="0">Não</mat-radio-button>
+                            <mat-radio-button value="1">Sim</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <p class="msg">Faz uso de medicamentos? Se sim, quais?</p>
+
+                    <div style="margin-top: 5px; margin-bottom: 20px;" fxLayout="row">
+                        <mat-radio-group formControlName="use_medication" (change)="radioChangeUseMedication($event)" [ngClass]="{'invalid': ngForm.submitted && formAnamnese.get('use_medication')!.invalid}">
+                            <mat-radio-button value="0">Não</mat-radio-button>
+                            <mat-radio-button value="1">Sim</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="form-anexar-anamnese" *ngIf="formAnamnese.get('use_medication')!.value == '1'">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <input type="text" matInput formControlName="use_medication_desc" placeholder="Descrever aqui..." required>
+                        </mat-form-field>
+                    </div>
+
+                    <p class="msg">Faz uso de tabaco, álcool ou outras substâncias?</p>
+
+                    <div style="margin-top: 5px; margin-bottom: 20px;" fxLayout="row">
+                        <mat-radio-group formControlName="use_drugs" [ngClass]="{'invalid': ngForm.submitted && formAnamnese.get('use_drugs')!.invalid}">
+                            <mat-radio-button value="0">Não</mat-radio-button>
+                            <mat-radio-button value="1">Sim</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions *ngIf="button === true">
+            <button mat-button class="btn-padrao" type="submit" (click)="onConfirmClick()">
+                Salvar
+            </button>
+        </mat-dialog-actions>
+
+    </form>
+
+</section>

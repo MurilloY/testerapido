@@ -1,0 +1,58 @@
+<section id="box-modal" class="emitir-receita">
+    <form [formGroup]="formPrescription" #ngForm="ngForm">
+        <mat-dialog-content>
+            <div class="box-message">
+                <h2 class="tit">Emitir receita médica</h2>
+
+                <div class="btn-close">
+                    <img src="assets/images/icone-close.svg" alt="" (click)="onCloseClick()">
+                </div>
+
+                <p class="msg">Descreva abaixo os medicamentos receitados ao paciente.</p>
+
+                <div class="form-emitir-receita">
+                    <div class="datas">
+                        <div class="data">
+                            <br>
+                            <p>Emissão</p>
+                            <div class="input-calendario">
+                                <input matInput [matDatepicker]="picker" formControlName="pre_date" required>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </div>
+                        </div>
+                        <!-- <div class="data">
+                        <p>Vencimento</p>
+                        <div class="input-calendario">
+                            <input matInput [matDatepicker]="picker2">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </div>
+                    </div> -->
+                    </div>
+
+                    <div>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <textarea matInput formControlName="pre_desc" required rows="10"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <div class="info-modal">
+                <div class="img">
+                    <img src="assets/images/icone-documento.svg" alt="">
+                </div>
+
+                <p>Este documento é de uso exclusivo do médico responsável pelo paciente.</p>
+            </div>
+            <button mat-button class="btn-padrao btn-padrao2" (click)="revisarPDF()">
+                Revisar PDF
+            </button>
+            <button mat-button class="btn-padrao" (click)="onConfirmClick()">
+                Emitir receita
+            </button>
+        </mat-dialog-actions>
+    </form>
+</section>

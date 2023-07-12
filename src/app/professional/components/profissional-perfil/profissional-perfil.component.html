@@ -1,0 +1,269 @@
+<!-- <app-header-nova-consulta 
+    [fixedHeader]="true" 
+    [showUser]="true" 
+    [showBtnNotification]="true"></app-header-nova-consulta> -->
+
+
+<app-header-agendamento [fixedHeader]="true" [showProgress]="false" [showInfo]="false" [showBtnClose]="true"
+    [dialogVersion]="1" (closeEvent)="onDismiss()" [showPerfil]="false"></app-header-agendamento>
+
+<form [formGroup]="CadastroProfessionalPerfilForm">
+    <section class="container container2">
+        <h1 class="titulo-perfil">
+            <span>
+                <img src="assets/images/icone-meu-perfil.svg" alt="">
+            </span>
+            Meu perfil
+        </h1>
+
+        <section id="meu-perfil-detalhes" class="agendamento-detalhes">
+            <div class="perfil">
+                <div class="img">
+                    <img [attr.src]=" user.user_photo | secure | async">
+                    <!-- <img src="assets/images/img.png" alt=""> -->
+                </div>
+                <div class="info">
+                    <h2>Dr(a). {{user.user_name}}</h2>
+
+                    <p>
+                        <img src="assets/images/icone-verificado.svg" alt="">
+                        <span *ngFor="let specialties of user.specialties">
+                            {{specialties.cat_name}}
+                        </span>
+                    </p>
+
+                    <p>
+                        <img src="assets/images/icone-cidade.svg" alt=""> {{user.user_address.ua_city}},
+                        {{user.user_address.ua_uf}}
+                    </p>
+                </div>
+            </div>
+            <!-- <div class="metas-semana">
+            <h3>Metas da semana</h3>
+
+            <div class="metas-detalhes">
+                <div class="meta">
+                    <div class="valor">63%</div>
+                    <p>Meta de atendimentos</p>
+                    <mat-progress-bar mode="determinate" [value]="63"></mat-progress-bar>
+                </div>
+                <div class="meta">
+                    <div class="valor">70%</div>
+                    <p>Metas de vendas</p>
+                    <mat-progress-bar mode="determinate" [value]="70"></mat-progress-bar>
+                </div>
+                <div class="meta">
+                    <div class="valor">50%</div>
+                    <p>Novos clientes</p>
+                    <mat-progress-bar mode="determinate" [value]="50"></mat-progress-bar>
+                </div>
+            </div>
+        </div> -->
+        </section>
+        <section id="meu-perfil-dados-cadastrais" class="agendamento-detalhes">
+            <h2 class="subtitulo">Dados cadastrais</h2>
+
+
+            <div class="box-container">
+
+                <div class="form form-foto">
+                    <div class="label">
+                        <label for="">Foto</label>
+                    </div>
+                    <div class="item">
+                        <div class="avatar-upload">
+                            <div class="avatar-edit">
+                                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg"
+                                    (change)="uploadFile($event)" #fileInput />
+
+                                <label for="imageUpload" *ngIf="editFile"
+                                    [ngClass]="['custom-label', 'upload-image']"></label>
+                                <label *ngIf="removeUpload" [ngClass]="['custom-label', 'remove-image']"
+                                    (click)="removeUploadedFile()"></label>
+                            </div>
+                            <div class="avatar-preview">
+                                <img id="imagePreview" style="height: 120px; width: 120px; object-fit: cover;"
+                                    [attr.src]=" imageUrl | secure | async">
+                            </div>
+                            <!-- <div class="editar">
+                                <img src="assets/images/icone-editar.svg" alt="">
+                            </div>
+                            <div class="img">
+                                <img src="assets/images/img.png" alt="">
+                            </div> -->
+                            <p>Escolha uma foto: png, jpg, jpeg.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form">
+                    <div class="label">
+                        <label for="">Nome completo</label>
+                    </div>
+                    <div class="item">
+                        <input type="text" formControlName="user_name" placeholder="Nome Completo">
+                    </div>
+                </div>
+
+                <div class="form">
+                    <div class="label">
+                        <label for="">CPF</label>
+                    </div>
+                    <div class="item">
+                        <input formControlName="user_cpf" [dropSpecialCharacters]="false" placeholder="CPF"
+                            mask="000.000.000-00">
+                    </div>
+                </div>
+
+                <div class="form">
+                    <div class="label">
+                        <label for="">Contatos</label>
+                    </div>
+                    <div class="item item2">
+                        <input matInput placeholder="Telefone/WhatsApp" formControlName="user_phone"
+                            [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 0 0000-0000">
+                        <input matInput formControlName="user_email2" placeholder="E-mail">
+                    </div>
+                </div>
+
+                <div class="form">
+                    <div class="label">
+                        <label for="">Estado/Cidade</label>
+                    </div>
+                    <div class="item item2">
+                        <div style="width: 48%;">
+                            <mat-select matNativeControl formControlName="ua_uf" placeholder="Estado"
+                                (selectionChange)="selectedState($event.value)">
+                                <mat-option value="AC">Acre</mat-option>
+                                <mat-option value="AL">Alagoas</mat-option>
+                                <mat-option value="AP">Amapá</mat-option>
+                                <mat-option value="AM">Amazonas</mat-option>
+                                <mat-option value="BA">Bahia</mat-option>
+                                <mat-option value="CE">Ceará</mat-option>
+                                <mat-option value="DF">Distrito Federal</mat-option>
+                                <mat-option value="ES">Espírito Santo</mat-option>
+                                <mat-option value="GO">Goiás</mat-option>
+                                <mat-option value="MA">Maranhão</mat-option>
+                                <mat-option value="MT">Mato Grosso</mat-option>
+                                <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                                <mat-option value="MG">Minas Gerais</mat-option>
+                                <mat-option value="PA">Pará</mat-option>
+                                <mat-option value="PB">Paraíba</mat-option>
+                                <mat-option value="PR">Paraná</mat-option>
+                                <mat-option value="PE">Pernambuco</mat-option>
+                                <mat-option value="PI">Piauí</mat-option>
+                                <mat-option value="RJ">Rio de Janeiro</mat-option>
+                                <mat-option value="RN">Rio Grande do Norte</mat-option>
+                                <mat-option value="RS">Rio Grande do Sul</mat-option>
+                                <mat-option value="RO">Rondônia</mat-option>
+                                <mat-option value="RR">Roraima</mat-option>
+                                <mat-option value="SC">Santa Catarina</mat-option>
+                                <mat-option value="SP">São Paulo</mat-option>
+                                <mat-option value="SE">Sergipe</mat-option>
+                                <mat-option value="TO">Tocantins</mat-option>
+                            </mat-select>
+
+                        </div>
+
+                        <div style="width: 48%;">
+                            <mat-select placeholder="Cidade" formControlName="ua_city">
+                                <mat-option *ngFor="let item of cities" [value]="item">
+                                    {{item}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form">
+                    <div class="label">
+                        <label for="">CEP/Endereço</label>
+                    </div>
+                    <div class="item item2">
+                        <input matInput placeholder="CEP" formControlName="ua_cep">
+                        <input matInput formControlName="ua_name_street" placeholder="Endereço">
+                    </div>
+                </div>
+
+                <div class="form">
+                    <div class="label">
+                        <label for="">Número/Bairro</label>
+                    </div>
+                    <div class="item item2">
+                        <input matInput placeholder="Número" formControlName="ua_house_number">
+                        <input matInput formControlName="ua_district" placeholder="Bairro">
+                    </div>
+                </div>
+
+            </div>
+
+
+        </section>
+
+        <section id="meu-perfil-dados-acesso" class="agendamento-detalhes">
+            <h2 class="subtitulo">Dados de acesso</h2>
+
+            <div class="informacoes divisoria">
+                <div class="info">
+                    <h3>Endereço de e-mail</h3>
+                    <p>{{user.user_email}}</p>
+                </div>
+                <div class="acao" matTooltip="Em teste">
+                    <button type="submit" disabled="true" mat-button class="colorBlue">Mudar e-mail</button>
+                </div>
+            </div>
+
+            <div class="informacoes">
+                <div class="info">
+                    <h3>Senha de acesso</h3>
+                    <p>* * * * * * * *</p>
+                </div>
+                <div class="acao">
+                    <button type="submit" mat-button (click)="editPassword()">Atualizar senha</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="meu-perfil-notificacoes" class="agendamento-detalhes">
+            <h2 class="subtitulo">
+                <span>Notificações</span>
+                <div class="op1"></div>
+                <div class="op2">E-mail</div>
+                <div class="op3">WhatsApp</div>
+            </h2>
+
+            <!-- <div class="informacoes"> -->
+            <!-- <h3>Atendimento ao cliente</h3>
+            <div class="op1"><mat-slide-toggle></mat-slide-toggle></div>
+            <div class="op2"><mat-checkbox name="detalhes" value="1"></mat-checkbox> <span class="label">E-mail</span></div>
+            <div class="op3"><mat-checkbox name="detalhes" value="1"></mat-checkbox> <span class="label">WhatsApp</span></div>
+        </div>
+    
+        <div class="informacoes">
+            <h3>Faturas em aberto</h3>
+            <div class="op1"><mat-slide-toggle></mat-slide-toggle></div>
+            <div class="op2"><mat-checkbox name="detalhes" value="1"></mat-checkbox> <span class="label">E-mail</span></div>
+            <div class="op3"><mat-checkbox name="detalhes" value="1"></mat-checkbox> <span class="label">WhatsApp</span></div>
+        </div> -->
+
+            <div class="informacoes">
+                <h3>Projetos finalizados</h3>
+                <div class="op1"></div>
+                <div class="op2"><mat-checkbox name="detalhes" formControlName="notify_prof_email"></mat-checkbox> <span
+                        class="label">E-mail</span>
+                </div>
+                <div class="op3"><mat-checkbox name="detalhes" formControlName="notify_prof_whatsapp"></mat-checkbox>
+                    <span class="label">WhatsApp</span>
+                </div>
+            </div>
+
+            <div class="btn">
+                <button class="btn-padrao" type="submit" mat-button (click)="onSubmit()">Salvar</button>
+            </div>
+        </section>
+
+    </section>
+</form>
+
+<!-- <app-footer></app-footer> -->

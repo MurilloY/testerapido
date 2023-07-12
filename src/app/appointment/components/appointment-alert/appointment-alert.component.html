@@ -1,0 +1,37 @@
+<app-header-appointment [fixedHeader]="true"></app-header-appointment>
+
+<div class="alert" *ngIf="showExpired">
+    <mat-icon class="expirado">link_off</mat-icon>
+    <p class="frase">Ops, seu link para o atendimento expirou!</p>
+    <!-- <div id="acoes-principais">
+        <div class="acao">            
+            <button mat-button class="btn-padrao">
+                <span class="material-symbols-outlined" style="width: 2px;">add</span> 
+                Novo Atendimento
+            </button>
+        </div>
+    </div> -->
+
+</div>
+
+<!-- <div class="alert" *ngIf="showExpired">
+    <h2>Atenção</h2>
+    <p>A reunião que você está tentando acessar já expirou. </p>
+    <br>
+</div> -->
+
+<div class="upcoming-meeting" *ngIf="showAdvanced">
+    <mat-icon class="relogio">schedule</mat-icon>
+    <P class="frase02">Fico feliz em ver que você já conseguiu acessar o link da consulta. Aguarde um pouco e logo começaremos.</P>
+    <P class="frase02-1">O atendimento online está agendado conforme informações listadas abaixo:</P>
+    <div class="vertical-line">
+        <P class="frase02-2">Dr.(a) {{appointment?.prof_name}}</P>
+        <P class="frase02-2">Data: {{appointment?.app_date}} às {{appointment?.start_time}}</P>
+    </div>
+
+</div>
+<!-- <div class="alert upcoming-meeting" *ngIf="showAdvanced">
+    <h2>Atenção</h2>
+    <p>A reunião que você está tentando acessar ainda não começou.</p>
+    <p>Por favor, tente novamente mais tarde.</p>
+  </div> -->

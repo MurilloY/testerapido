@@ -1,0 +1,78 @@
+<div class="book">
+    <div class="page">
+
+        <header id="header">
+            <div id="logo">
+                <div class="logo">
+                    <img src="assets/images/logo-i9care.svg" alt="">
+                </div>
+                <div class="cidade">Presidente Prudente &bull; São Paulo</div>
+            </div>
+            <div class="informacoes-clinica">
+                <h2>{{clinic_name}}</h2>
+                <p>CNPJ {{clinic_cnpj}}</p>
+                <div class="tel">
+                    <img src="assets/images/icone-telefonepink.svg" alt="">
+                    {{clinic_phone}}
+                </div>
+                <div class="endereco">
+                    <img src="assets/images/icone-endereco.svg" alt="">
+                    {{clinic_address}}, {{clinic_number}} &bull; CEP {{clinic_cep}}
+                </div>
+            </div>
+        </header>
+
+        <section id="informacoes-paciente-medico">
+            <div class="paciente">
+                <div class="info">Paciente</div>
+                <h2>{{pc_name}}</h2>
+                <div class="documento">CPF {{pc_cpf}}</div>
+            </div>
+            <div class="medico">
+                <div class="info">Médico</div>
+                <h2>{{prof_name}}</h2>
+                <div class="documento">{{cat_name}} &bull; {{rt_number}}</div>
+            </div>
+        </section>
+
+        <section id="dados-atendimento">
+            <div class="box">
+                <div class="img">
+                    <img src="assets/images/icone-modalidade.svg" alt="">
+                </div>
+                <div class="info">
+                    <h2>Modalidade</h2>
+                    <p>{{app_type_name}}</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="img">
+                    <img src="assets/images/icone-calendariopink.svg" alt="">
+                </div>
+                <div class="info">
+                    <h2>Data do atendimento</h2>
+                    <p>{{pre_date | date:"dd/MM/yyyy HH:mm"}}</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="descricao-receita">
+            <h2>ATESTADO MÉDICO</h2>
+
+            <p [innerHTML]="pre_desc"></p>
+        </section>
+
+        <section id="assinatura-medico">
+            <div class="acao">
+                <div class="item">
+                    Nome completo do médico<br>
+                    Assinatura do médico
+                </div>
+            </div>
+            <div class="acao">
+                <div class="item">Data</div>
+            </div>
+        </section>
+
+    </div>
+</div>

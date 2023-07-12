@@ -1,0 +1,62 @@
+#central-de-notificacoes {
+    border-radius: 8px; 
+    background: #FFFFFF;
+
+    .notificacao, .paginacao { padding: 16px 25px;}
+
+    .notificacao {       
+        border-bottom: 1px solid rgba(78, 83, 92, 0.12);
+
+        p {
+            color: #646464;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 20px;
+            letter-spacing: 0.02em;
+            margin: 0 0 16px;
+        }
+
+        .data {
+            color: #828282;
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 12px;
+            letter-spacing: 0.02em;
+        }
+    }
+
+    .paginacao {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .exibindo {
+            color: rgba(65, 65, 65, 0.6);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 18px;
+
+            .btn-acao {color: #485DFF;}
+        }
+
+        ::ng-deep .ngx-pagination .current {background: #485DFF;}
+
+        ::ng-deep .ngx-pagination a, ::ng-deep .ngx-pagination button {
+            color: rgba(65, 65, 65, 0.4);
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+
+}
+
+@media screen and (max-width: 991px){
+    #central-de-notificacoes {
+        .paginacao {
+            align-items: flex-end;
+            flex-direction: column;
+
+            .exibindo {margin-bottom: 10px;}
+        }
+    }
+}

@@ -1,0 +1,58 @@
+<section id="box-modal" class="emitir-receita">
+    <form [formGroup]="formAnexo">
+        <mat-dialog-content>
+            <div class="box-message">
+                <h2 class="tit">Anexar documento</h2>
+
+                <div class="btn-close">
+                    <img src="assets/images/icone-close.svg" alt="" (click)="onCloseClick()">
+                </div>
+
+                <p class="msg">Escolha um nome e como deseja adicionar seu arquivo.</p>
+
+                <div class="form-anexar-documento">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <input type="text" matInput formControlName="ane_name" placeholder="Nome do arquivo" required>
+                    </mat-form-field>
+
+                    <div class="acoes" *ngIf="fileName == ''; else other_content">
+                        <button class="btn-foto" (click)="takePicture()">
+                            <img src="assets/images/icone-foto.svg" alt="">
+                            <span>Foto com a câmera</span>
+                        </button>
+                        <button class="btn-arquivo">
+                            <input type="file" (change)="onFileSelected($event)">
+                            <img src="assets/images/icone-computador.svg" alt="">
+                            <span>Arquivo do computador</span>
+                        </button>
+                    </div>
+
+                    <ng-template #other_content>
+                        <div class="border-menu" fxLayout="row" fxLayoutAlign="space-between center">
+
+                            <span>{{fileName}}</span>
+                            <div (click)="removeFile()">
+                                <mat-icon>delete</mat-icon>
+                            </div>
+
+                        </div>
+
+
+                    </ng-template>
+
+                </div>
+
+
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="text-right">
+
+            <button mat-button class="btn-padrao" (click)="onConfirmClick()" [disabled]="disabled">
+                <mat-spinner color="primary" [diameter]="36" *ngIf="disabled"></mat-spinner>
+                <span *ngIf="!disabled">Salvar</span>
+            </button>
+        </mat-dialog-actions>
+
+    </form>
+
+</section>

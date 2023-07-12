@@ -1,0 +1,64 @@
+<div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+
+    <h2 mat-dialog-title>Editar Pagamento</h2>
+
+    <form [formGroup]="formPayment">
+
+        <div style="margin-bottom: 10px;">
+            <mat-radio-group name="modalidade" formControlName="status">
+                <mat-radio-button value="1">Pago</mat-radio-button>
+                <mat-radio-button value="0">Pendente</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div *ngIf="formPayment.value.status == '1'">
+            <div class="box-select">
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-select (selectionChange)="changePayment($event)"  formControlName="apt_id" placeholder="Escolha o tipo de pagamento">
+                        <mat-option *ngFor="let status of pagamentotipo" [value]="status.apt_id">
+                            {{status.apt_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="box-select"  *ngIf="formPayment.value.apt_id == 'J+WMlCDBA1o='">
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Nº Parcelas</mat-label>
+                    <mat-select formControlName="times" placeholder="Nº Parcelas">
+                        <mat-option *ngFor="let n of counter" [value]="n">
+                            {{n}}x
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="formulario">
+                <div class="form-a">
+                    <mat-form-field appearance="outline">
+                        <input matInput formControlName="date" [matDatepicker]="picker3" placeholder="Data Pagamento"
+                            required>
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-b">
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Valor total</mat-label>
+                        <input matInput formControlName="ap_valor">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: right;">
+            <button mat-button class="btn-cancelar3" (click)="onCancelClick()" style="margin-right: 10px;">
+                Cancelar
+            </button>
+            <button mat-button class="btn-padrao" (click)="onConfirmClick()">
+                Salvar
+            </button>
+        </div>
+    </form>
+</div>

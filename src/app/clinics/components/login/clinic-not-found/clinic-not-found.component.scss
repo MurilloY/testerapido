@@ -1,0 +1,152 @@
+// #fullscreen {        
+//     .titulo-acao {
+//         position: relative; top: 110px;
+//         color: black;
+//     }
+
+//     .expirado {
+//         position: relative; top: 50px;
+//         transform: scale(3);
+//         color: #0031B2;
+//     }
+//     .container2{
+//         min-width: 100%;
+//     }
+// }
+
+// .box-aviso{
+//     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6)
+// }
+// .avisotext {
+//     height: 30px;
+//     background-color: #0031B2;
+//     justify-content: center;
+//     text-align: center;
+//     padding: 2px;
+//     color: white;
+//     border-radius: 5px;
+// }
+.alert {
+
+    width: 470px;
+    height: 291px;
+    margin-top: 20%;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+.expirado {
+    position: relative; top: 50px;
+    left: 50%;
+    transform: scale(3);
+    color: #485DFF;
+  }
+
+.frase {
+  position: relative;
+  font-size: 22px;
+  width: 511px;
+  left: 3%;
+  top: 30%;
+  border-radius: nullpx;
+  line-height: 29px;
+  line-height: 120%;
+
+}
+
+#acoes-principais .btn-padrao {
+  width: 65%;
+  height: 50px;
+  left: 74%;
+  top: 120px;
+  border-radius: 8px;
+  padding: 20px 32px 20px 32px;
+  font-size: 14px;
+
+  .material-symbols-outlined {
+    transform: scale(0.99);
+    
+  }
+
+}
+
+.upcoming-meeting {
+  height: 400px;
+  width: 750px;
+  margin-left: 50%;
+  margin-top: 20%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  background-color: #FFFFFF;
+}
+
+.frase02 {
+  position: relative;
+  font-size: 20px;
+  width: 80%;
+  left: 15%;
+  top: 20%;
+  border-radius: nullpx;
+  line-height: 120%;
+}
+
+// .relogio {
+//   position: relative; top: 50px;
+//   left: 50%;
+//   transform: scale(2.5);
+//   color: #485DFF;
+// }
+
+.frase02-1 {
+  position: relative;
+  width: 80%;
+  left: 15%;
+  font-size: 13px;
+  top: 25%;
+  border-radius: nullpx;
+  line-height: 120%;
+}
+
+.frase02-2 {
+  position: relative;
+  width: 80%;
+  left: 2%;
+  font-size: 13px;
+  top: 10%;
+  border-radius: nullpx;
+  line-height: 120%;
+}
+
+.vertical-line {
+  border-left: 2px solid #485DFF; /* Define a borda esquerda com estilo sólido de 1 pixel e cor preta */
+	height: 60px;
+  position: relative;
+  width: 80%;
+  left: 18%;
+  font-size: 13px;
+  top: 25%;
+  border-radius: nullpx;
+  line-height: 120%;
+}
+
+.relogio {
+  position: relative; top: 50px;
+  color: #485DFF;
+  left: 50%;
+  font-size: 40px;
+  height: 50px;
+  width: 40px;
+  display: inline-block;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

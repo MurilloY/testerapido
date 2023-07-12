@@ -1,0 +1,67 @@
+<div>
+
+    <mat-toolbar color="primary" class="menusss">
+        <button mat-icon-button (click)="onDismiss()" class="example-icon"
+            aria-label="Example icon-button with menu icon">
+            <mat-icon>close</mat-icon>
+        </button>
+        <span>Capturar imagem </span>
+        <span class="example-spacer"></span>
+
+        <button mat-button type="button" (click)="onSubmit()">
+            SALVAR
+        </button>
+
+    </mat-toolbar>
+
+</div>
+
+
+
+<div class="div-form">
+
+    <div *ngIf="activeWebCam" fxLayout="column" fxLayoutAlign="center center" style="margin-top: 30px;">
+
+        <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
+            [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)">
+        </webcam>
+
+        <div *ngIf="webCamIsOpen" fxLayout="column">
+
+            <button mat-raised-button color="primary" (click)="triggerSnapshot()">
+                <mat-icon style="margin-right: 5px;">photo_camera</mat-icon> <span> Tirar foto</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div>
+
+        <image-cropper [imageBase64]="imageBase64" [maintainAspectRatio]="false" [aspectRatio]="4 / 4"
+            [resizeToWidth]="256" [cropperMinWidth]="128" [onlyScaleDown]="true" [roundCropper]="false"
+            [alignImage]="'center'" [style.display]="showCropper ? null : 'none'" format="jpeg"
+            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
+            (loadImageFailed)="loadImageFailed()">
+        </image-cropper>
+
+
+
+        <div fxLayoutAlign="center center">
+            <img [src]="croppedImage" [style.border]="croppedImage" />
+        </div>
+
+    </div>
+
+    <div *ngIf="!activeWebCam" style="text-align: center; margin-top: 10px;">
+
+        <button mat-raised-button color="warn" (click)="tryAgainSnapshot()">
+            <mat-icon style="margin-right: 5px;">photo_camera</mat-icon> <span> Tirar novamente</span>
+        </button>
+    </div>
+
+
+
+
+
+</div>

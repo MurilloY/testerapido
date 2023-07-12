@@ -1,0 +1,18 @@
+<section id="box-modal">
+    <mat-dialog-content>
+        <div class="box-message">
+            <h2 class="tit">Mantenha o paciente informado!</h2>
+
+            <p class="message">{{ message }}</p>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button class="btn-whatsapp" *ngIf="msgEnviada == false" (click)="enviarMsg()">
+            <img src="assets/images/icone-whatsapp.svg" alt=""> 
+            Enviar lembrete pelo WhatsApp
+        </button>
+        <button mat-button class="btn-padrao" *ngIf="msgEnviada == true" (click)="onConfirmClick()">
+            Entendi
+        </button>
+    </mat-dialog-actions>
+</section>

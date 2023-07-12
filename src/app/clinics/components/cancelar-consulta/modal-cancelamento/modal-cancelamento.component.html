@@ -1,0 +1,35 @@
+<section id="box-modal">
+    <mat-dialog-content>
+        <div class="box-message">
+            <ng-container >
+                <h2 class="tit">{{title}}</h2>
+
+                <p class="message">{{desc}}</p>
+            </ng-container>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <ng-container *ngIf="version == 1">
+            <button mat-button class="btn-padrao" (click)="onConfirmClick()">
+                {{buttonConfirm}}
+            </button>
+        </ng-container>
+        <ng-container *ngIf="version == 2">
+            <button mat-button class="btn-cancelar2" (click)="onCancelClick()">
+               {{buttonCancel}}
+            </button>
+            <button mat-button class="btn-padrao" (click)="onConfirmClick()">
+                {{buttonConfirm}}
+            </button>
+        </ng-container>
+        <ng-container *ngIf="version == 3">
+            <button mat-button class="btn-cancelar3" (click)="onCancelClick()">
+                {{buttonCancel}}
+            </button>
+            <button mat-button class="btn-padrao" (click)="onConfirmClick()">
+                {{buttonConfirm}}
+            </button>
+        </ng-container>
+       
+    </mat-dialog-actions>
+</section>

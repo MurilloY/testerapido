@@ -1,0 +1,23 @@
+<div class="_step_verification">
+
+  <div id="remote" #remoteVideo class="w-100 text-center" style="height: 100vh;">
+  </div>
+  <div class="w-100" style="position: absolute;top: 0;height: 100vh;">
+
+    <div>
+      <div class="d-flex justify-content-center position-fixed w-100 p-2"
+        style="bottom: 0rem;z-index: 1;background-color: #fff;">
+
+        <img *ngIf="twilioService.microphone" title="Mute" class="pr-2" style="opacity: 1;cursor: pointer;"
+          (click)="mute()" src="assets/images/Group344.svg" alt="Mute Button" />
+        <img *ngIf="!twilioService.microphone" title="Unmute" class="pr-2" style="opacity: 1;cursor: pointer;"
+          (click)="unmute()" src="assets/images/Group346.svg" alt="Unmute Button" />
+        <img title="Disconnect" class="pr-2" style="opacity: 1;cursor: pointer;" (click)="disconnect()"
+          src="assets/images/disconnect.svg" alt="Disconnect Button" />
+
+      </div>
+      <div id="local" class="position-fixed text-right w-100" #localVideo></div>
+    </div>
+  </div>
+</div>
+

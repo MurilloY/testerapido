@@ -1,0 +1,61 @@
+<app-header-nova-consulta [fixedHeader]="true" [showProgress]="false" [showBtnClose]="true" [dialogVersion]="3"
+    (closeEvent)="onDismiss()"></app-header-nova-consulta>
+
+
+<section class="container container2">
+    <div id="acoes-principais">
+        <div class="busca">
+            <img src="assets/images/icone-pesquisa.svg" alt=""> 
+            <input type="text" matInput placeholder="Busque pelo nome do convênio" (keyup)="onKeypressEvent($event)" >
+        </div>
+        <div class="acao">            
+            <button mat-button class="btn-padrao" (click)="addInsurance()">
+                <span class="material-symbols-outlined">add</span> 
+                Novo convênio
+            </button>
+        </div>
+    </div>
+    <div class="lista-header" style="text-align: center;">
+        <div class="nome" (click)="ordenacao('nome')">
+            Nome
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'asc'">arrow_upward</span>
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'desc'">arrow_downward</span>
+        </div>
+        <div class="contato">Cidade</div>
+        <div class="pagamento">Status</div>
+        <div class="acao">Ações</div>
+    </div>
+
+    <div class="lista-item-chamada" style="text-align: center;"
+        *ngFor="let insurance of sortedData | paginate: { itemsPerPage: totalItens, currentPage: p }">
+        <div class="nome">
+            <span class="item">Nome: </span>
+            <p class="destaque">{{insurance.ins_name}}</p>
+        </div>
+        <div class="contato">
+            <span class="item">Cidade: </span>
+            <p class="destaque">{{insurance.ins_city}} • {{insurance.ins_state}}</p>
+        </div>
+        <div class="pagamento">
+            <div [className]="insurance.ins_status == 1 ? 'active':'inactive'">
+                <button mat-button>
+                    <span>&bull;</span> 
+                    {{insurance.ins_status == 1 ? 'Ativo':'Inativo'}}
+                </button>
+            </div>
+        </div>
+        <div class="acao">
+            <button mat-button [matMenuTriggerFor]="menu">
+                <span class="material-symbols-outlined">more_vert</span>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editarConvenio(insurance)">Editar</button>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="paginacao-geral">
+        <div class="paginas">
+            <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+        </div>
+    </div>
+</section>

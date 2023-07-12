@@ -1,0 +1,173 @@
+#acoes-principais {
+
+   .btn-agendada{
+        width: 170px;
+        height: 40px;
+        border-radius: 8px;
+        color: white;
+        left: 30px;
+   }
+
+   .btn-encerrada{
+        width: 170px;
+        height: 40px;
+        border-radius: 8px;
+        color: white;
+        left: 40px;
+   }
+}
+
+@keyframes piscar {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .piscar {
+    animation: piscar 1.5s ease-in-out infinite;
+  }
+
+#relatorio-modo {
+    letter-spacing: 0.02em;
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .resultados {
+        color: #202124;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 20px;
+        margin: 0;
+    }
+
+    .informacoes {
+        color: #5F6368;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+
+        span {
+            width: 6px;
+            height: 6px;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+            border-radius: 10px;
+        }
+
+        .agendada {
+            span {background-color: #485DFF;}
+        }
+
+        .encerrada {
+            margin-left: 20px;
+            span {background-color: #25D366;}
+        }
+    }
+}
+
+// .lista-header, .lista-item-chamada {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 10px 24px;
+    
+//     .paciente {width: calc(100% - 720px); padding: 5px;}
+//     .consulta, .retorno, .situacao, .atender, .prontuario {width: 130px; padding: 5px;}
+
+    
+//     .nome {width: calc(100% - 680px); padding: 5px 5px 5px 0;}
+//     .consulta {width: calc(100% - 680px); padding: 5px 5px 5px 0;}
+//     .situacao {width: calc(100% - 680px); padding: 5px 5px 5px 0;}
+    
+    
+//     .nome_paciente {width: calc(100% - 650px); padding: 5px 5px 5px 0;}
+//     .consulta {width: 200px; padding: 5px;}
+//     .situacao {width: calc(100% - 650px); padding: 5px 5px 5px 0;}
+    
+
+//     .acao {width: 60px;}
+// }
+
+// .lista-header {
+//     color: #485DFF;
+//     font-size: 13px;
+//     font-weight: 500;
+//     line-height: 20px;
+//     letter-spacing: 0.02em;
+
+//     .nome_paciente, .consulta, .situacao {cursor: pointer;}
+
+//     span {font-size: 16px; margin-left: 4px; vertical-align: middle;}
+// }
+
+// .lista-item-chamada {
+//     color: #202124;
+//     font-size: 13px;
+//     font-weight: 500;
+//     line-height: 20px;
+//     letter-spacing: 0.02em;
+//     margin-bottom: 20px;
+//     background: #FFFFFF;
+//     border-radius: 8px;
+//     border: 1px solid #E0E0E0;
+
+//     &:hover {border-color: #485DFF;}
+
+//     .item {color: #485DFF; font-size: 13px; display: none;}
+
+//     p {
+//         &.informacao {color: rgba(78, 83, 92, 0.6); font-size: 13px;}
+//     }
+
+//     .nome_paciente, .consulta, .situacao {
+//         display: flex;
+//         align-items: center;
+//         img {margin-right: 10px;}
+
+//         .img {
+//             position: relative;
+
+//             .tag-novo {
+//                 color: #FFFFFF;
+//                 font-size: 12px;
+//                 font-weight: 500;
+//                 line-height: 20px;
+//                 text-align: center;
+//                 display: block;
+//                 padding: 2px 14px;
+//                 border-radius: 100px;
+//                 background-color: #485DFF;
+//                 left: 0;
+//                 bottom: -5px;
+//                 position: absolute;
+//             }
+//         }
+//     }
+// }
+
+.paginacao-geral {
+    .paginas {
+        ::ng-deep .ngx-pagination .current {background: #485DFF;}
+
+        ::ng-deep .ngx-pagination a, ::ng-deep .ngx-pagination button {
+            color: rgba(65, 65, 65, 0.4);
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+}
+
+.bg-red {
+    background-color: #FF2252;
+}

@@ -1,0 +1,124 @@
+//Tela principal
+#div-principal {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#login-div {
+    position: absolute;
+    width: 46.5%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+
+    display: flex;
+    
+
+    //color
+    background: #0031B2;
+    border-radius: 0px 16px 16px 0px;
+}
+
+#login-div {
+    background-color: #0031B2;
+    border-radius: 0px 16px 16px 0px;
+    
+    .welcome-message {
+        width: 96%;
+        max-width: 60%;
+
+        .welcome {
+            position: absolute;
+            width: 60%;
+            height: 3.1%;
+            left: 130px;
+            top: 277px;
+
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+
+            margin: 0 0 32px;
+            letter-spacing: 0.04em; 
+            font-feature-settings: 'liga' off;
+            color: #00CDFA;          
+        }
+        
+        .message {
+            position: absolute;
+            width: 61.5%;
+            height: 20%;
+            left: 130px;
+            top: 326px;
+
+            font-style: normal;
+            font-weight: 600;
+            font-size: 36px;
+            line-height: 120%;
+
+            font-feature-settings: 'liga' off;
+            color: #FFF;
+        }
+    }
+
+}
+
+.information {
+    position: absolute;
+    width: 615px;
+    height: 64px;
+    left: 664px;
+    top: 183px;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+
+    span {color: #485DFF;}
+}
+
+
+#login {
+    .login-content {width: 96%; max-width: 410px;}
+
+    .logo-photo {
+        position: absolute;
+        left: 49.6%;
+        right: 0.81%;
+        top: 3.06%;
+        bottom: 3.09%;
+    }
+    
+}
+
+
+@media screen and (max-width: 750px){
+    
+    #div-principal {height: auto; min-height: 50vh; flex-direction: column;}
+
+    #login-div, #login {width: calc(100% - 20px); height: auto;}
+
+    #login-div {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        
+        .welcome-message {
+            max-width: 410px;
+    
+            .welcome {margin: 0 0 16px;}
+            
+            .message {font-size: 28px; line-height: 32px; margin-bottom: 0;}
+        }
+    }
+
+    #login {
+        .logo-photo {margin: 0 0 40px;}
+    }
+
+}

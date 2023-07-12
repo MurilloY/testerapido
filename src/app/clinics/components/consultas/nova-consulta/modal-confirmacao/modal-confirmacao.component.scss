@@ -1,0 +1,9 @@
+#box-modal {
+    .tit, .message {padding-right: 100px;}
+}
+
+@media screen and (max-width: 670px){
+    #box-modal {
+        .tit, .message {padding-right: 0px;}
+    }
+}

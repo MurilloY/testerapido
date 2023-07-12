@@ -1,0 +1,64 @@
+<div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+
+    <h2 mat-dialog-title>{{dialog_title}}</h2>
+  
+    <form [formGroup]='form'>
+  
+      <div class="text-inside">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nome do perfil</mat-label>
+          <input matInput type="text" placeholder="Nome do perfil" formControlName="name" required>
+          <mat-error *ngIf="checkError('name', 'required')">
+            Campo obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+  
+      <div formArrayName="menus">
+        <div *ngFor="let menu of menusFB.controls; let menuIndex=index" [formGroupName]="menuIndex">
+          <mat-checkbox formControlName="selected">
+            {{form.value.menus[menuIndex].menu_name}} ({{form.value.menus[menuIndex].menu_cat_name}})
+          </mat-checkbox>
+  
+  
+          <span class="example-list-section">
+  
+            <div *ngIf="form.value['menus'][menuIndex].selected">
+              <ul>
+                <li>
+                  <div formArrayName="permissions">
+                    <div *ngFor="let permission of getControls(menuIndex); let permIndex=index" [formGroupName]="permIndex">
+                      <mat-checkbox formControlName="selected" [disabled]="form.value.menus[menuIndex].permissions[permIndex].required">
+                        {{form.value.menus[menuIndex].permissions[permIndex].per_name}}
+                      </mat-checkbox>
+                    </div>
+                  </div>
+  
+  
+                </li>
+              </ul>
+  
+            </div>
+  
+          </span>
+  
+  
+  
+        </div>
+      </div>
+  
+  
+      <div mat-dialog-actions style="text-align: right;">
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit();">Salvar</button>
+  
+        <span class="spacer"></span>
+        <button mat-button (click)="onDismiss()">Cancelar</button>
+      </div>
+  
+  
+  
+    </form>
+  
+  
+  </div>

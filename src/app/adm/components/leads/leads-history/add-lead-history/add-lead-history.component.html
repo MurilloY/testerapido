@@ -1,0 +1,39 @@
+<div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+
+    <h2 mat-dialog-title>{{dialogTitle}}</h2>
+
+    <form [formGroup]="formAddHistory">
+
+        <div style="margin-top: 20px; margin-bottom: 20px;" fxLayout="row" fxLayoutAlign="start center">
+            <mat-radio-group formControlName="lead_status">
+                <mat-radio-button value="1">Novo</mat-radio-button>
+                <mat-radio-button value="2">Em atendimento</mat-radio-button>
+                <mat-radio-button value="3">Finalizado</mat-radio-button>
+                <mat-radio-button value="4">Recusado</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Comentário</mat-label>
+                <textarea matInput matTextareaAutosize matAutosizeMaxRows="5" rows="6" type="text"
+                    placeholder="Escreva um comentário..." formControlName="message" style="font-size: 12px;"></textarea>
+                <mat-error *ngIf="checkError('message', 'required')">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions style="text-align: right;">
+            <button mat-raised-button color="primary" type="submit" (click)="onSubmit();">{{ dialogButton }}</button>
+
+            <span class="spacer"></span>
+            <button mat-button (click)="onDismiss()">Cancelar</button>
+        </div>
+
+
+
+    </form>
+
+
+</div>

@@ -1,0 +1,124 @@
+<div class="flex">
+    <mat-toolbar style="z-index: 2">
+        <div>
+            <button mat-icon-button (click)="snav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+    
+        </div>
+    
+    
+        <img src="assets/images/logotipo.png" *ngIf="!mobileQuery.matches" height="30px" />
+    
+        <span class="example-fill-remaining-space"></span>
+    
+        <ng-container>
+            <div *ngIf="totalNotifications > 0; then thenBlock; else elseBlock"></div>
+            <ng-template #thenBlock>
+                <button style="
+                padding: 0;
+                margin-right: 10px;
+                width: auto;
+                height: auto;
+                background: transparent;
+                border: none;
+                float: none;
+                text-align: center;
+                cursor: pointer;
+                color: #fff;
+                
+              " (click)="openNotifications()" matBadge="{{ totalNotificationsText }}" matBadgeSize="medium"
+                    matBadgeColor="warn">
+                    <mat-icon>notifications</mat-icon>
+                </button>
+            </ng-template>
+            <ng-template #elseBlock>
+                <button style="
+                padding: 0;
+                margin-right: 10px;
+                width: auto;
+                height: auto;
+                background: transparent;
+                border: none;
+                float: none;
+                text-align: center;
+                cursor: pointer;
+                color: #828282;
+              " (click)="openNotifications()">
+    
+                    <mat-icon>notifications</mat-icon>
+                </button>
+            </ng-template>
+        </ng-container>
+    
+        <button [matMenuTriggerFor]="menuUser" class="transparent">
+            <mat-card style="display: none"></mat-card><img mat-card-avatar style="background-size: cover !important"
+                [attr.src]="photo" />
+        </button>
+        <mat-menu #menuUser="matMenu">
+            <button mat-menu-item (click)="perfil()">
+                <mat-icon>face</mat-icon> Minha conta
+            </button>
+    
+            <button mat-menu-item (click)="logOut()">
+                <mat-icon>logout</mat-icon> Sair
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+    
+    <mat-drawer-container>
+        <mat-drawer #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches"
+            [ngClass]="{ 'sidenav-collapsed': mobileQuery.matches }" style="margin-top: 57px;">
+            <div class="sidenav-header" *ngIf="mobileQuery.matches">
+                <img src="assets/images/logotipo.png" *ngIf="!collapsedNav" height="30px">
+            </div>
+            <mat-divider></mat-divider>
+            <mat-nav-list>
+    
+    
+                <div *ngFor="let page of category_fixes">
+                    <div *ngIf="page.hasSubmenu == 1 && page.submenus.length > 0">
+                        <a mat-list-item (click)="openSubmenu(page)" *ngIf="page.submenus != []">
+                            <mat-icon mat-list-icon>{{page.icon}}</mat-icon>
+                            <span matLine>
+                                {{page.name}}
+                            </span>
+                            <mat-icon class="menu-button" [ngClass]="{'rotated' : isClicked(page.name)}">expand_more
+                            </mat-icon>
+                        </a>
+                        <div *ngFor="let submenu of page.submenus" class="submenu"
+                            [ngClass]="{'expanded' : isClicked(page.name), 'd-none': !isClicked(page.name)}">
+    
+                            <a routerLinkActive="is-active" [routerLink]="submenu.link"
+                                [routerLinkActiveOptions]="{exact: true}" mat-list-item>
+                                <mat-icon mat-list-icon>{{submenu?.icon}}</mat-icon>
+                                <span matLine>{{ submenu?.name }} </span>
+                            </a>
+    
+                        </div>
+                    </div>
+    
+                    <div *ngIf="page.hasSubmenu == 0 ">
+                        <a routerLinkActive="is-active" [routerLink]="page.link" routerLinkActive="is-active"
+                            mat-list-item>
+                            <mat-icon mat-list-icon>{{page?.icon}}</mat-icon>
+                            <span matLine>{{ page?.name }} </span>
+                        </a>
+                    </div>
+    
+                </div>
+    
+    
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+    
+    
+            <router-outlet></router-outlet>
+    
+    
+    
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

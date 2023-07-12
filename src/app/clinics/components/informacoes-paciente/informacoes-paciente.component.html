@@ -1,0 +1,215 @@
+<app-header-nova-consulta [fixedHeader]="true" [progress]="100" [showProgress]="true" [showBtnClose]="true"></app-header-nova-consulta>
+
+<section class="container container2">
+
+    <h1 class="titulo-acao">Informações do paciente</h1>
+
+    <form>
+        <div id="informacoes-paciente">
+
+            <p class="txt">O paciente é maior de idade?</p>
+
+            <div class="opcoes">
+                <mat-radio-group>
+                    <mat-radio-button value="1">Adulto</mat-radio-button>
+                    <mat-radio-button value="2">Criança</mat-radio-button>
+                    <mat-radio-button value="3">idosa</mat-radio-button>
+                </mat-radio-group>              
+            </div>
+
+            <p class="txt">O paciente precisa de acompanhante?</p>
+
+            <div class="opcoes">
+                <mat-radio-group name="acompanhante" [(ngModel)]="acompanhante">
+                    <mat-radio-button value="sim">Sim, precisa</mat-radio-button>
+                    <mat-radio-button value="nao">Não precisa</mat-radio-button>
+                </mat-radio-group>              
+            </div>
+
+            <h2>Informações do paciente</h2>
+
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="Nome Completo">
+                </mat-form-field>
+            </div>
+            <div class="formulario">
+                <div class="form-a">
+                    <mat-form-field>
+                        <input matInput placeholder="Data do aniversário">
+                    </mat-form-field>
+                </div>
+                <div class="form-b">
+                    <mat-form-field>
+                        <input matInput placeholder="RG">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="formulario">
+                <div class="form-a">
+                    <mat-form-field>
+                        <input matInput placeholder="CPF">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="formulario">
+                <div class="form-a">
+                    <mat-form-field>
+                        <input matInput placeholder="CEP">
+                    </mat-form-field>
+                </div>
+                <div class="form-b">
+                    <mat-form-field>
+                        <input matInput placeholder="Estado">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="formulario">
+                <div class="form-a">
+                    <mat-form-field>
+                        <input matInput placeholder="Cidade">
+                    </mat-form-field>
+                </div>
+                <div class="form-b">
+                    <mat-form-field>
+                        <input matInput placeholder="Bairro">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="formulario">
+                <div class="form-c">
+                    <mat-form-field>
+                        <input matInput placeholder="Nome da rua">
+                    </mat-form-field>
+                </div>
+                <div class="form-d">
+                    <mat-form-field>
+                        <input matInput placeholder="Número">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <h2>O paciente possui convênio ou plano de saúde</h2>
+
+            <div class="opcoes">
+                <mat-radio-group>
+                    <mat-radio-button value="1">Sim</mat-radio-button>
+                    <mat-radio-button value="2">Não</mat-radio-button>
+                </mat-radio-group>              
+            </div>
+
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="Plano de Saúde">
+                </mat-form-field>
+            </div>
+
+            <ng-container *ngIf="acompanhante == 'sim'">
+                <h2>Dados do responsável legal ou acompanhante</h2>
+                    
+                <div>
+                    <mat-form-field>
+                        <input matInput placeholder="Nome Completo">
+                    </mat-form-field>
+                </div>
+                <div class="formulario">
+                    <div class="form-a">
+                        <mat-form-field>
+                            <input matInput placeholder="Data do aniversário">
+                        </mat-form-field>
+                    </div>
+                    <div class="form-b">
+                        <mat-form-field>
+                            <input matInput placeholder="RG">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="formulario">
+                    <div class="form-a">
+                        <mat-form-field>
+                            <input matInput placeholder="Cpf">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <p class="txt">O endereço do paciente é o mesmo do representante legal?</p>
+    
+                <div class="opcoes">
+                    <mat-radio-group name="endereco" [(ngModel)]="endereco">
+                        <mat-radio-button value="mesmo">Mesmo endereço</mat-radio-button>
+                        <mat-radio-button value="outro">Outro endereço</mat-radio-button>
+                    </mat-radio-group>              
+                </div>
+
+                <ng-container *ngIf="endereco == 'outro'">
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field>
+                                <input matInput placeholder="CEP">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-b">
+                            <mat-form-field>
+                                <input matInput placeholder="Estado">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field>
+                                <input matInput placeholder="Cidade">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-b">
+                            <mat-form-field>
+                                <input matInput placeholder="Bairro">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-c">
+                            <mat-form-field>
+                                <input matInput placeholder="Nome da rua">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-d">
+                            <mat-form-field>
+                                <input matInput placeholder="Número">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="form-a">
+                            <mat-form-field>
+                                <input matInput placeholder="Telefone/WhatsApp">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-b">
+                            <mat-form-field>
+                                <input matInput placeholder="E-mail">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </ng-container>
+            </ng-container>
+
+            <div class="aceito">
+                <mat-checkbox>
+                    Aceito receber informações pelos meios cadastrados, durante o agendamento de consultas.
+                </mat-checkbox>
+            </div>
+
+            <div class="acoes">
+                <div class="btn-continuar">
+                    <button mat-button class="btn-padrao">
+                        Salvar e Continuar <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,111 @@
+<div id="box-login">
+
+    <aside id="login-welcome">
+      
+      <div class="welcome-message">
+        <h1 class="welcome">Bem-vinda(o) à i9Care</h1>
+        <h2 class="message">Atendimento quando e onde quiser!</h2>
+      </div>
+  
+    </aside>
+  
+    <section id="login">
+  
+      <div class="login-content">
+        <div class="logo-login">
+            <img class="img-logo-clinic" src="assets/images/logo-i9care.svg">
+        </div>
+
+        <ng-container *ngIf="showBox == 'login'">
+            <h3 class="message"><span>Olá!</span> Digite o e-mail cadastrado para recuperar sua senha!</h3>
+    
+            <form [formGroup]="formGroup">
+            <mat-form-field>
+                <input matInput formControlName="user_email" placeholder="E-mail">
+                <mat-error *ngIf="checkError('user_email', 'email')">Insira um e-mail válido</mat-error>
+                <mat-error *ngIf="checkError('user_email', 'required')">Este campo é obrigatório</mat-error>
+            </mat-form-field>
+    
+            <button type="submit" mat-button (click)="onSubmit()" > Enviar</button>
+    
+            <!-- <div class="link-cadastro">
+                <a routerLink="/clinica/cadastro">Não tem uma conta? <span>Cadastre-se</span></a>
+            </div> -->
+            </form>
+        </ng-container>
+        
+        <ng-container *ngIf="showBox == 'code'">
+            <h3 class="message"><span>Ambiente seguro!</span> Digite o código que enviamos no e-mail cadastrado.</h3>
+    
+            <form [formGroup]="formGroup2">
+            <mat-form-field>
+                <input matInput type="number" formControlName="code">
+                <mat-error *ngIf="checkError2('code', 'required')">Código inválido. <span>Enviaremos um novo código em 60 segundos</span></mat-error>
+            </mat-form-field>
+    
+            <button type="submit" mat-button (click)="onSubmit()">Enviar</button>
+            </form>
+        </ng-container>
+        
+        <ng-container *ngIf="showBox == 'password'">
+            <h3 class="message">Crie uma senha forte!</h3>
+    
+            <form [formGroup]="formGroup3">
+
+                <mat-form-field>
+                  <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (keyup)="verificaSenha($event)">
+                  <button mat-icon-button matSuffix class="matIconButton" (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="checkError3('password', 'required')">Este campo é obrigatório</mat-error>
+                </mat-form-field>
+
+                <div class="verificacoes-senha" [class.novalue]="formGroup3.controls['password'].value === ''">
+                  <p 
+                    [class.error]="passwordLengthError && formGroup3.controls['password'].value != ''" 
+                    [class.success]="!passwordLengthError && formGroup3.controls['password'].value != ''">
+                    <img src="assets/images/icone-x.svg" alt="" class="icone-x">
+                    <img src="assets/images/icone-x-red.svg" alt="" class="icone-x-error">
+                    <img src="assets/images/icone-check.svg" alt="" class="icone-check">
+                    A senha deve possuir 6 caracteres
+                  </p>
+                  <p 
+                    [class.error]="passwordSpecialError && formGroup3.controls['password'].value != ''" 
+                    [class.success]="!passwordSpecialError && formGroup3.controls['password'].value != ''">
+                    <img src="assets/images/icone-x.svg" alt="" class="icone-x">
+                    <img src="assets/images/icone-x-red.svg" alt="" class="icone-x-error">
+                    <img src="assets/images/icone-check.svg" alt="" class="icone-check">
+                    Deve conter pelo menos um caracter especial (%@&)
+                  </p>
+                  <p 
+                    [class.error]="passwordNumberError && formGroup3.controls['password'].value != ''" 
+                    [class.success]="!passwordNumberError && formGroup3.controls['password'].value != ''">
+                    <img src="assets/images/icone-x.svg" alt=""  class="icone-x">
+                    <img src="assets/images/icone-x-red.svg" alt="" class="icone-x-error">
+                    <img src="assets/images/icone-check.svg" alt="" class="icone-check">
+                    Deve conter pelo menos um número
+                  </p>
+                </div>
+    
+            <button type="submit" mat-button (click)="onSubmit()">Enviar</button>
+    
+            <div class="link-cadastro">
+                <a routerLink="/clinica/cadastro">Não tem uma conta? <span>Cadastre-se</span></a>
+            </div>
+            </form>
+        </ng-container>
+        
+        <ng-container *ngIf="showBox == 'success'">
+            <h3 class="message text-center">Senha alterada com sucesso!</h3>
+    
+            <div class="link-pagina-inicial">
+                <a routerLink="/paciente/login">Página inicial</a>
+            </div>
+        </ng-container>
+  
+      </div>
+  
+    </section>
+  
+ </div>

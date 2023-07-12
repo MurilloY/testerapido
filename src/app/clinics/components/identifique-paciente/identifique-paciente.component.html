@@ -1,0 +1,32 @@
+<app-header-nova-consulta [fixedHeader]="true" [showBtnClose]="true"></app-header-nova-consulta>
+
+<section class="container container2">
+    <h1 class="titulo-acao">Identifique o paciente</h1>
+
+    <div class="info-error tp2">
+        <span class="material-symbols-outlined">error</span> 
+        Paciente não encontrado.
+    </div>
+
+    <div class="box-input">
+        <input type="text" value="725.820.400-88">
+    </div>
+
+    <div class="form-acoes">
+        <div class="acoes">                
+            <div class="btn-acao-voltar">
+                <button mat-button class="btn-voltar">
+                    <span class="material-symbols-outlined">chevron_left</span> Voltar
+                </button>
+            </div>
+
+            <div class="btn-continuar">
+                <button mat-button class="btn-padrao">
+                    Continuar <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-footer></app-footer>

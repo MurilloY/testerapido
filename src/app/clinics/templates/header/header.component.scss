@@ -1,0 +1,111 @@
+#validar-conta {
+    font-size: 15px;
+    text-align: center;    
+    background-color: #FF2252;
+
+    a {
+        width: 100%; 
+        color: #FFFFFF; 
+        font-weight: 500; 
+        padding: 20px 0; 
+        display: block;
+    }
+    span {margin: 0 5px 2px 0; vertical-align: middle;}
+}
+
+.img-logo-clinic{
+    max-width: 150px;
+}
+
+#header-site-ghost {height: 120px;}
+#header-site {
+    width: 100%;
+    margin: 0 0 50px;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    position: fixed;
+    background-color: #FFF;
+    box-shadow: 0px 16px 40px rgba(113, 127, 147, 0.04);
+
+    &.validar-conta {
+        top: 64px;
+        &.scrollPage {top: 0;}
+    }
+
+    .header {
+        width: 96%;
+        max-width: 1285px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .acoes-menu {display: flex; align-items: center; padding: 28px 0 30px;}
+
+        .mobile {display: none; margin-right: 10px;}
+
+        .usuario {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .nome {color: #485DFF; font-size: 14px; font-weight: 500;}
+
+            .acao {
+                margin-left: 18px;
+
+                .acao-usuario {
+                    color: #485DFF;
+                    width: 40px;
+                    height: 40px;
+                    min-width: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    padding: 0;
+                    border-radius: 4px;
+                    background: #DEEFFF;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 991px){
+    #header-site {    
+        .header {    
+            .nav-site {display: none;}    
+            .mobile {display: block;}
+        }
+    }
+}
+@media screen and (max-width: 654px){
+    #header-site {
+        &.validar-conta {top: 84px;}
+    }
+}
+@media screen and (max-width: 576px){
+    #header-site {
+        .header {    
+            .usuario {
+                .acao {margin-left: 0px;}
+                .nome {display: none;}
+            }
+        }
+    }
+}
+@media screen and (max-width: 350px){
+    #header-site {
+        .header {
+            .logo {
+                max-width: 180px;
+                img {width: 100%;}
+            }
+        }
+    }
+}
+@media screen and (max-width: 332px){
+    #header-site {
+        &.validar-conta {top: 104px;}
+    }
+}

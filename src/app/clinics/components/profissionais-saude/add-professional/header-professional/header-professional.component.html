@@ -1,0 +1,37 @@
+<div id="header-etapas-ghost" *ngIf="fixedHeader"></div>
+<div [class.fixedHeader]="fixedHeader">
+    <header id="header-etapas" [class.hasNav]="menu">
+        <div class="header">
+            <div class="logo">
+                <a href="#">
+                    <img [src]="logo" alt="">
+                </a>
+            </div>
+
+            <div class="etapas" *ngIf="showProgress">
+                <div class="etapa" [ngClass]="{'selected': progress >= 0}">
+                    <div class="num">1</div>
+                    <div class="descricao">Profissional</div>
+                </div>
+                <div class="etapa" [ngClass]="{'selected': progress >= 30}">
+                    <div class="num">2</div>
+                    <div class="descricao">Especialidade</div>
+                </div>
+                <div class="etapa" [ngClass]="{'selected': progress >= 65}">
+                    <div class="num">3</div>
+                    <div class="descricao">Disponibilidade</div>
+                </div>
+                <div class="etapa" [ngClass]="{'selected': progress >= 90}">
+                    <div class="num">4</div>
+                    <div class="descricao">Finalizar</div>
+                </div>
+            </div>
+
+            <div class="close" *ngIf="showBtnClose">
+                <button mat-button (click)="closeDialog()"><span class="material-symbols-outlined">close</span></button>
+            </div>
+
+        </div>
+    </header>
+    <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+</div>

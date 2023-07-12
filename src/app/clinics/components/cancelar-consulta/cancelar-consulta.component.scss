@@ -1,0 +1,26 @@
+.acao-cancelamento {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .txt {
+        max-width: 525px;
+        color: #4E535C;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0.02em;
+        margin: 0;
+        padding: 0 55px 0 0;
+    }
+
+    .btn-continuar {min-width: 280px;}
+}
+
+@media screen and (max-width: 730px){
+    .acao-cancelamento {
+        flex-direction: column;
+        .txt {max-width: 100%; padding: 0; margin-bottom: 20px;}
+    }
+}

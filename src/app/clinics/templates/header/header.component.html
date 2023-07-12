@@ -1,0 +1,69 @@
+
+<div id="validar-conta" *ngIf="validarConta">
+    <a href="#">
+        <span class="material-symbols-outlined">error</span>
+        Enviamos um SMS com um código de segurança para o seu celular. Validar conta
+    </a>
+</div>
+
+<div id="header-site-ghost" [class.validar-conta]="validarConta"></div>
+<header id="header-site" [class.validar-conta]="validarConta" [class.scrollPage]="scrollPage">
+    <div class="header">
+        <div class="logo">
+          <img class="img-logo-clinic" [attr.src]="clinic?.clinic_logo! | secure | async" [alt]="clinic?.clinic_name">
+        </div>
+        <nav class="nav-site">
+            <ul>
+                <li><button mat-button class="main-nav" [routerLink]="['consultas']" routerLinkActive="active">Consultas</button></li>
+                <li>
+                    <button mat-button class="main-nav" [routerLink]="['pacientes']" routerLinkActive="active">Pacientes</button>
+                    <mat-menu #submenuPacientes="matMenu">
+                        <button mat-menu-item>Ficha completa</button>
+                        <button mat-menu-item>Exames</button>
+                        <button mat-menu-item>Atestados</button>
+                        <button mat-menu-item>Retornos</button>
+                    </mat-menu>
+                </li>
+                <li><button mat-button class="main-nav" [routerLink]="['profissionais']" routerLinkActive="active">Profissionais da Saúde</button></li>
+                <li>
+                    <button mat-button class="main-nav notifications has-notification" (click)="notifications()">
+                        <span class="material-symbols-outlined">notifications_active</span>
+                        <span class="alert-notification"></span>
+                    </button>
+                </li>
+            </ul>
+        </nav>        
+        
+        <div class="acoes-menu">
+            <div class="mobile">
+                <button mat-icon-button [matMenuTriggerFor]="navMobile">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                
+                <mat-menu #navMobile="matMenu">
+                    <button mat-menu-item>Consultas</button>
+                    <button mat-menu-item [matMenuTriggerFor]="submenuPacientes">Pacientes</button>
+                    <button mat-menu-item>Profissionais da Saúde</button>
+                </mat-menu>    
+                
+            </div>
+
+            <div class="usuario">
+                <span class="nome">{{user.user_name}}</span>
+                
+                <div class="acao">    
+                    <button mat-button [matMenuTriggerFor]="navAccount" class="acao-usuario">
+                        <span class="material-symbols-outlined">account_circle</span>
+                    </button>
+                    <mat-menu #navAccount="matMenu">
+                        <button mat-menu-item>Meu perfil</button>
+                        <button mat-menu-item>Configurações</button>
+                        <button mat-menu-item>Integrações</button>
+                        <button mat-menu-item (click)="convenio()">Convênios</button>
+                        <button mat-menu-item (click)="logOut()">Sair</button>
+                    </mat-menu>     
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

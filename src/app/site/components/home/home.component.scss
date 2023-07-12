@@ -1,0 +1,38 @@
+.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    color: white;
+    background: #F51551;
+}
+
+.center {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.btn-padrao{
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px !important;
+    text-align: center;
+    white-space: break-spaces !important;
+    padding: 16px 36px !important;
+
+    span {vertical-align: middle;}
+}
+.btn-padrao {
+    color: #FFFFFF;
+    border-radius: 8px !important;
+    background-color: #0A1542;
+    border-color: white;
+    border-style: solid;
+}
+

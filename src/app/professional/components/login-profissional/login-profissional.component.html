@@ -1,0 +1,68 @@
+<div id="box-login">
+
+  <aside id="login-welcome">
+
+    <div class="welcome-message">
+      <h1 class="welcome">Bem-vinda(o) à i9Care</h1>
+      <h2 class="message">Atendimento quando e onde quiser!</h2>
+    </div>
+
+  </aside>
+
+  <section id="login">
+
+    <div class="login-content">
+      <div class="logo-login">
+        <img src="assets/images/logotipo.png">
+      </div>
+
+      <h3 class="message"><span>Olá!</span> Utilize o seu e-mail e a senha cadastrados para usar os serviços.</h3>
+
+      <form [formGroup]="loginForm">
+        <div style="margin-top: 20px; margin-bottom: 20px; display: fle;">
+          <mat-radio-group formControlName="choice" (change)="onChange($event)">
+            <mat-radio-button value="0">E-mail</mat-radio-button>
+            <mat-radio-button value="1">CPF</mat-radio-button>
+          </mat-radio-group>
+      </div>
+        <mat-form-field *ngIf="selectedOption === '0'">
+          <input matInput formControlName="user_email" placeholder="E-mail">
+          <mat-error *ngIf="checkError('user_email', 'email')">Insira um e-mail válido</mat-error>
+          <mat-error *ngIf="checkError('user_email', 'required')">Este campo é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="selectedOption === '1'">
+          <input matInput formControlName="user_cpf" placeholder="CPF" mask="000.000.000-00" [dropSpecialCharacters]="false">
+          <mat-error *ngIf="checkError('user_cpf', 'checkCPF')">Insira um CPF válido</mat-error>
+          <mat-error *ngIf="checkError('user_cpf', 'required')">Este campo é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="user_password" placeholder="Senha">
+          <button mat-icon-button matSuffix class="matIconButton" (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="checkError('user_password', 'required')">Este campo é obrigatório</mat-error>
+        </mat-form-field>
+
+        <div *ngIf="returnError" class="notify-message">
+          <label>Email ou senha inválidos</label>
+        </div>
+
+        <div class="esqueci-senha">
+          <a routerLink="/profissional/{{clinic_url}}esqueci-senha">Esqueci minha senha</a>
+        </div>
+
+        <button type="submit" mat-button (click)="onSubmit()">Entrar</button>
+
+        <!-- <div class="link-cadastro">
+            <a routerLink="/profissional/cadastro">Não tem uma conta? <span>Cadastre-se</span></a>
+          </div>  -->
+      </form>
+
+    </div>
+
+  </section>
+
+</div>

@@ -1,0 +1,38 @@
+<!-- <app-header-appointment [fixedHeader]="true"></app-header-appointment> -->
+
+<div class="container container2" *ngIf="messages > 0 else other_content">
+
+    <section id="doctor-chat">
+
+        <div class="informacao">
+
+            <ng-template #professional>
+                <div class="profissional">
+
+                    <div class="img">
+                        <!-- <img [src]="appointment?.pacient?.user_photo" style="height: 80px;"> -->
+                        <span class="online"></span>
+                    </div>
+                    <div class="info">
+                        <h2>{{appointment?.pacient?.pc_name}}</h2>
+                        <h3>Paciente</h3>
+                    </div>
+                </div>
+            </ng-template>
+
+        </div>
+        <div class="chat" #msger>
+            <!-- <div class="data">{{appointment?.date| date: 'd'}} de {{today | date: 'MMMM'}} de {{today | date: 'y'}}</div> -->
+        </div>
+    </section>
+
+</div>
+
+<ng-template #other_content>
+    <div style="display: flex; justify-content: center; align-content: center; height: 100%; align-items: center; color: #485DFF;">
+        <h2>Não possui nenhuma mensagem</h2>
+    </div>
+</ng-template>
+
+
+<!-- <app-footer></app-footer> -->

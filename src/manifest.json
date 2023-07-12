@@ -1,0 +1,16 @@
+{
+    "name": "i9Care",
+    "short_name": "i9Care",
+    "icons": [
+      {
+        "src": "caminho-para-o-icone.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
+  }
+  

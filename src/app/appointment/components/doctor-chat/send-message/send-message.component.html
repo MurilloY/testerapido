@@ -1,0 +1,27 @@
+<section id="doctor-chat">
+    <div class="chat" #msger>
+        <div class="data">{{today | date: 'd'}} de {{today | date: 'MMMM'}} de {{today | date: 'y'}}</div>
+    </div>
+    <div class="comunicacao">
+        <form [formGroup]="formMessage" (keyup.enter)="sendMessage()">
+            <div class="msg">
+                <mat-form-field>
+                    <textarea formControlName="message" matInput placeholder="Escreva aqui sua mensagem"></textarea>
+                </mat-form-field>
+
+                <button mat-button class="btn-anexo">
+                    <img src="assets/images/icone-anexo.svg" alt="">
+                </button>
+                <button mat-button class="btn-mic">
+                    <img src="assets/images/icone-audio.svg" alt="">
+                </button>
+
+            </div>
+            <div class="btn">
+                <button mat-button (click)="sendMessage()">
+                    <img src="assets/images/icone-enviar.svg" alt="">
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

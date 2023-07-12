@@ -1,0 +1,91 @@
+<div style=" margin-left: 1.5%; margin-right: 1.5%; padding-top: 75px; padding-bottom: 5px;">
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+
+        <div fxLayout="row" fxLayoutAlign=" center" class="border-menu">
+
+            <button mat-button (click)="backClinics()">Clínicas</button>
+            
+            <mat-icon class="color-icon" aria-hidden="false">navigate_next</mat-icon>
+
+            <button mat-button >{{clinic?.clinic_name}}</button>
+
+        </div>
+
+    </div>
+
+    <div class="rcorners1" fxLayout="row wrap" fxLayoutAlign="space-between start" style="margin-bottom: 10px;">
+
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+
+
+
+            <div class="avatar-upload margem">
+                <img id="imagePreview" style="height: 100px; width: 100px; border-radius: 50%;"
+                    [attr.src]="clinic?.clinic_logo">
+            </div>
+
+
+
+            <div class="margem">
+                <p style="font-size:x-large; color: white; ">{{clinic?.clinic_name}}</p>
+                <div>
+                    <span style="font-size:medium; color: white;">{{clinic?.clinic_email}}</span>
+                </div>
+
+                <div>
+                    <p style="font-size:medium; color: white;">{{clinic?.clinic_phone}}</p>
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+
+        <div >
+            <button mat-icon-button (click)="edit()" style="margin: 5px;">
+                <mat-icon class="edit-icon">edit</mat-icon>
+            </button>
+        </div>
+
+       
+
+
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly center" style="margin-bottom:100px;">
+
+        <div *ngFor="let menu of menus;" class="menu-div-principal" fxLayout="column" >
+    
+          <div class="menu-div-filha" fxLayout="row" fxLayoutAlign="space-between center"
+            [style.background-color]="menu.color">
+    
+    
+            <mat-icon class="icon-menu">{{menu.icon}}</mat-icon>
+    
+            <span style="font-size: large; color: white; text-align: center;">{{menu.name}}</span>
+    
+            <div></div>
+    
+    
+          </div>
+    
+          <div style="cursor:pointer" class="menu-div-filha2" fxLayoutAlign="center center" (click)="goToNext(menu.link)">
+            <div *ngIf="menu.dash == 'user_profile'">
+                <span>{{dashes?.user_profile}}</span>
+            </div>
+            <div *ngIf="menu.dash == 'patient_clinic'">
+                <span>{{dashes?.patient_clinic}}</span>
+            </div>
+            <div *ngIf="menu.dash == 'prof_clinic'">
+                <span>{{dashes?.prof_clinic}}</span>
+            </div>
+          </div>
+    
+    
+        </div>
+
+</div>
