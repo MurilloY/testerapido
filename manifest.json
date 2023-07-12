@@ -7,7 +7,7 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "i9 Care",
-  "start_url": ".",
+  "start_url": "https://i9care.com.br/clinica/fisiomart",
   "theme_color": "#30d6e5",
   "categories": [
     "health"
