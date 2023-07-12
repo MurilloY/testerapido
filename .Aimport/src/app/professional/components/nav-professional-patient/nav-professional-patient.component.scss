@@ -1,0 +1,28 @@
+.acoes-menu {display: flex; align-items: center; padding: 28px 0 30px;}
+
+        .mobile {display: none; margin-right: 10px;}
+
+        .usuario {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 200px;
+
+            .nome {color: #485DFF; font-size: 14px; font-weight: 500;}
+
+            .acao {
+                margin-left: 18px;
+
+                .acao-usuario {
+                    color: #485DFF;
+                    width: 40px;
+                    height: 40px;
+                    min-width: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    padding: 0;
+                    border-radius: 4px;
+                    background: #DEEFFF;
+                }
+            }
+        }

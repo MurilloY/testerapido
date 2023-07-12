@@ -802,3 +802,254 @@
         margin-bottom: 10px;
     }
 }
+
+/////////////
+
+#header-etapas-ghost {
+    height: 110px;
+}
+
+.fixedHeader {
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    position: fixed;
+}
+
+#header-etapas {
+    width: 100%;
+    padding: 24px 0;
+    background-color: #FFF;
+
+    &.hasNav {
+        padding: 0;
+    }
+
+    .header {
+        width: 96%;
+        max-width: 1285px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .home {
+            width: 65%;
+
+            button {
+                line-height: 32px;
+                width: 32px;
+                height: 32px;
+                min-width: 32px;
+                padding: 0;
+                border-radius: 4px;
+                background: rgba(239, 243, 246, 0.6);
+
+                img {
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .nav-site {
+            max-width: 500px;
+        }
+
+        .nav-site-mobile {
+            display: none;
+        }
+
+        .etapas {
+            width: 80%;
+            max-width: 680px;
+            display: flex;
+            justify-content: space-between;
+
+            .etapa {
+                display: flex;
+                align-items: center;
+
+                .num {
+                    width: 24px;
+                    height: 24px;
+                    color: #FFFFFF;
+                    font-size: 11px;
+                    line-height: 24px;
+                    text-align: center;
+                    margin-right: 8px;
+                    border-radius: 100px;
+                    background-color: #BAC8D3;
+                }
+
+                .descricao {
+                    color: #BAC8D3;
+                    font-size: 11px;
+                    font-weight: 500;
+                    letter-spacing: 0.02em;
+                }
+
+                &.selected {
+                    .num {
+                        background-color: #485DFF;
+                    }
+
+                    .descricao {
+                        color: #707070;
+                    }
+                }
+            }
+        }
+
+        .close {
+            color: #0031B2;
+        }
+
+        .acoes {
+            display: flex;
+            align-items: center;
+
+            .notificacao {
+                color: #0031B2;
+
+                .alert-notification {
+                    width: 5px;
+                    height: 5px;
+                    display: none;
+                    top: 28%;
+                    right: 13px;
+                    position: absolute;
+                    border-radius: 10px;
+                    background-color: #FF2252;
+                }
+
+                &.has-notification {
+                    .alert-notification {
+                        display: block;
+                    }
+                }
+            }
+
+            .usuario {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                margin-left: 10px;
+
+                .nome {
+                    color: #485DFF;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                .acao {
+                    margin-left: 18px;
+
+                    .acao-usuario {
+                        color: #485DFF;
+                        width: 40px;
+                        height: 40px;
+                        min-width: 40px;
+                        line-height: 40px;
+                        text-align: center;
+                        padding: 0;
+                        border-radius: 4px;
+                        background: #DEEFFF;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1260px) {
+    #header-etapas {
+        .header {
+            .home {
+                width: 55%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1030px) {
+    #header-etapas {
+        .header {
+            .etapas {
+                max-width: 600px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 991px) {
+    #header-etapas {
+        &.hasNav {
+            padding: 24px 0;
+        }
+
+        .header {
+            .home {
+                display: none;
+            }
+
+            .etapas {
+                display: none;
+            }
+
+            .nav-site {
+                display: none;
+            }
+
+            .nav-site-mobile {
+                display: block;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 490px) {
+    #header-etapas {
+        .header {
+            .acoes {
+                .usuario {
+                    .acao {
+                        margin-left: 0;
+                    }
+
+                    .nome {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #header-etapas {
+        .header {
+            .logo {
+                max-width: 180px;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+
+
+.mat-progress-bar {
+    height: 2px;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: #d6dee5;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background: #485DFF;
+}

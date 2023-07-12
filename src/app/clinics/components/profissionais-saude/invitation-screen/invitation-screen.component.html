@@ -5,8 +5,43 @@
 </div>
 
 <div *ngIf="show">
-    <app-header-professional [fixedHeader]="true" [progress]="progress" [showProgress]="true"
-        [showBtnClose]="true" [logo]="clinic!.clinic_logo!"></app-header-professional>
+    <div id="header-etapas-ghost"></div>
+    <div class="fixedHeader">
+        <header id="header-etapas" [class.hasNav]="false">
+            <div class="header">
+                <div class="logo">
+                    <a href="#">
+                        <img [src]="clinic.clinic_logo" alt="" width="60px" height="60px">
+                    </a>
+                </div>
+
+                <div class="etapas" style="text-align: center;">
+                    <div class="etapa" [ngClass]="{'selected': progress >= 0}">
+                        <div class="num">1</div>
+                        <div class="descricao">Profissional</div>
+                    </div>
+                    <div class="etapa" [ngClass]="{'selected': progress >= 30}">
+                        <div class="num">2</div>
+                        <div class="descricao">Especialidade</div>
+                    </div>
+                    <div class="etapa" [ngClass]="{'selected': progress >= 65}">
+                        <div class="num">3</div>
+                        <div class="descricao">Disponibilidade</div>
+                    </div>
+                    <div class="etapa" [ngClass]="{'selected': progress >= 90}">
+                        <div class="num">4</div>
+                        <div class="descricao">Finalizar</div>
+                    </div>
+                </div>
+
+                <div class="close">
+                    
+                </div>
+
+            </div>
+        </header>
+        <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+    </div>
 
     <!-- Início Etapa 1 -->
     <ng-container *ngIf="etapa == 1">
@@ -168,7 +203,7 @@
                             </div>
                             <div class="form-b">
                                 <mat-form-field>
-                                    <input matInput formControlName="user_email" placeholder="E-mail">
+                                    <input matInput formControlName="user_email" placeholder="E-mail" required>
                                 </mat-form-field>
                             </div>
                         </div>

@@ -21,7 +21,7 @@ export class AddProfessionalComponent implements OnInit {
 
   user: any;
   clinic_subdomain: string;
-  clinic: Clinic;
+  clinic?: Clinic;
 
   progress: number = 5;
   etapa: number = 1;
@@ -481,7 +481,7 @@ export class AddProfessionalComponent implements OnInit {
         console.log(this.CadastroProfessionalForm.value.birth_data)
 
         data.who_user = this.user.user_id;
-        data.clinic_id = this.clinic.clinic_id;
+        data.clinic_id = this.clinic?.clinic_id;
         data.specialities = this.secondFormGroup.value['specialities'];
         data.disponibilities = this.thirdFormGroup.value['disponibilities'];
         data.birth_data = moment(this.CadastroProfessionalForm.value.birth_data).format('YYYY-MM-DD');
@@ -625,7 +625,7 @@ export class AddProfessionalComponent implements OnInit {
 
   getProfessional(numberCPf: string) {
 
-    this.clinicService.getProfCPFVerify(this.clinic.clinic_id, numberCPf).subscribe(data => {
+    this.clinicService.getProfCPFVerify(this.clinic?.clinic_id!, numberCPf).subscribe(data => {
 
       this.showCpf = false;
       this.showForm = true

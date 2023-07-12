@@ -33,7 +33,7 @@
         </div>
 
         <div style="text-align: right;" *ngIf="formAddorSendLink.value.status == '0'">
-            <button mat-button (click)="sendLink()" class="btn-padrao">
+            <button mat-button (click)="sendLink()" class="btn-padrao" [disabled]="button_disabled">
                 Enviar link
             </button>
         </div>

@@ -277,8 +277,6 @@ export class AddProfessionalComponent implements OnInit {
 
       if (this.professional != null) {
 
-        console.log(this.professional)
-        console.log('entrei')
         let data3 = {
           prof_status: 1,
           specialities: this.secondFormGroup.value['specialities'],
@@ -325,16 +323,12 @@ export class AddProfessionalComponent implements OnInit {
 
       }
       else{
-        console.log(this.firstFormGroup.value.notify_prof_email)
-        console.log(this.firstFormGroup.value.notify_prof_whatsapp)
 
         if (this.userInsert) {
 
-          console.log(data1)
 
           data1.user_password = (Math.floor(100000 + Math.random() * 900000)).toString();
           data1.user_photo = this.firstFormGroup.value.user_photo
-          console.log(data1.user_photo)
           data1.user_status = 1;
           data1.birth_data = this.convertToDb(this.firstFormGroup.value.birth_data)
           data1.photoisdefault = this.photodefault

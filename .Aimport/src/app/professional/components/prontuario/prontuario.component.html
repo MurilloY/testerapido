@@ -1,0 +1,62 @@
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: baseline;">
+    <h2 class="subtitulo">Receituário médico</h2>
+    <div class="btn">
+        <button mat-button class="btn-padrao" (click)="openAlertDialog3()">Emitir receita</button>
+    </div>
+</div>
+<div class="relatorio-receitas">
+    <div class="info">
+        <div class="qtd">{{sortedData.length}}</div>
+        <p>receitas emitidas</p>
+    </div>
+    <div class="info">
+        <div class="qtd">{{receita_vencida}}</div>
+        <p>receitas vencidas</p>
+    </div>
+</div>
+
+<h2 class="subtitulo">Receitas emitidas</h2>
+
+<div class="receitas"
+    *ngFor="let item of sortedData | paginate: { itemsPerPage: totalItens, currentPage: p }; let idx = index">
+    <div class="info">Receituário {{ getPrescriptionNumber(idx) }}</div>
+    <div class="data" [ngClass]="{'expired': isExpired(item.pre_date)}">
+        {{ item.pre_date| date: 'dd/MM/yyyy' }}
+        <span class="btn" *ngIf="item.expired">
+            <img src="assets/images/icone-informacao.svg" alt="" matTooltip="Receita emitida há mais de 30 dias">
+        </span>
+    </div>
+    <div class="profissional">
+        {{ item.clinic_name | slice:0:18}}...
+    </div>
+    <div class="btn">
+        <button mat-button [matMenuTriggerFor]="navAcao">
+            <img src="assets/images/icone-editar2.svg" alt="">
+        </button>
+        <mat-menu #navAcao="matMenu">
+            <button mat-menu-item (click)="openAlertDialog2(item)">Ver receita</button>
+        </mat-menu>
+    </div>
+</div>
+
+
+<div class="paginacao">
+
+    <div class="exibindo">
+        <mat-menu #total="matMenu">
+            <button mat-menu-item (click)="totalItens = 4">4</button>
+            <button mat-menu-item (click)="totalItens = 10">10</button>
+            <button mat-menu-item (click)="totalItens = 50">50</button>
+            <button mat-menu-item (click)="totalItens = 100">100</button>
+        </mat-menu>
+    </div>
+
+    <div class="paginas" *ngIf="sortedData.length > 0">
+        <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+    </div>
+    <div class="paginacao-geral" *ngIf="sortedData.length === 0">
+        <div class="paginas">
+            <h2 class="piscar" style="color: #485DFF;">Nenhuma receita emitida</h2>
+        </div>
+    </div>
+</div>

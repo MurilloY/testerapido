@@ -1,0 +1,803 @@
+.box-calendario {
+    max-width: 412px;
+    margin-bottom: 46px;
+    border-radius: 16px;
+    box-shadow: none;
+    background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #FAFAFA;
+}
+
+.selected {
+    background-color: #485CFF;
+    color: white;
+}
+
+.unavailable {
+    background-color: #eb3c3c;
+    color: white;
+}
+
+.border-menu {
+    padding: 5px;
+    border-style: solid;
+    border-color: #DADCE0;
+    border-width: 1px;
+    border-radius: 6px;
+    margin: 5px;
+    width: 90px;
+    height: 25px;
+    text-align: center;
+  
+  }
+
+.calendario-acoes {
+    display: flex;
+    justify-content: space-between;
+
+    &.m-top {
+        margin-top: 32px;
+    }
+
+    .data {
+        width: 45%;
+
+        label {
+            color: #101828;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin: 0 0 16px;
+            display: block;
+        }
+
+        .mat-form-field {
+            width: 100%;
+        }
+
+        ::ng-deep .mat-form-field-infix {
+            border-top: none !important;
+        }
+
+        ::ng-deep .mat-form-field-underline {
+            display: none;
+        }
+
+        ::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix {
+            padding: 0 !important;
+        }
+
+        ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+            padding: 0 0.75em !important;
+            border-radius: 8px;
+            background-color: #FFF;
+
+            .mat-button-wrapper {
+                color: #485DFF;
+            }
+
+            input {
+                width: calc(100% - 70px);
+                margin-left: 10px;
+                padding: 18px 0;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    .horarios {
+        width: 50%;
+        max-width: 420px;
+        display: flex;
+        justify-content: space-between;
+
+        label {
+            color: #101828;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin: 0 0 16px;
+            display: block;
+        }
+
+        .time {
+            width: 162px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            background: #FFFFFF;
+
+            .material-symbols-outlined {
+                color: #485DFF;
+                margin-right: 2px;
+                vertical-align: middle;
+            }
+
+            input {
+                width: calc(100% - 50px);
+                color: #101828;
+                font-size: 16px;
+                padding: 5px 0 5px 16px;
+                border: none;
+            }
+
+            select {
+                width: calc(100px);
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .acoes {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    .calendario-acoes {
+        align-items: flex-start;
+        flex-direction: column;
+
+        .data,
+        .horarios,
+        .acoes {
+            width: 100%;
+        }
+
+        .acoes {
+            margin-top: 40px;
+            justify-content: flex-end;
+        }
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .calendario-acoes {
+        .horarios {
+            flex-direction: column;
+
+            .time {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 410px) {
+    .calendario-acoes {
+        .acoes {
+            flex-direction: column;
+        }
+
+        .btn-acao-voltar,
+        .btn-continuar {
+            width: 100%;
+        }
+
+        .btn-acao-voltar {
+            .btn-voltar {
+                padding: 16px 0 !important;
+            }
+        }
+    }
+}
+
+::ng-deep .mat-calendar-body-selected {
+    background-color: #485DFF;
+}
+
+#nova-consulta {
+
+    mat-radio-button,
+    .box-select {
+        padding: 18px 34px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        background: #FFFFFF;
+        border: solid 1px #FFFFFF;
+    }
+
+    mat-radio-button {
+        display: block;
+
+        &.mat-radio-checked {
+            border-color: #0031B2;
+
+            ::ng-deep .mat-radio-label-content {
+                color: #0031B2;
+            }
+        }
+
+        ::ng-deep .mat-radio-container {
+            margin-right: 5px;
+        }
+
+        ::ng-deep .mat-radio-label-content {
+            color: #4E535C;
+            font-size: 15px;
+            font-weight: 500;
+        }
+    }
+
+    .box-select {
+
+        ::ng-deep .mat-select-placeholder,
+        ::ng-deep .mat-option-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+
+    .box-pesquisa {
+        padding: 0 22px;
+        margin: 0 0 44px;
+        border-radius: 8px;
+        background: #FFFFFF;
+
+        span {
+            color: #485DFF;
+            margin-right: 18px;
+            vertical-align: middle;
+        }
+
+        input {
+            color: #212121;
+            font-size: 16px;
+            width: calc(100% - 70px);
+            padding: 18px 0;
+            border: none;
+        }
+    }
+
+    .bloco-pesquisa {
+        margin: 0 0 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .box-pesquisa {
+            width: calc(100% - 270px);
+            margin: 0;
+        }
+
+        .btn-calendario {
+            width: 200px;
+            position: relative;
+            border-radius: 8px;
+            background: #FFFFFF;
+
+            mat-datepicker-toggle {
+                color: #485DFF;
+                top: 18%;
+                right: 3px;
+                position: absolute;
+            }
+
+            input {
+                width: calc(100% - 50px);
+                color: #485DFF;
+                font-size: 16px;
+                margin: 4px;
+                padding: 16px 2px;
+                border: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #nova-consulta {
+        .bloco-pesquisa {
+            flex-direction: column;
+
+            .box-pesquisa {
+                width: calc(100% - 44px);
+            }
+
+            .btn-calendario {
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 345px) {
+    #nova-consulta {
+        mat-radio-button {
+            ::ng-deep .mat-radio-label-content {
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+.box-profissional,
+.box-profissional-editar {
+    width: calc(100% - 48px);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+}
+
+.box-profissional {
+    color: #4E535C;
+    font-size: 13px;
+    line-height: 23px;
+    letter-spacing: 0.02em;
+    margin: 0 0 16px;
+    border-radius: 8px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &.editar {
+        margin-bottom: 0;
+        border-radius: 8px 8px 0 0;
+        border-bottom: 1.5px solid #F5F5F5;
+    }
+
+    .img {
+        width: 90px;
+
+        img {
+            border-radius: 100px;
+        }
+    }
+
+    .profissional {
+        width: calc(35% - 130px);
+        padding-left: 10px;
+        margin: 5px;
+
+        h2 {
+            color: #0031B2;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+            margin: 0 0 16px;
+        }
+    }
+
+    .endereco {
+        width: calc(60% - 130px);
+        max-height: 90px;
+        padding-right: 20px;
+        text-align: center;
+        display: flex; /* Organiza os itens em uma linha */
+        flex-wrap: wrap; /* Move os itens para a próxima linha quando necessário */
+        overflow: auto; /* Permite a rolagem do conteúdo */
+
+        p {
+            margin: 0;
+        }
+
+        .avaliacoes {
+            margin: 4px 0 0;
+            display: flex;
+            align-items: center;
+
+            .stars {
+                margin: 0 4px 0 0;
+
+                img {
+                    margin: 0 4px 0 0;
+                }
+            }
+
+            .txt {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .acao {
+        width: 40px;
+        text-align: center;
+    }
+
+    .btn-agendar {
+        button {
+            color: #485DFF;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: 0.02em;
+            padding: 10px 30px;
+            border-radius: 8px;
+            border: solid 1px #485DFF;
+
+            &:disabled {
+                color: #A1A8B2;
+                border-color: #A1A8B2;
+            }
+        }
+    }
+}
+
+.box-profissional-editar {
+    margin: 0 0 16px;
+    justify-content: flex-end;
+    border-radius: 0 0 8px 8px;
+
+    .data {
+        width: calc(60% - 140px);
+        color: #485DFF;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+    }
+
+    .acao-editar {
+        width: 100px;
+        text-align: center;
+
+        button {
+            color: #485DFF;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+    }
+}
+
+.box-paciente-editar {
+
+    margin: 0 0 16px;
+    padding: 16px 40px !important;
+
+    .editar {
+        color: #485DFF;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .nome {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+
+            span {
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+        }
+
+        .acao {
+            text-align: right;
+
+            button {
+                font-size: 13px;
+                font-weight: 500;
+                letter-spacing: 0.02em;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 740px) {
+    .box-profissional {
+        .profissional {
+            width: calc(100% - 110px);
+            margin-bottom: 20px;
+        }
+
+        .endereco {
+            width: calc(100% - 60px);
+        }
+
+        .btn-agendar {
+            margin-top: 20px;
+        }
+    }
+
+    .box-profissional-editar {
+        justify-content: space-between;
+
+        .data {
+            width: calc(100% - 120px);
+        }
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .box-profissional {
+        .img {
+            width: 50px;
+            padding-right: 5px;
+
+            img {
+                max-width: 100%;
+            }
+        }
+
+        .profissional {
+            width: calc(100% - 75px);
+        }
+
+        .endereco {
+            .avaliacoes {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        .acao {
+            width: 100%;
+            order: -2;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+// ::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline {
+//     background-color: white;
+//     color: white;
+//     border-radius: 10px;
+//     height: 60px;
+
+// }
+
+.mat-button-toggle-appearance-standard {
+    background-color: transparent;
+    color: black;
+}
+
+.mat-button-toggle-checked {
+    background-color: #485DFF;
+    color: white;
+}
+
+:host .mat-button-toggle-group {
+    border-radius: 8px !important;
+}
+
+.range {
+
+    color: #101828;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin: 0 0 16px;
+    display: block;
+
+}
+
+.box-input {
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0px 8px 120px -16px #BAC4CE;
+
+    input {
+        color: #282828;
+        width: calc(100% - 48px);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0.02em;
+        border: none;
+        border-radius: 8px;
+        padding: 18px 24px;
+    }
+}
+
+
+
+//  formulário usuário
+
+.info-atendimento-online {color: #485dff; background: rgb(72, 93, 255, 0.08);}
+#informacoes-paciente {
+    padding: 32px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0px 12px 24px -12px rgba(0, 0, 0, 0.08);
+
+    .txt {
+        color: #101828;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.2em;
+        margin: 0 0 24px;
+    }
+
+    .opcoes {
+        margin: 0 0 16px;
+
+        mat-radio-button {
+            color: #828282;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+            padding: 14px 32px;
+            margin: 0 16px 16px 0;
+            border-radius: 8px;
+            background: #F2F3F8;
+
+            &.mat-radio-checked {
+                ::ng-deep .mat-radio-label-content {
+                    color: #485DFF;
+                }
+            }
+        }
+    }
+
+    h2 {
+        color: #485DFF;
+        font-size: 20px;
+        font-weight: 500;
+        margin: 32px 0;
+        letter-spacing: 0.02em;
+    }
+
+    mat-form-field {
+        width: calc(100% - 48px);
+        margin: 0 0 24px;
+        padding: 5px 24px;
+        border-radius: 4px;
+        border: 1px solid #A1A8B2;
+        box-shadow: 0px 8px 120px -16px #BAC4CE;
+
+        ::ng-deep .mat-form-field-underline {
+            display: none;
+        }
+
+        input {
+            color: #101828;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 19px;
+            letter-spacing: 0.02em;
+        }
+    }
+
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+        padding-bottom: 0.5em;
+    }
+
+    .formulario {
+        display: flex;
+        justify-content: space-between;
+
+        .form-a,
+        .form-b {
+            width: 48%;
+        }
+
+        .form-c {
+            width: 75%;
+        }
+
+        .form-d {
+            width: 22%;
+        }
+    }
+
+    .aceito {
+        color: #707070;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
+        margin: 0 0 40px;
+    }
+
+    .acoes {
+        text-align: right;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    #informacoes-paciente {
+        .formulario {
+            .form-c {
+                width: 70%;
+            }
+
+            .form-d {
+                width: 27%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #informacoes-paciente {
+        .formulario {
+            flex-wrap: wrap;
+
+            .form-a,
+            .form-b,
+            .form-c,
+            .form-d {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.avatar-upload {
+    position: relative;
+    max-width: 150px;
+    margin: 20px auto 10px;
+  }
+  
+  
+  .avatar-upload .avatar-edit {
+    position: absolute;
+    right: 19px;
+    z-index: 1;
+    top: 13px;
+  }
+  
+  .avatar-upload .avatar-edit input {
+    display: none;
+  }
+  
+  .avatar-upload .avatar-edit .custom-label {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0;
+    border-radius: 100%;
+    background: #3efc78;
+    border: 1px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .avatar-upload .avatar-edit .upload-image {
+    background: #3efc78;
+  }
+  
+  .avatar-upload .avatar-edit .remove-image {
+    background: #E91E63;
+  }
+  
+  .avatar-upload .avatar-edit .custom-label:hover {
+    opacity: 1;
+  }
+  
+  .avatar-upload .avatar-edit .custom-label:after {
+    position: absolute;
+    text-align: center;
+    margin: auto;
+    top: 8px;
+    right: 0;
+    left: 2px;
+    width: 18px;
+  }
+  
+  .avatar-upload .avatar-edit .upload-image:after {
+    font-family: 'Material Icons';
+    content: "create";
+  }
+  
+  .avatar-upload .avatar-edit .remove-image:after {
+    font-family: 'Material Icons';
+    content: "close";
+    left: 0px !important;
+  }
+  
+  
+  .avatar-upload .avatar-preview {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 12px solid #fff;
+    -webkit-box-shadow: 0 0 45px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 45px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.2);
+  }
+  
+  .avatar-upload .avatar-preview>div {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }

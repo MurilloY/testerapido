@@ -1,0 +1,95 @@
+<div id="header-etapas-ghost" *ngIf="fixedHeader"></div>
+<div [class.fixedHeader]="fixedHeader">
+    <header id="header-etapas" [class.hasNav]="menu">
+        <div class="header">
+            <div class="logo">
+                <a href="#">
+                    <img src="assets/images/logo-fisiomart.svg" alt="">
+                </a>
+            </div>
+
+            <div class="home" *ngIf="showBtnHome">
+                <button mat-button>
+                    <img src="assets/images/icone-home.svg" alt="">
+                </button>
+            </div>
+
+            <nav class="nav-site" *ngIf="menu">
+                <ul>
+                    <li><button mat-button class="main-nav active">Minha consulta</button></li>
+                    <li><button mat-button class="main-nav">Profissionais da Saúde</button></li>
+                </ul>
+            </nav>
+
+            <div class="etapas" *ngIf="showProgress">
+                <div class="etapa" [ngClass]="{'selected': progress >= 0}">
+                    <div class="num">1</div>
+                    <div class="descricao">Modalidade</div>
+                </div>
+                <div class="etapa" [ngClass]="{'selected': progress >= 20}">
+                    <div class="num">2</div>
+                    <div class="descricao">Especialidade</div>
+                </div>
+                <!-- <div class="etapa" [ngClass]="{'selected': progress >= 30}">
+                    <div class="num">3</div>
+                    <div class="descricao">Profissional</div>
+                </div> -->
+                <div class="etapa" [ngClass]="{'selected': progress >= 40}">
+                    <div class="num">3</div>
+                    <div class="descricao">Data e médico</div>
+                </div>
+                <div class="etapa" [ngClass]="{'selected': progress >= 60}">
+                    <div class="num">4</div>
+                    <div class="descricao">Paciente</div>
+                </div>
+                <div class="etapa" [ngClass]="{'selected': progress >= 80}">
+                    <div class="num">5</div>
+                    <div class="descricao">Finalizar</div>
+                </div>
+            </div>
+
+            <div class="close" *ngIf="showBtnClose">
+                <button mat-button (click)="closeDialog()"><span class="material-symbols-outlined">close</span></button>
+            </div>
+
+            <div class="acoes" *ngIf="showBtnNotification || showUser || menu">
+                <div class="nav-site-mobile" *ngIf="menu">
+                    <button mat-icon-button [matMenuTriggerFor]="navMobile">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    
+                    <mat-menu #navMobile="matMenu">
+                        <button mat-menu-item>Minha consulta</button>
+                        <button mat-menu-item>Profissionais da Saúde</button>
+                    </mat-menu>
+                </div>
+
+                <div class="notificacao has-notification" *ngIf="showBtnNotification">
+                    <button mat-button class="main-nav notifications">
+                        <span class="material-symbols-outlined">notifications_active</span>
+                        <span class="alert-notification"></span>
+                    </button>
+                </div>
+                
+                <div class="usuario" *ngIf="showUser">
+                    <span class="nome">Cássia</span>
+                    
+                    <div class="acao">    
+                        <button mat-button [matMenuTriggerFor]="navAccount" class="acao-usuario">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </button>
+                        <mat-menu #navAccount="matMenu">
+                            <button mat-menu-item>Meu perfil</button>
+                            <button mat-menu-item>Configurações</button>
+                            <button mat-menu-item>Integrações</button>
+                            <button mat-menu-item>Notificações</button>
+                            <button mat-menu-item>Sair</button>
+                        </mat-menu>     
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+</div>

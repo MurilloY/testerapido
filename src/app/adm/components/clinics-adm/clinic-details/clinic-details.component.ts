@@ -132,6 +132,10 @@ export class ClinicDetailsComponent implements OnInit {
     });
   }
 
+  delete(){
+    
+  }
+
   goToNext(route: string) {
 
 

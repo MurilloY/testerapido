@@ -1,0 +1,101 @@
+<app-header-agendamento [showBtnClose]="true" [showInfo]="false" (closeEvent)="onDismiss()"></app-header-agendamento>>
+
+<section class="container container2">
+
+    <!-- Início Etapa 1 -->
+    <ng-container *ngIf="etapa == 1">
+
+        <h1 class="titulo-acao">Informações do Agendamento</h1>
+
+        <div class="agendamento-detalhes">
+            <div class="detalhes">
+                <h2>Dr(a). {{appointment?.professional?.prof_name}}</h2>
+                <p>A consulta está agendada conforme informações listadas abaixo</p>
+                <ul>
+                    <li>
+                        <span><img src="assets/images/icone-calendario.svg" alt=""></span> 
+                        {{appointment?.appointment?.date| date:'dd/MM/yyyy'}}, às {{appointment?.appointment?.start_time}}
+                    </li>
+                    <!-- <li>
+                        <span><img src="assets/images/icone-localizacao.svg" alt=""></span> 
+                        Av. Presidente Getúlio Vargas, 1080 &bull; Martinópolis
+                    </li> -->
+                </ul>
+            </div>
+            <div class="detalhes">
+                <h2>{{appointment?.pacient?.pc_name}}</h2>
+                <p>O paciente será notificado pelos contatos listados abaixo</p>
+
+                <ul>
+                    <li>
+                        <span><img src="assets/images/icone-email.svg" alt=""></span> 
+                        {{appointment?.pacient?.pc_email}}
+                    </li>
+                    <li>
+                        <span><img src="assets/images/icone-celular.svg" alt=""></span> 
+                        {{appointment?.pacient?.pc_phone}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="acao-cancelamento">
+            <p class="txt">Deseja realmente cancelar está consulta?</p>
+            <div class="btn-continuar">
+                <button mat-button class="btn-cancelar" (click)="openAlertDialog()">
+                    Cancelar agendamento
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <!-- Fim Etapa 1 -->
+
+    <!-- Início Etapa 2 -->
+    <ng-container *ngIf="etapa == 2">
+        <form [formGroup]="formQuestions">
+
+        <h1 class="titulo-acao">Cancelar consulta</h1>
+
+        <mat-card>
+            <mat-card-content>
+                <h2 class="titulo-detalhes">Para melhorar o atendimento, precisamos saber o motivo do cancelamento</h2>
+
+                <mat-radio-group formControlName="cq_id">
+                <ul class="lista-detalhes-opcoes">
+                    <div *ngFor="let question of questions">
+                        <li>
+                            <mat-radio-button [value]="question.cq_id">{{question.cq_name}}</mat-radio-button>
+                        </li>
+                    </div>
+                    <li>
+                        <mat-radio-button value="6zNeW5FtPAI=">Outros</mat-radio-button>
+                    </li>
+                </ul>
+                </mat-radio-group>
+                <div *ngIf="formQuestions.value.cq_id== '6zNeW5FtPAI='">
+                    <mat-form-field appearance="outline" style="width: 100%;" >
+                            <textarea matInput formControlName="question_text" rows="10" placeholder="Descreva outros motivos"></textarea>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <div class="acao-cancelamento">
+            <p></p>
+            <div class="btn-continuar">
+                <button mat-button class="btn-voltar" (click)="alternaEtapa()">
+                    <span class="material-symbols-outlined">chevron_left</span> Voltar
+                </button>
+                <button mat-button class="btn-cancelar" (click)="confirmClick()">
+                    Cancelar agendamento
+                </button>
+            </div>
+        </div>
+    </form>
+
+    </ng-container>
+    <!-- Fim Etapa 2 -->
+
+</section>
+
+<!-- <app-footer></app-footer> -->

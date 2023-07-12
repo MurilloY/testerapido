@@ -18,6 +18,7 @@ export class HeaderNovaConsultaComponent implements OnInit {
   @Input() fixedHeader: boolean = true;
   @Input() menu: boolean = false;
   @Input() dialogVersion: number = 0;
+  @Input() logo?: string;
 
   @Output() closeEvent = new EventEmitter<string>();
 

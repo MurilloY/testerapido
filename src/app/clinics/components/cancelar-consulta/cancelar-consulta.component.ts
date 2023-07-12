@@ -23,6 +23,7 @@ export class CancelarConsultaComponent implements OnInit {
 
   formQuestions: FormGroup;
   cq_id: string
+  clinic: any
 
   usersystem: any;
 
@@ -34,7 +35,7 @@ export class CancelarConsultaComponent implements OnInit {
     public dialogRef: MatDialogRef<CancelarConsultaComponent>
   ) { 
     this.getAppointmentInfo(data['consulta']['app_id'])
-    console.log(data)
+    this.clinic = data["clinic"]
 
     this.formQuestions = new FormGroup({
 

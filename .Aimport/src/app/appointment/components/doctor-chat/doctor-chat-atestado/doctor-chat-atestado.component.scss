@@ -1,0 +1,45 @@
+.expired {
+    color: red;
+}
+
+.receitas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 12px;
+    padding: 20px 25px;
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+
+    .info {width: calc(100% - 500px); font-size: 14px;}
+    .data {
+        width: 140px;
+        font-size: 15px;
+        letter-spacing: 0.02em;
+        span {
+            margin: 0 0 0 2px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    }
+    .profissional {
+        width: 220px;
+        color: #202124;
+        font-size: 15px;
+        letter-spacing: 0.02em;
+    }
+    .btn {
+        width: 40px;
+        margin: 0 0 0 10px;
+        img {vertical-align: middle; opacity: 0.5;}
+        .cancelar {color: #FF0E2B;}
+    }
+}
+
+.paginas {
+    text-align: center; 
+    margin-top: 35px;
+    ul {margin: 0; padding: 0;}
+}

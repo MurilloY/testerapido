@@ -1,0 +1,99 @@
+#informacoes-paciente {
+    padding: 32px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0px 12px 24px -12px rgba(0, 0, 0, 0.08);
+
+    .txt {
+        color: #101828;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.2em;
+        margin: 0 0 24px;
+    }
+
+    .opcoes {
+        margin: 0 0 16px;
+        
+        mat-radio-button {
+            color: #828282;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+            padding: 14px 32px;
+            margin: 0 16px 16px 0;
+            border-radius: 8px;
+            background: #F2F3F8;
+            
+            &.mat-radio-checked {
+                ::ng-deep .mat-radio-label-content {color: #485DFF;}
+            }
+        }
+    }
+
+    h2 {
+        color: #485DFF;
+        font-size: 20px;
+        font-weight: 500;
+        margin: 32px 0;
+        letter-spacing: 0.02em;
+    }
+
+    mat-form-field {
+        width: calc(100% - 48px);
+        margin: 0 0 24px;
+        padding: 5px 24px;
+        border-radius: 4px;
+        border: 1px solid #A1A8B2;
+        box-shadow: 0px 8px 120px -16px #BAC4CE;
+
+        ::ng-deep .mat-form-field-underline {
+            display: none;
+        }
+
+        input {
+            color: #101828;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 19px;
+            letter-spacing: 0.02em;
+        }
+    }
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {padding-bottom: 0.5em;}
+
+    .formulario {
+        display: flex;
+        justify-content: space-between;
+
+        .form-a, .form-b {width: 48%;}
+        .form-c {width: 75%;}
+        .form-d {width: 22%;}
+    }
+
+    .aceito {
+        color: #707070;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
+        margin: 0 0 40px;
+    }
+
+    .acoes {text-align: right;}
+}
+
+@media screen and (max-width: 730px){
+    #informacoes-paciente {
+        .formulario {
+            .form-c {width: 70%;}
+            .form-d {width: 27%;}
+        }
+    }
+}
+@media screen and (max-width: 600px){
+    #informacoes-paciente {
+        .formulario {
+            flex-wrap: wrap;
+            .form-a, .form-b, .form-c, .form-d {width: 100%;}
+        }
+    }
+}

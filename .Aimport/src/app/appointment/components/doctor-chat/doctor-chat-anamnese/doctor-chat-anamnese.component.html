@@ -1,0 +1,42 @@
+<div class="container container2">
+    <div class="prontuario-informacoes">
+        <div style="display: flex; flex-direction: row; justify-content: space-between;" class="subtitulo">
+            <h2>Anamnese</h2>
+            <div class="btn" *ngIf="participant === 1">
+                <button mat-button class="btn-padrao" (click)="addAnamense()">Nova Anamenese</button>
+            </div>
+        </div>
+        <div class="receitas"
+            *ngFor="let item of sortedData | paginate: { itemsPerPage: totalItens, currentPage: p }; let idx = index">
+            <div class="info">Anamnese {{ getAnamneseNumber(idx) }}</div>
+            <div class="data">
+                {{ item.date | date: 'dd/MM/yyyy' }}
+            </div>
+            <div class="profissional">
+                {{ item.clinic_name | slice:0:18}}...
+            </div>
+            <div class="btn">
+                <button mat-button (click)="openAlertDialog(item)" matTooltip="Visualizar anamnese">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <!-- <img src="assets/images/icone-editar2.svg" alt=""> -->
+                </button>
+            </div>
+        </div>
+
+        <div class="paginacao" *ngIf="sortedData.length > 0" style="text-align: center;">
+
+            <div class="exibindo">
+                <mat-menu #total="matMenu">
+                    <button mat-menu-item (click)="totalItens = 4">4</button>
+                    <button mat-menu-item (click)="totalItens = 10">10</button>
+                    <button mat-menu-item (click)="totalItens = 50">50</button>
+                    <button mat-menu-item (click)="totalItens = 100">100</button>
+                </mat-menu>
+            </div>
+
+            <div class="paginas">
+                <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

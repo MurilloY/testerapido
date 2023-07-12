@@ -1,0 +1,19 @@
+.expired {
+    color: red;
+}
+
+@keyframes piscar {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .piscar {
+    animation: piscar 1.5s ease-in-out infinite;
+  }

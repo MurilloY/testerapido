@@ -1,0 +1,101 @@
+<div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">    
+
+    <h2 mat-dialog-title>{{dialogTitle}}</h2>
+  
+    <form [formGroup]="formAddLeads" >
+
+  
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput type="text" placeholder="Nome do lead" formControlName="lead_name">
+                <mat-error *ngIf="checkError('lead_name', 'required')">
+                    Campo obrigatório
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="text" placeholder="Email do lead" formControlName="lead_email">
+                <mat-error *ngIf="checkError('lead_email', 'required')">
+                Campo obrigatório
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Celular</mat-label>
+                <input matInput type="text" placeholder="Celular do lead" formControlName="lead_cellphone" [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 0 0000-0000">
+                <mat-error *ngIf="checkError('lead_cellphone', 'required')">
+                Campo obrigatório
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" fxLayout.xs="column">
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Estado</mat-label>
+                <mat-select matNativeControl formControlName="lead_state"
+                    (selectionChange)="selectedState($event.value)" required>
+                    <mat-option value="AC">Acre</mat-option>
+                    <mat-option value="AL">Alagoas</mat-option>
+                    <mat-option value="AP">Amapá</mat-option>
+                    <mat-option value="AM">Amazonas</mat-option>
+                    <mat-option value="BA">Bahia</mat-option>
+                    <mat-option value="CE">Ceará</mat-option>
+                    <mat-option value="DF">Distrito Federal</mat-option>
+                    <mat-option value="ES">Espírito Santo</mat-option>
+                    <mat-option value="GO">Goiás</mat-option>
+                    <mat-option value="MA">Maranhão</mat-option>
+                    <mat-option value="MT">Mato Grosso</mat-option>
+                    <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                    <mat-option value="MG">Minas Gerais</mat-option>
+                    <mat-option value="PA">Pará</mat-option>
+                    <mat-option value="PB">Paraíba</mat-option>
+                    <mat-option value="PR">Paraná</mat-option>
+                    <mat-option value="PE">Pernambuco</mat-option>
+                    <mat-option value="PI">Piauí</mat-option>
+                    <mat-option value="RJ">Rio de Janeiro</mat-option>
+                    <mat-option value="RN">Rio Grande do Norte</mat-option>
+                    <mat-option value="RS">Rio Grande do Sul</mat-option>
+                    <mat-option value="RO">Rondônia</mat-option>
+                    <mat-option value="RR">Roraima</mat-option>
+                    <mat-option value="SC">Santa Catarina</mat-option>
+                    <mat-option value="SP">São Paulo</mat-option>
+                    <mat-option value="SE">Sergipe</mat-option>
+                    <mat-option value="TO">Tocantins</mat-option>
+                </mat-select>
+                <mat-error *ngIf="checkError('lead_state', 'required')">
+                    Campo requerido
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Cidade</mat-label>
+                <mat-select placeholder="Cidade do lead" formControlName="lead_city">
+                    <mat-option *ngFor="let item of cities" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="checkError('lead_city', 'required')">
+                    Campo requerido
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+  
+        <div mat-dialog-actions style="text-align: right;">
+            <button mat-raised-button color="primary" type="submit" (click)="onSubmit();">{{ dialogButton }}</button>
+            
+            <span class="spacer"></span>
+            <button mat-button (click)="onDismiss()">Cancelar</button>
+        </div>
+  
+    </form>
+  
+  
+  </div>

@@ -21,13 +21,15 @@ export class AddPacientComponent implements OnInit {
 
   user: any;
   clinic_subdomain: string;
-  clinic: Clinic;
+  clinic?: Clinic;
 
   CadastroPacienteForm: FormGroup;
 
   insurances: Insurance[];
 
   imageUrl: any = "/assets/images/user.png";
+  photopatient: string = '/assets/images/user.png';
+
 
   photodefault = true;
   photobase64: any;
@@ -52,43 +54,45 @@ export class AddPacientComponent implements OnInit {
 
   userAccomp: User;
 
+  showErrorCPFTitular: boolean = false;
+  showFormTitular: boolean = false;
+
 
   constructor(public dialogRef: MatDialogRef<AddPacientComponent>, private clinicService: ClinicService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private cd: ChangeDetectorRef
-    ) {
+  ) {
 
-      this.getJsonCities();
+    this.getJsonCities();
 
-      this.clinic = data['clinic'];
-      console.log(data)
-      console.log("local:", this._locale)
+    this.clinic = data['clinic'];
 
     this.CadastroPacienteForm = new FormGroup({
 
       user_name: new FormControl('', [Validators.required]),
       birth_data: new FormControl('', [Validators.required]),
-      user_rg: new FormControl('', [Validators.required]),
-      user_cpf: new FormControl('', [Validators.required]),
+      user_rg: new FormControl(),
+      user_cpf: new FormControl({ value: '', disabled: true }, [Validators.required]),
       ua_cep: new FormControl('', [Validators.required]),
+      user_gender: new FormControl('', [Validators.required]),
       ua_uf: new FormControl('', [Validators.required]),
       ua_city: new FormControl('', [Validators.required]),
       ua_district: new FormControl('', [Validators.required]),
       ua_name_street: new FormControl('', [Validators.required]),
       ua_house_number: new FormControl('', [Validators.required]),
-      companion: new FormControl(),
-      user_phone: new FormControl('', [Validators.required]),
+      companion: new FormControl('', [Validators.required]),
+      health_plan: new FormControl(),
+      user_phone: new FormControl(),
       user_email: new FormControl('', [Validators.email]),
       has_insurance: new FormControl('', [Validators.required]),
-      insurance: new FormControl(),
-      user_gender: new FormControl('', [Validators.required]),
-      user_photo: new FormControl(this.photobase64),
+      ins_id: new FormControl(),
+      //of_age: new FormControl('', [Validators.required]),
 
-      titular_gender: new FormControl(),
       titular_same_address: new FormControl(),
       titular_cpf: new FormControl(),
       titular_name: new FormControl(),
+      titular_gender: new FormControl(),
       titular_birthdate: new FormControl(),
       titular_rg: new FormControl(),
       titular_cep: new FormControl(),
@@ -103,7 +107,7 @@ export class AddPacientComponent implements OnInit {
 
     });
 
-    if(data['pc_id'] != null ){
+    if (data['pc_id'] != null) {
 
       this.showCpf = false;
       this.getPacientClinica(data['pc_id'])
@@ -116,7 +120,7 @@ export class AddPacientComponent implements OnInit {
   ngOnInit(): void {
 
     this.getInsurances();
-    
+
   }
 
   onDismiss(): void {
@@ -135,7 +139,7 @@ export class AddPacientComponent implements OnInit {
 
   }
 
-  
+
 
 
   selectedState(state: string) {
@@ -171,7 +175,7 @@ export class AddPacientComponent implements OnInit {
 
     // When file uploads set it to file formcontrol
     this.CadastroPacienteForm.patchValue({
-      user_photo:  this.photobase64
+      user_photo: this.photobase64
     });
 
   }
@@ -255,7 +259,7 @@ export class AddPacientComponent implements OnInit {
 
 
     }
-    else{
+    else {
 
       //Validators
       this.CadastroPacienteForm.controls['titular_name'].setValidators(Validators.required);
@@ -282,13 +286,59 @@ export class AddPacientComponent implements OnInit {
     console.log(event.value);
   }
 
-  radioChangeOfAge(event: MatRadioChange){
-    if(event.value == '1'){
+  radioChangeTitularAddress(event: MatRadioChange) {
+
+    if (event.value == '1') {
+
+      this.CadastroPacienteForm.controls['titular_cep'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_uf'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_city'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_district'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_name_street'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_house_number'].setValue(null);
+
+
+      this.CadastroPacienteForm.controls['titular_cep'].setValidators(null);
+      this.CadastroPacienteForm.controls['titular_cep'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_uf'].setValidators(null);
+      this.CadastroPacienteForm.controls['titular_uf'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_city'].setValidators(null);
+      this.CadastroPacienteForm.controls['titular_city'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_district'].setValidators(null);
+      this.CadastroPacienteForm.controls['titular_district'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_name_street'].setValidators(null);
+      this.CadastroPacienteForm.controls['titular_name_street'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_house_number'].setValidators(null);
+      this.CadastroPacienteForm.controls['titular_house_number'].updateValueAndValidity();
+
+    }
+    else {
+
+      this.CadastroPacienteForm.controls['titular_cep'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['titular_cep'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_uf'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['titular_uf'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_city'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['titular_city'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_district'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['titular_district'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_name_street'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['titular_name_street'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_house_number'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['titular_house_number'].updateValueAndValidity();
+
+
+    }
+
+  }
+
+  radioChangeOfAge(event: MatRadioChange) {
+    if (event.value == '1') {
 
       this.CadastroPacienteForm.controls['companion'].setValue('1');
       this.CadastroPacienteForm.controls['companion'].disable();
     }
-    else{
+    else {
       this.CadastroPacienteForm.controls['companion'].enable();
     }
   }
@@ -296,18 +346,18 @@ export class AddPacientComponent implements OnInit {
   radioChangeInsurance(event: MatRadioChange) {
     if (event.value == '1') {
 
-      this.CadastroPacienteForm.controls['insurance'].setValidators(Validators.required);
-      this.CadastroPacienteForm.controls['insurance'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['ins_id'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['ins_id'].updateValueAndValidity();
     }
     else {
-      this.CadastroPacienteForm.controls['insurance'].setValidators(null);
-      this.CadastroPacienteForm.controls['insurance'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['ins_id'].setValidators(null);
+      this.CadastroPacienteForm.controls['ins_id'].updateValueAndValidity();
     }
   }
 
   getInsurances() {
 
-    this.clinicService.getInsurancesByClinic(this.clinic.clinic_id).subscribe(
+    this.clinicService.getInsurancesByClinic(this.clinic?.clinic_id!).subscribe(
       data => {
         console.log(data)
         this.insurances = data.insurances;
@@ -323,18 +373,20 @@ export class AddPacientComponent implements OnInit {
   enviarDados() {
     let data = this.CadastroPacienteForm.getRawValue();
 
-    data.clinic_id = this.clinic.clinic_id;
-    data.photoisdefault = this.photodefault
-    data.birth_data = this.convertToDb(new Date(this.CadastroPacienteForm.value.birth_data))
-
     if (this.CadastroPacienteForm.valid) {
+
+      data.clinic_id = this.clinic?.clinic_id;
+      data.photoisdefault = this.photodefault
+      data.birth_data = this.convertToDb(new Date(this.CadastroPacienteForm.value.birth_data))
+      data.user_photo = 'users/user.png';
+
       this.clinicService.insertPacient(data).subscribe(
         data => {
           console.log(data);
           this.dialogRef.close(true);
         },
         err => {
-  
+
         }
       );
     }
@@ -346,7 +398,6 @@ export class AddPacientComponent implements OnInit {
   }
 
   convertToDb(date: Date) {
-    console.log(date)
     return date.toISOString().split('T')[0];
   }
 
@@ -360,10 +411,10 @@ export class AddPacientComponent implements OnInit {
       if (cpf.isValid(numberCPf)) {
         this.showErrorCPF = false;
 
-        this.clinicService.getUserCPFVerify(this.clinic.clinic_id, numberCPf).subscribe(data => {
+        this.clinicService.getUserCPFVerify(this.clinic?.clinic_id!, numberCPf).subscribe(data => {
 
           console.log("Oi")
-          
+
           this.showCpf = false;
           this.showForm = true
 
@@ -441,6 +492,129 @@ export class AddPacientComponent implements OnInit {
     );
   }
 
+  onKeypressEventCPFTitular(event: any) {
+
+    let numberCPf = event.target.value;
+
+    if (numberCPf.length == 14) {
+
+      if (cpf.isValid(numberCPf)) {
+
+        if (numberCPf == this.CadastroPacienteForm.controls['user_cpf'].value) {
+
+          this.showErrorCPFTitular = true;
+          this.errorCPFMsg = "O CPF do titular não pode ser o mesmo do dependente";
+
+        }
+        else {
+
+          this.showErrorCPFTitular = false;
+
+          this.clinicService.getUserCPF(numberCPf).subscribe(data => {
+
+            this.showFormTitular = true;
+
+
+            this.userAccomp = data.user;
+
+            console.log(data.user)
+
+            this.CadastroPacienteForm.controls['titular_name'].setValue(data.user.user_name);
+            this.CadastroPacienteForm.controls['titular_gender'].setValue(data.user.user_gender);
+            this.CadastroPacienteForm.controls['titular_phone'].setValue(data.user.user_phone);
+            this.CadastroPacienteForm.controls['titular_email'].setValue(data.user.user_email);
+            this.CadastroPacienteForm.controls['titular_birthdate'].setValue(data.user.birth_data);
+            this.CadastroPacienteForm.controls['titular_rg'].setValue(data.user.user_rg);
+            this.CadastroPacienteForm.controls['titular_cpf'].setValue(data.user.user_cpf);
+            this.CadastroPacienteForm.controls['titular_cep'].setValue(data.user.address.ua_cep);
+            this.CadastroPacienteForm.controls['titular_uf'].setValue(data.user.address.ua_uf);
+
+            if (data.user.address.ua_uf != null) {
+
+              this.CadastroPacienteForm.controls['titular_same_address'].setValue('0');
+            }
+            else {
+              this.CadastroPacienteForm.controls['titular_same_address'].setValue('1');
+
+            }
+
+            this.selectedStateTitular(data.user.address.ua_uf);
+
+            this.CadastroPacienteForm.controls['titular_city'].setValue(data.user.address.ua_city);
+            this.CadastroPacienteForm.controls['titular_district'].setValue(data.user.address.ua_district);
+            this.CadastroPacienteForm.controls['titular_name_street'].setValue(data.user.address.ua_name_street);
+            this.CadastroPacienteForm.controls['titular_house_number'].setValue(data.user.address.ua_house_number);
+
+
+
+
+
+          },
+            err => {
+
+              if (err.status == 404) {
+
+                this.showFormTitular = true;
+                this.showErrorCPFTitular = false;
+
+                this.CadastroPacienteForm.controls['titular_name'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_gender'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_phone'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_email'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_same_address'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_birthdate'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_rg'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_cep'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_uf'].setValue(null);
+
+                this.CadastroPacienteForm.controls['titular_same_address'].setValue('0');
+
+
+
+                this.CadastroPacienteForm.controls['titular_city'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_district'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_name_street'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_house_number'].setValue(null);
+
+              }
+
+
+
+            })
+
+        }
+
+
+      }
+      else {
+        this.showErrorCPFTitular = true;
+        this.errorCPFMsg = "CPF inválido";
+      }
+    }
+    else {
+      this.showErrorCPFTitular = true;
+      this.showFormTitular = false;
+      this.errorCPFMsg = "Digite um CPF válido";
+
+      this.CadastroPacienteForm.controls['titular_name'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_gender'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_phone'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_email'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_same_address'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_birthdate'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_rg'].setValue(null);
+
+      this.CadastroPacienteForm.controls['titular_cep'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_uf'].setValue(null);
+
+
+      this.CadastroPacienteForm.controls['titular_city'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_district'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_name_street'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_house_number'].setValue(null);
+    }
+  }
+
   onKeypressEventCPFacc(event: any) {
 
     let numberCPf = event.target.value;
@@ -454,14 +628,14 @@ export class AddPacientComponent implements OnInit {
 
           if (data.user.user_cpf == numberCPf) {
             this.userAccomp = data.user;
-            
+
             this.CadastroPacienteForm.controls['titular_name'].setValue(data.user.user_name)
-            this.CadastroPacienteForm.controls['titular_same_address'].setValue(data.user.address === null? '1' : '0');
+            this.CadastroPacienteForm.controls['titular_same_address'].setValue(data.user.address === null ? '1' : '0');
             this.CadastroPacienteForm.controls['titular_birthdate'].setValue(data.user.birth_data);
             this.CadastroPacienteForm.controls['titular_rg'].setValue(data.user.user_rg);
             this.CadastroPacienteForm.controls['titular_cpf'].setValue(data.user.user_cpf);
             this.CadastroPacienteForm.controls['titular_cep'].setValue(data.user.address.ua_cep);
-            
+
             this.CadastroPacienteForm.controls['titular_uf'].setValue(data.user.address.ua_uf);
             this.CadastroPacienteForm.controls['titular_phone'].setValue(data.user.user_phone);
             this.CadastroPacienteForm.controls['titular_email'].setValue(data.user.user_email);
@@ -484,7 +658,7 @@ export class AddPacientComponent implements OnInit {
     }
   }
 
-  getPacientClinica(pc_id:string) {
+  getPacientClinica(pc_id: string) {
     this.clinicService.getPacientClinic(pc_id).subscribe(
       data => {
 
@@ -512,15 +686,17 @@ export class AddPacientComponent implements OnInit {
 
         this.selectedState(data.patient_clinic.ua_uf);
 
-        this.CadastroPacienteForm.controls['companion'].setValue(data.patient_clinic.companion === null? '0' : '1');
-        this.CadastroPacienteForm.controls['has_insurance'].setValue(data.patient_clinic.ins_id === null? '0' : '1');
-        this.CadastroPacienteForm.controls['insurance'].setValue(data.patient_clinic.ins_id);
+        this.CadastroPacienteForm.controls['companion'].setValue(data.patient_clinic.companion === null ? '0' : '1');
+        this.CadastroPacienteForm.controls['has_insurance'].setValue(data.patient_clinic.ins_id === null ? '0' : '1');
+        this.CadastroPacienteForm.controls['ins_id'].setValue(data.patient_clinic.ins_id);
 
-        if (data.patient_clinic.companion != null){
+        if (data.patient_clinic.companion != null) {
 
           this.selectedStateTitular(data.patient_clinic.companion.address.ua_uf);
 
-          
+          this.showFormTitular = true;
+
+
           this.CadastroPacienteForm.controls['titular_cpf'].setValue(data.patient_clinic.companion?.user_cpf);
           this.CadastroPacienteForm.controls['titular_gender'].setValue(data.patient_clinic.companion?.user_gender);
           this.CadastroPacienteForm.controls['titular_name'].setValue(data.patient_clinic.companion?.user_name);
@@ -540,17 +716,20 @@ export class AddPacientComponent implements OnInit {
 
 
         }
-        
+        else{
+          this.showFormTitular = false;
+        }
+
       },
       err => {
 
       }
 
     );
-  
+
   }
 
-  
+
 
 }
 

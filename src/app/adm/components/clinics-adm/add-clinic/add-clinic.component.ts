@@ -195,18 +195,15 @@ export class AddClinicComponent implements OnInit {
     this.findInvalidControls();
     form.photoisdefault = this.photodefault
 
-    console.log(form)
 
 
     if(this.clinicFormGroup.valid){
 
       form.clinic_logo = this.clinic_logo;
-      console.log('Entrei')
     
 
       if(this.clinic != null){
 
-        console.log('Entrei')
 
         this.admService.updateClinic(this.clinic.clinic_id, form).subscribe(
           data => {
@@ -248,8 +245,6 @@ export class AddClinicComponent implements OnInit {
       else{
         this.admService.insertClinic(form).subscribe(
           data => {
-            console.log("entrei")
-            console.log(form)
   
   
             Swal.fire({

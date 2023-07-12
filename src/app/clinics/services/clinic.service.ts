@@ -313,8 +313,20 @@ export class ClinicService {
     
   }
 
+  getSpecialitiesByCategory2(cat_id: string, token: string): Observable<ReturnSpecialities> {
+    let headerOptions = new HttpHeaders({ 'No-Auth': 'True', 'Authorization': `Bearer ${token}` });
+    return this.http.get<any>(`${environment.api}/specialitycat/${cat_id}`, {headers: headerOptions });
+    
+  }
+
   getRegisterTypes(): Observable<ReturnRegisterTypes> {
     let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'CLINIC' });
+    return this.http.get<any>(`${environment.api}/registers`, {headers: headerOptions });
+    
+  }
+
+  getRegisterTypes2(token: string): Observable<ReturnRegisterTypes> {
+    let headerOptions = new HttpHeaders({ 'No-Auth': 'True', 'Authorization': `Bearer ${token}` });
     return this.http.get<any>(`${environment.api}/registers`, {headers: headerOptions });
     
   }
@@ -325,8 +337,20 @@ export class ClinicService {
     
   }
 
+  getCategories2(token: string): Observable<ReturnCategories> {
+    let headerOptions = new HttpHeaders({ 'No-Auth': 'True', 'Authorization': `Bearer ${token}` });
+    return this.http.get<any>(`${environment.api}/categories`, {headers: headerOptions });
+    
+  }
+
   insertProfessionalVerify(data:any): Observable<any> {
     let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'CLINIC' });
+    return this.http.post<any>(`${environment.api}/profclinic/verify`, data, {headers: headerOptions });
+    
+  }
+
+  insertProfessionalVerify2(data:any, token:string): Observable<any> {
+    let headerOptions = new HttpHeaders({ 'No-Auth': 'True', 'Authorization': `Bearer ${token}`});
     return this.http.post<any>(`${environment.api}/profclinic/verify`, data, {headers: headerOptions });
     
   }
@@ -351,6 +375,12 @@ export class ClinicService {
 
   getProfCPFVerify(clinic_id:string, cpf:string): Observable<ReturnProfessionalCpf> {
     let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'CLINIC' });
+    return this.http.get<any>(`${environment.api}/profclinic/${clinic_id}/cpf/${cpf}`, {headers: headerOptions });
+
+  }
+
+  getProfCPFVerify2(clinic_id:string, cpf:string, token: string): Observable<ReturnProfessionalCpf> {
+    let headerOptions = new HttpHeaders({ 'No-Auth': 'True', 'Authorization': `Bearer ${token}`});
     return this.http.get<any>(`${environment.api}/profclinic/${clinic_id}/cpf/${cpf}`, {headers: headerOptions });
 
   }
@@ -393,6 +423,12 @@ export class ClinicService {
   updatePayment(ap_id:string, data:any): Observable<any> {
     let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'CLINIC' });
     return this.http.put<any>(`${environment.api}/appointmentpayments/update/${ap_id}`, data, {headers: headerOptions });
+
+  }
+
+  updateAppointmentTpid(app_id:string, data:any): Observable<any> {
+    let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'CLINIC' });
+    return this.http.put<any>(`${environment.api}/appointment/update/payment/${app_id}`, data, {headers: headerOptions });
 
   }
 

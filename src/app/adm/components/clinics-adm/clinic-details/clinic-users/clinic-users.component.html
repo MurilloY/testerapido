@@ -116,9 +116,9 @@
 
                         <mat-menu #menu="matMenu">
                             <ng-template matMenuContent let-data="data">
-                                <button mat-menu-item (click)="editUser(data)">
-                                    <mat-icon>edit</mat-icon>
-                                    Editar
+                                <button mat-menu-item (click)="updateStatusUserProfile(data)">
+                                    <mat-icon>delete</mat-icon>
+                                    Desabilitar
                                 </button>
                             </ng-template>
                         </mat-menu>

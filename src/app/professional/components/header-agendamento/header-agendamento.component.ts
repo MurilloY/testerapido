@@ -26,6 +26,7 @@ export class HeaderAgendamentoComponent implements OnInit {
   @Input() consultaPaciente: boolean = false
   @Input() showMenu: boolean = false
   @Input() buttonBack: boolean = false
+  @Input() logo?: string;
 
   validarConta: boolean = false;
   scrollPage: boolean = false;

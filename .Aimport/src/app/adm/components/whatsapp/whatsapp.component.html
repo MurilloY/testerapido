@@ -1,0 +1,59 @@
+<div style="margin-left: 1.5%; margin-right: 1.5%; padding-top: 75px; padding-bottom: 5px;">
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+
+    <div fxLayout="row" fxLayoutAlign=" center" class="border-menu">
+
+
+      <mat-icon class="color-icon" aria-hidden="false">navigate_next</mat-icon>
+
+      <button mat-button>Whatsapp</button>
+
+    </div>
+
+  </div>
+
+
+  <mat-card>
+    <div *ngIf="connected; else connectedSection">
+      <h2>Whatsapp Conectado...</h2>
+      <h3>Conectado como {{formataCell(number)}} ({{name}})</h3>
+      <button mat-raised-button color="primary" (click)="desconectar()">Desconectar</button>
+    </div>
+    
+    <ng-template #connectedSection>
+      <div *ngIf="qr_code === ''">
+        <h2>
+          <span class="blinking">A</span>
+          <span class="blinking">g</span>
+          <span class="blinking">u</span>
+          <span class="blinking">a</span>
+          <span class="blinking">r</span>
+          <span class="blinking">d</span>
+          <span class="blinking">e</span>
+          <span class="blinking">&nbsp;</span>
+          <span class="blinking">u</span>
+          <span class="blinking">m</span>
+          <span class="blinking">&nbsp;</span>
+          <span class="blinking">p</span>
+          <span class="blinking">o</span>
+          <span class="blinking">u</span>
+          <span class="blinking">c</span>
+          <span class="blinking">o</span>
+          <span class="blinking">...</span>
+        </h2>
+      </div>
+    
+      <div *ngIf="qr_code != ''">
+        <h2>Conecte o whatsapp escaneando o Qr Code abaixo</h2>
+        <img [src]="qr_code" style="width: 400px">
+      </div>
+    </ng-template>
+
+
+  </mat-card>
+
+
+
+
+</div>

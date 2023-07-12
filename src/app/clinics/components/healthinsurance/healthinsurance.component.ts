@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Insurance } from '../../returns/insurance_by_clinic';
 import { ClinicService } from '../../services/clinic.service';
 import { AddInsuranceComponent } from './add-insurance/add-insurance.component';
+import { Clinic } from '../../returns/clinic_name.return';
 
 @Component({
   selector: 'app-healthinsurance',
@@ -11,7 +12,7 @@ import { AddInsuranceComponent } from './add-insurance/add-insurance.component';
 })
 export class HealthinsuranceComponent implements OnInit {
 
-  clinic_id?: string
+  clinic?: Clinic
   returnError: boolean = false;
   insurances: Insurance[]
 
@@ -22,6 +23,7 @@ export class HealthinsuranceComponent implements OnInit {
   status: number = 1;
 
   sortDirection: string = 'asc';
+  
 
 
 
@@ -30,7 +32,7 @@ export class HealthinsuranceComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<HealthinsuranceComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private clinicService: ClinicService, private dialog: MatDialog) {
 
     console.log(data)
-    this.clinic_id = data['clinic']['clinic_id']
+    this.clinic = data['clinic']
   }
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class HealthinsuranceComponent implements OnInit {
       maxHeight: '90vh',
       disableClose: true,
       data: {
-        clinic_id: this.clinic_id,
+        clinic_id: this.clinic?.clinic_id,
         insurance: insurance
       }
       
@@ -68,7 +70,7 @@ export class HealthinsuranceComponent implements OnInit {
   }
 
   insuranceByClinic() {
-    this.clinicService.getInsurancesByClinic(this.clinic_id!).subscribe(
+    this.clinicService.getInsurancesByClinic(this.clinic?.clinic_id!).subscribe(
       data => {
         console.log(data)
         this.sortedData = data.insurances
@@ -88,7 +90,7 @@ export class HealthinsuranceComponent implements OnInit {
       maxHeight: '90vh',
       disableClose: true,
       data: {
-        clinic_id: this.clinic_id,
+        clinic_id: this.clinic?.clinic_id,
         insurance: null
       }
     })

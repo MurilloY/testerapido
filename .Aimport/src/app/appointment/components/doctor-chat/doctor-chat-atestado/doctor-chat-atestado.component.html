@@ -1,0 +1,48 @@
+<div class="container container2">
+    <div class="prontuario-informacoes">
+        <div style="display: flex; flex-direction: row; justify-content: space-between;" class="subtitulo">
+            <h2 class="subtitulo">Atestados emitidos</h2>
+            <div class="btn" *ngIf="participant === 1">
+                <button mat-button class="btn-padrao" (click)="newAtestado()">Novo atestado</button>
+            </div>
+        </div>
+
+        <div class="receitas"
+            *ngFor="let item of sortedData | paginate: { itemsPerPage: totalItens, currentPage: p }; let idx = index">
+            <div class="info">Atestado {{ getAtestadoNumber(idx) }}</div>
+            <div class="data" [ngClass]="{'expired': isExpired(item.cert_validity)}">
+                {{ item.cert_date | date: 'dd/MM/yyyy' }}
+                <span class="btn" *ngIf="item.expired">
+                    <img src="assets/images/icone-informacao.svg" alt="" matTooltip="Atestado vencido">
+                </span>
+            </div>
+            <div class="profissional">
+                {{ item.clinic_name | slice:0:18}}...
+            </div>
+            <div class="btn">
+                <button mat-button [matMenuTriggerFor]="navAcao">
+                    <img src="assets/images/icone-editar2.svg" alt="">
+                </button>
+                <mat-menu #navAcao="matMenu">
+                    <button mat-menu-item (click)="openAlertDialog2(item)">Ver atestado</button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <div class="paginacao" *ngIf="sortedData.length > 0">
+
+            <div class="exibindo">
+                <mat-menu #total="matMenu">
+                    <button mat-menu-item (click)="totalItens = 4">4</button>
+                    <button mat-menu-item (click)="totalItens = 10">10</button>
+                    <button mat-menu-item (click)="totalItens = 50">50</button>
+                    <button mat-menu-item (click)="totalItens = 100">100</button>
+                </mat-menu>
+            </div>
+
+            <div class="paginas">
+                <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

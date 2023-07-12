@@ -1,0 +1,193 @@
+<app-header-agendamento></app-header-agendamento>
+
+<section class="page-destaque page-destaque-area-clinica">
+    <div class="container">
+
+        <div class="page-destaque-informacoes">
+            <div class="hello">
+                <img src="assets/images/hello.svg" alt="">
+                Olá, {{user.user_name}}
+            </div>
+            <h1>Seu dia a dia mais <span>prático</span> e <span>eficiente</span><span class="ponto">.</span></h1>
+            <h2>Recursos para gestão da consultas online ou presenciais, cadastro de pacientes e profissionais da saúde.
+            </h2>
+
+            <div class="movimentacoes">
+                <span class="material-symbols-outlined">monitoring</span>
+                Movimentações
+                <span class="bull">&bull;</span>
+                {{today | date: 'd'}} de {{today | date: 'MMMM'}} de {{today | date: 'y'}}
+            </div>
+
+            <div class="informacoes">
+                <div class="box">
+                    <div class="qtd">{{dashes?.appointments_scheduled}}</div>
+                    <div class="info">consultas agendadas</div>
+                </div>
+                <div class="box">
+                    <div class="qtd">{{dashes?.professionales_performed}}</div>
+                    <div class="info">consultas realizadas</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container container2">
+
+    <h1 class="titulo-principal">
+        <span><img src="assets/images/icone-calendario2.svg" alt=""></span>
+        Gestão de consultas agendadas
+    </h1>
+
+    <div id="acoes-principais">
+        <div class="busca">
+            <img src="assets/images/icone-pesquisa.svg" alt="">
+            <input type="text" matInput placeholder="Busque pelo nome do paciente" (keyup)="onKeypressEvent($event)">
+        </div>
+
+        <div class="btn-agendada">
+            <button mat-button class="btn-agendada" style="background: #FF8C00; border-radius: 8px; ">
+                Agendadas {{dashes?.appointments_scheduled}}
+            </button>
+        </div>
+        <div class="btn-encerrada">
+            <button mat-button class="btn-encerrada" style="background: #25D366; border-radius: 8px">
+                Encerradas {{dashes?.professionales_performed}}
+            </button>
+        </div>
+    </div>
+
+
+    <div id="relatorio-opcoes">
+        <div class="abas">
+            <button mat-button (click)="days(0)" [ngClass]="daySelected == 0 ? 'selecionado' : ''">Todas</button>
+            <button mat-button (click)="days(1)" [ngClass]="daySelected == 1 ? 'selecionado' : ''">Hoje</button>
+            <button mat-button (click)="days(7)" [ngClass]="daySelected == 7 ? 'selecionado' : ''">7 dias</button>
+            <button mat-button (click)="days(15)" [ngClass]="daySelected == 15 ? 'selecionado' : ''">15 dias</button>
+            <button mat-button (click)="days(30)" [ngClass]="daySelected == 30 ? 'selecionado' : ''">30 dias</button>
+        </div>
+        <div class="acoes-downloads">
+            <button mat-button>Relatório</button>
+            <button mat-button class="btn-pdf">
+                <img src="assets/images/icone-pdf.svg" alt=""> 
+                PDF
+            </button>
+        </div>
+    </div>
+
+    <div id="relatorio-modo">
+        <p class="resultados"> {{sortedData.length}} resultados encontrados</p>
+        <div class="informacoes">
+            <div class="agendada">
+                <span></span> Agendada
+            </div>
+            <div class="encerrada">
+                <span></span> Encerrada
+            </div>
+        </div>
+    </div>
+
+    <div class="lista-header">
+        <div class="nome" (click)="ordenacao('nome')">
+            Paciente
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'asc'">arrow_upward</span>
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'desc'">arrow_downward</span>
+        </div>
+        <div class="consulta" (click)="ordenacao('data')">
+            Consulta
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'asc'">arrow_upward</span>
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'desc'">arrow_downward</span>
+        </div>
+        <div class="retorno">Tipo</div>
+        <div class="situacao" (click)="ordenacao('status')">
+            Situação
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'asc'">arrow_upward</span>
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'desc'">arrow_downward</span>
+        </div>
+        <div class="atender">Atender</div>
+        <div class="prontuario">Prontuário</div>
+        <div class="acao">Ações</div>
+    </div>
+
+    <div class="lista-item-chamada"
+        *ngFor="let pacient of sortedData | paginate: { itemsPerPage: totalItens, currentPage: p }">
+        <div class="nome">
+            <span class="item">Nome completo: </span>
+            <p class="destaque">{{pacient.pacient.pc_name}}</p>
+            <!-- <p class="informacao">{{pacient.pacient.pacient_birth_data | date: 'dd/MM/yyyy'}} &bull; {{calculateAge(pacient.pacient.pacient_birth_data)}}</p> -->
+        </div>
+        <div class="consulta">
+            <!-- <span class="item">Consulta: </span> -->
+            <p class="destaque">{{pacient.appointment.date | date:'dd/M/yyyy'}}</p>
+            <p class="informacao">{{pacient.appointment.start_time}}</p>
+        </div>
+        <div class="status"
+            [ngClass]="{'online': pacient.appointment.app_type_name === 'Atendimento Online', 'presencial': pacient.appointment.app_type_name === 'Atendimento Presencial'}">
+            <div [className]="pacient.appointment.app_type_name">
+                <button mat-button>
+                    <span class="ponto">&bull;</span>
+                    {{pacient.appointment.app_type_name === 'Atendimento Online' ? 'Online' :
+                    pacient.appointment.app_type_name === 'Atendimento Presencial' ? 'Presencial' :
+                    pacient.appointment.app_type_name}}
+                </button>
+            </div>
+        </div>
+        <div class="status">
+            <div [className]="pacient.appointment.status_name">
+                <button mat-button>
+                    <span class="ponto">&bull;</span>
+                    {{pacient.appointment.status_name}}
+                </button>
+            </div>
+        </div>
+
+        <div class="atender" [style.background-color]="getBackgroundColor(pacient.appointment)"
+            style="border-radius: 8px;">
+            <button mat-button [disabled]="isButtonDisabled(pacient.appointment)"
+                (click)="openLink(pacient.professional.url_prof)">
+                <span class="material-symbols-outlined" style="color: #fff;">videocam</span>
+            </button>
+        </div>
+
+        <div class="prontuario">
+            <button mat-button style="border: 1px solid #485DFF;"
+                (click)="prontuario(pacient.appointment.app_id, pacient.pacient.pc_id)">
+                <span style="color:#485DFF">Abrir</span>
+            </button>
+        </div>
+
+
+        <ng-container *ngIf="pacient.appointment.status_id !== 3; else tooltip">
+            <div class="acao">
+                <button mat-button [matMenuTriggerFor]="menu">
+                    <span class="material-symbols-outlined">more_vert</span>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item [disabled]="pacient.appointment.status_id === 3"
+                        (click)="cancelarAgendamento(pacient)">Cancelar Consulta</button>
+                </mat-menu>
+            </div>
+        </ng-container>
+        <ng-template #tooltip>
+            <div class="acao" matTooltip="Não possui nenhuma ação">
+                <button mat-button>
+                    <span class="material-symbols-outlined">more_vert</span>
+                </button>
+                <mat-menu #menu="matMenu"></mat-menu>
+            </div>
+        </ng-template>
+    </div>
+    <div class="paginacao-geral" *ngIf="sortedData.length > 0">
+        <div class="paginas">
+            <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+        </div>
+    </div>
+    <div class="paginacao-geral" *ngIf="sortedData.length === 0">
+        <div class="paginas">
+            <h2 class="piscar" style="color: #485DFF;">Sem agendamentos para hoje</h2>
+        </div>
+    </div>
+
+</section>

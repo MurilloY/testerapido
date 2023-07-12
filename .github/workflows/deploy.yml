@@ -1,0 +1,140 @@
+name: AWS CI Workflow
+
+on:
+  push:
+    branches:
+      - production
+      - homolog
+
+jobs:
+  build-image:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Current Branch
+        run: echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
+
+      - name: Set env AWS_REGION
+        run: |
+          if [[ $BRANCH == 'production' && $GITHUB_EVENT_NAME == 'push' ]]; then
+              echo "AWS_REGION=sa-east-1" >> "$GITHUB_ENV"
+          fi
+          if [[ $BRANCH == 'homolog' && $GITHUB_EVENT_NAME == 'push' ]]; then
+              echo "AWS_REGION=us-east-1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: i9care-front
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build --build-arg ENV_FILE=$BRANCH -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" > image_version.txt
+
+      - name: Archive image version
+        uses: actions/upload-artifact@v2
+        with:
+          name: image_version
+          path: image_version.txt
+
+  deploy-homolog:
+    name: Deploy to homolog
+    needs: build-image
+    if: github.ref == 'refs/heads/homolog'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download image version artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image_version
+      - name: Expand image version
+        id: image-version
+        run: |
+          IMAGE_VERSION="$(cat image_version.txt)"
+          echo "::set-output name=image::$IMAGE_VERSION"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Download homolog task definition
+        run: |
+          aws ecs describe-task-definition --task-definition i9care-front-td --query taskDefinition > task-definition.json
+      - name: Set docker image to task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: i9care-front
+          image: ${{ steps.image-version.outputs.image }}
+      - name: Deploy to homolog
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: i9care-front-svc
+          cluster: i9care-cluster-stg
+
+  deploy-production:
+    name: Deploy to production
+    needs: build-image
+    if: github.ref == 'refs/heads/production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download image version artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: image_version
+      - name: Expand image version
+        id: image-version
+        run: |
+          IMAGE_VERSION="$(cat image_version.txt)"
+          echo "::set-output name=image::$IMAGE_VERSION"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: sa-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Download production task definition
+        run: |
+          aws ecs describe-task-definition --task-definition i9care-front-prd-td --query taskDefinition > task-definition.json
+      - name: Set docker image to task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: i9care-front
+          image: ${{ steps.image-version.outputs.image }}
+      - name: Deploy to production
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: i9care-front-svc
+          cluster: i9care-cluster-prd

@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalCancelamentoComponent } from '../../components/cancelar-consulta/modal-cancelamento/modal-cancelamento.component';
 import { CentralNotificacaoComponent } from '../../components/central-notificacao/central-notificacao.component';
 import { ConfirmdialogComponent } from '../../components/confirmdialog/confirmdialog.component';
 import { HealthinsuranceComponent } from '../../components/healthinsurance/healthinsurance.component';
@@ -23,7 +22,7 @@ export class HeaderComponent implements OnInit {
   user?: any;
 
   constructor(private dialog:MatDialog, private route: ActivatedRoute, private clinicService: ClinicService, private router: Router) { 
-    this.route.params.subscribe(params => this.clinic_subdomain = params['clinic_name']);
+   
     this.user = JSON.parse(localStorage.getItem("UserClinicObject")!);
   }
   
@@ -31,6 +30,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.route.params.subscribe(params => {
+      this.clinic_subdomain = params['clinic_name']
+
+      this.getClinic();
+
+
+    });
+
+   
+
+  }
+
+  getClinic(){
     this.clinicService.selectClinic(this.clinic_subdomain).subscribe(
       data => {
           this.clinic = data.clinic      
@@ -41,7 +53,6 @@ export class HeaderComponent implements OnInit {
       
     }
     );
-
   }
 
 
@@ -49,7 +60,9 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(CentralNotificacaoComponent, {
       panelClass: 'my-full-screen-dialog',
       disableClose: false,
-      data: {}
+      data: {
+        clinic:this.clinic
+      }
     })
 
     dialogRef.afterClosed().subscribe(dialogResult => {

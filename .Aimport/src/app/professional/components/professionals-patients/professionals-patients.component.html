@@ -1,0 +1,143 @@
+<!-- <app-header></app-header> -->
+
+<section class="page-destaque page-destaque-consultas">
+    <div class="container">
+        
+        <div class="page-destaque-informacoes">
+            <div class="hello">
+                <img src="assets/images/hello.svg" alt=""> 
+                Olá, {{user.user_name}}
+            </div>
+            <h1>Seu dia a dia mais <span>prático</span> e <span>eficiente</span><span class="ponto">.</span></h1>
+            <h2>Recursos para gestão da consultas online ou presenciais, cadastro de pacientes e profissionais da saúde.</h2>
+
+            <div class="movimentacoes">
+                <span class="material-symbols-outlined">monitoring</span> 
+                Movimentações 
+                <span class="bull">&bull;</span> 
+                {{today | date: 'd'}} de {{today | date: 'MMMM'}} de {{today | date: 'y'}}
+            </div>
+
+            <div class="informacoes">
+                <div class="box">
+                    <div class="qtd">{{sortedData.length}}</div>
+                    <div class="info">Pacientes</div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</section>
+
+<section class="container container2">
+    
+    <h1 class="titulo-principal">
+        <span><img src="assets/images/icone-cadastro.svg" alt=""></span>
+        Cadastro de pacientes
+    </h1>
+
+    <div id="acoes-principais">
+        <div class="busca">
+            <img src="assets/images/icone-pesquisa.svg" alt=""> 
+            <input type="text" matInput placeholder="Busque pelo nome do paciente" (keyup)="onKeypressEvent($event)" >
+        </div>
+        <!-- <div class="acao">            
+            <button mat-button class="btn-padrao" >
+                <span class="material-symbols-outlined">add</span> 
+                Novo Paciente
+            </button>
+        </div> -->
+    </div>
+
+    <!-- <div id="relatorio-opcoes">
+        <div class="abas">
+            <button mat-button (click)="payments(0)" [ngClass]="paySelected == 0 ? 'selecionado' : ''"> Pago <strong>{{paid}}</strong></button>
+            <button mat-button (click)="payments(1)" [ngClass]="paySelected == 1 ? 'selecionado' : ''"> Pendente <strong>{{pending}}</strong></button>
+        </div>
+        <div class="acoes-downloads">
+            <button mat-button>Relatório</button>
+            <button mat-button class="btn-pdf">
+                <img src="assets/images/icone-pdf.svg" alt=""> 
+                PDF
+            </button>
+        </div>
+    </div> -->
+
+    <div id="relatorio-informacoes">
+        <p class="resultados">{{sortedData.length}} resultados encontrados</p>
+        <!-- <div class="informacoes">
+            <div class="agendada">
+                <span></span> Agendada
+            </div>
+            <div class="encerrada">
+                <span></span> Encerrada
+            </div>
+        </div> -->
+    </div>
+
+    <div class="lista-header">
+        <div class="nome" (click)="ordenacao('nome')">
+            Nome completo
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'asc'">arrow_upward</span>
+            <span class="material-symbols-outlined" *ngIf="sortDirection == 'desc'">arrow_downward</span>
+        </div>
+        <div class="contato">Contato</div>
+        <div class="ultima-consulta">Última consulta</div>
+        <div class="profissional2">Nome da clínica</div>
+        <!-- <div class="pagamento">
+            Pagamento 
+        </div> -->
+        <div class="acao">Ações</div>
+    </div>
+
+    <div class="lista-item-chamada" *ngFor="let pacient of pacients | paginate: { itemsPerPage: totalItens, currentPage: p }">
+        <div class="nome">
+            <span class="item">Nome completo: </span> 
+            <p class="destaque">{{pacient.pacient.pacient_name}}</p>
+            <p class="informacao">{{pacient.pacient.pacient_birth_data | date: 'dd/MM/yyyy'}} &bull; {{calculateAge(pacient.pacient.pacient_birth_data)}}</p>
+        </div>
+        <div class="contato">
+            <span class="item">Contato: </span>
+            <p class="destaque">{{pacient.pacient.pacient_phone}}</p>
+            <p class="informacao">WhatsApp</p>
+        </div>
+        <div class="ultima-consulta">
+            <span class="item">Última consulta: </span>
+            <p class="destaque">{{pacient?.appointment?.date| date: 'dd/MM/yyyy'}}</p>
+            <p class="informacao">{{pacient?.appointment?.start_time}}</p>
+        </div>
+        <div class="profissional2">
+            <span class="item">Profissional da saúde: </span>
+            <p class="destaque">{{pacient.appointment.clinic_name | slice:0:18}}...</p>
+            <!-- <p class="informacao">{{pacient.appointment?.}}</p> -->
+        </div>
+        <!-- <div class="pagamento">
+            <div [className]="pacient?.appointment?.class">
+                <button mat-button>
+                    <span class="ponto">&bull;</span> 
+                    {{pacient?.appointment?.tp_name}}
+                </button>
+            </div>
+        </div> -->
+        <div class="acao">
+            <button mat-button [matMenuTriggerFor]="menu">
+                <span class="material-symbols-outlined">more_vert</span>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="visualizarConsulta(pacient.pacient.pacient_id)">Visualizar consultas</button>
+                <!-- <button mat-menu-item (click)="deletePacient(pacient)">Deletar</button> -->
+            </mat-menu>
+        </div>
+    </div>
+    <div class="paginacao-geral">
+        <div class="paginas">
+            <pagination-controls 
+                (pageChange)="p = $event" 
+                previousLabel=""
+                nextLabel=""
+            ></pagination-controls>
+        </div>
+    </div>
+    
+</section>

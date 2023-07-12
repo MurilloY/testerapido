@@ -1,0 +1,38 @@
+<app-header-nova-consulta [fixedHeader]="true" [showProgress]="false" [showBtnClose]="true" [dialogVersion]="1" (closeEvent)="onDismiss()"></app-header-nova-consulta>
+<div class="container">
+
+    <h1 class="titulo-acao">Central de notificações</h1>
+
+    <section id="central-de-notificacoes">
+        <div class="notificacao" *ngFor="let item of notifications | paginate: { itemsPerPage: totalItens, currentPage: p }">
+            <p>{{ item.not_description }}</p>
+            <div class="data">{{ item.not_time | date: 'dd'}} de {{ item.not_time | date: 'MMMM'}} às {{ item.not_time | date: 'HH:mm'}}</div>
+        </div>
+        <div class="paginacao">
+
+            <div class="exibindo">
+                Exibindo de <strong>{{ p }} a {{ totalItens }}</strong> de {{ notifications.length }} notificações
+                <button mat-button [matMenuTriggerFor]="total" class="btn-acao">
+                    <span class="material-symbols-outlined">
+                    expand_more
+                    </span>
+                </button>
+                <mat-menu #total="matMenu">
+                    <button mat-menu-item (click)="totalItens = 4">4</button>
+                    <button mat-menu-item (click)="totalItens = 10">10</button>
+                    <button mat-menu-item (click)="totalItens = 50">50</button>
+                    <button mat-menu-item (click)="totalItens = 100">100</button>
+                </mat-menu>
+            </div>
+
+            <div class="paginas">
+                <pagination-controls
+                    (pageChange)="p = $event"
+                    previousLabel=""
+                    nextLabel=""
+                ></pagination-controls>
+            </div>
+        </div>
+    </section>
+
+</div>

@@ -1,0 +1,23 @@
+<div id="header-etapas-ghost" *ngIf="fixedHeader"></div>
+<div [class.fixedHeader]="fixedHeader">
+    <header id="header-etapas" [class.hasNav]="menu">
+        <div class="header">
+            <div class="close" *ngIf="showBtnClose">
+                <button mat-button (click)="closeDialog()"><span class="material-symbols-outlined">close</span></button>
+            </div>
+            <div class="logo" *ngIf="showLogo">
+                <a href="#">
+                    <img src="assets/images/logo-fisiomart.svg" alt="">
+                </a>
+            </div>
+
+            <div class="home" *ngIf="showBtnHome">
+                <button mat-button>
+                    <img src="assets/images/icone-home.svg" alt="">
+                </button>
+            </div>
+
+           
+        </div>
+    </header>
+</div>

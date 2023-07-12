@@ -106,7 +106,6 @@ export class AddAdmComponent implements OnInit {
 
         this.admService.insertUser(data1).subscribe(
           data => {
-            console.log(data)
 
 
             let data2 = {

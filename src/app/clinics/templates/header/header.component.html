@@ -10,7 +10,7 @@
 <header id="header-site" [class.validar-conta]="validarConta" [class.scrollPage]="scrollPage">
     <div class="header">
         <div class="logo">
-          <img class="img-logo-clinic" [attr.src]="clinic?.clinic_logo! | secure | async" [alt]="clinic?.clinic_name">
+          <img class="img-logo-clinic" [attr.src]="clinic?.clinic_logo != null ? (clinic?.clinic_logo! | secure | async) : '' ">
         </div>
         <nav class="nav-site">
             <ul>
@@ -57,8 +57,8 @@
                     </button>
                     <mat-menu #navAccount="matMenu">
                         <button mat-menu-item>Meu perfil</button>
-                        <button mat-menu-item>Configurações</button>
-                        <button mat-menu-item>Integrações</button>
+                        <!-- <button mat-menu-item>Configurações</button> -->
+                        <!-- <button mat-menu-item>Integrações</button> -->
                         <button mat-menu-item (click)="convenio()">Convênios</button>
                         <button mat-menu-item (click)="logOut()">Sair</button>
                     </mat-menu>     

@@ -1,0 +1,39 @@
+<div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">    
+
+    <h2 mat-dialog-title>{{dialogTitle}}</h2>
+  
+    <form [formGroup]="formAddCategory" >
+
+
+        <div style="margin-top: 20px; margin-bottom: 20px;" fxLayout="row" fxLayoutAlign="start center">
+            <mat-radio-group formControlName="category_status">
+                <mat-radio-button value="0">Desativada</mat-radio-button>
+                <mat-radio-button value="1">Ativada</mat-radio-button>
+            </mat-radio-group>
+        </div>
+  
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nome da categoria</mat-label>
+                <input matInput type="text" placeholder="Nome" formControlName="category_name">
+                <mat-error *ngIf="checkError('category_name', 'required')">
+                Campo obrigatório
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+       
+  
+        <div mat-dialog-actions style="text-align: right;">
+            <button mat-raised-button color="primary" type="submit" (click)="onSubmit();">{{ dialogButton }}</button>
+            
+            <span class="spacer"></span>
+            <button mat-button (click)="onDismiss()">Cancelar</button>
+        </div>
+  
+  
+  
+    </form>
+  
+  
+  </div>

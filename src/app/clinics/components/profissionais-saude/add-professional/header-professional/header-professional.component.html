@@ -4,11 +4,11 @@
         <div class="header">
             <div class="logo">
                 <a href="#">
-                    <img [src]="logo" alt="">
+                    <img [src]="logo" alt=""  style="max-height: 30px;">
                 </a>
             </div>
 
-            <div class="etapas" *ngIf="showProgress">
+            <div class="etapas" *ngIf="showProgress" style="text-align: center;">
                 <div class="etapa" [ngClass]="{'selected': progress >= 0}">
                     <div class="num">1</div>
                     <div class="descricao">Profissional</div>

@@ -1,0 +1,95 @@
+<app-header-agendamento [showPerfil]="true" [showInfo]="false" [consultaPaciente]="false" [buttonBack]="true"></app-header-agendamento>
+
+<section id="sessao-prontuario" class="container container2">
+
+    <aside class="sidebar-prontuario">
+        <h2 class="subtitulo" style="font-size: 25px;">Consultas</h2>
+
+        <div class="sidebar">
+            <div class="img">
+                <img [attr.src]="pacient?.user_photo ? (pacient?.user_photo! | secure | async) : 'assets/images/user.png'"
+                    style="height: 94px; width: 94px; border-radius: 50%; object-fit: cover;">
+                <div class="btn">
+                    <img src="assets/images/icone-editar.svg" alt="">
+                </div>
+            </div>
+
+            <p class="nome">{{pacient?.user_name}}</p>
+            <p>{{calculateAge(pacient?.birth_data!)}} anos &bull; {{pacient?.birth_data | date: 'dd/MM/yyyy'}}</p>
+            <p>{{pacient?.ua_city}}, {{pacient?.ua_uf}}</p>
+            <p>{{pacient?.ua_name_street}}, {{pacient?.ua_house_number}}</p>
+
+            <!-- <h3>Consulta Selecionada</h3>
+            <div>
+                <p>{{appointment?.professional?.clinic_name | slice:0:18}}...</p>
+                <p>{{appointment?.appointment?.date| date: 'dd/MM/yyyy'}} , às {{appointment?.appointment?.start_time}} horas</p>
+                <p>{{appointment?.appointment?.app_type_name}}</p>
+            </div> -->
+        </div>
+    </aside>
+    <!-- <router-outlet></router-outlet> -->
+
+    <section class="prontuario-informacoes">
+        <h2 class="subtitulo">{{sortedData.length}} Consultas</h2>
+
+        <!-- <div class="relatorio-anexos">
+            <div class="relatorio-receitas">
+                <div class="info">
+                    <div class="qtd">{{sortedData.length}}</div>
+                    <p>
+                        Total de<br>
+                        consultas
+                    </p>
+                </div>
+            </div> -->
+
+        <!-- <div class="upload">
+                <input type="file" #upload name="">
+                <div class="img">
+                    <img src="assets/images/icone-upload.svg" alt="">
+                </div>
+                <p class="txt1">Arraste e solte ou clique para anexar</p>
+                <p class="txt2">Arquivos suportados: PDF, JPG e PNG</p>
+            </div> -->
+        <!-- </div> -->
+
+        <!-- <h2 class="subtitulo">Anexos</h2> -->
+
+        <div class="receitas"
+            *ngFor="let item of sortedData | paginate: { itemsPerPage: totalItens, currentPage: p }; let idx = index">
+            <div class="info">Consulta {{item.appointment.date | date: 'dd/MM/yyyy'}}</div>
+            <div class="data">
+                {{ item.appointment.app_type_name }}
+            </div>
+            <div class="profissional">
+                {{ item.clinic_name | slice:0:18}}...
+            </div>
+            <div class="acao">
+                <button mat-button [matMenuTriggerFor]="menu">
+                    <span class="material-symbols-outlined">more_vert</span>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="visualizarProntuario(item)">Visualizar prontuário</button>
+                    <!-- <button mat-menu-item (click)="deletePacient(pacient)">Deletar</button> -->
+                </mat-menu>
+            </div>
+        </div>
+
+        <div class="paginacao">
+
+            <div class="exibindo">
+                <mat-menu #total="matMenu">
+                    <button mat-menu-item (click)="totalItens = 4">4</button>
+                    <button mat-menu-item (click)="totalItens = 10">10</button>
+                    <button mat-menu-item (click)="totalItens = 50">50</button>
+                    <button mat-menu-item (click)="totalItens = 100">100</button>
+                </mat-menu>
+            </div>
+
+            <div class="paginas">
+                <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+            </div>
+        </div>
+    </section>
+
+</section>

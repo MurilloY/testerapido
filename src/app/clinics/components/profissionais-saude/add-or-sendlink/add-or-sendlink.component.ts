@@ -16,11 +16,12 @@ export class AddOrSendlinkComponent implements OnInit {
 
   clinic: Clinic;
   formAddorSendLink: FormGroup;
-  status: string;
+  status: string = "1";
   user_phone: string;
   user_email: string;
   user?: any;
   clinic_subdomain: string;
+  button_disabled: boolean = false
 
 
   constructor(private dialog: MatDialog, private clinicService: ClinicService, private router: Router, public dialogRef: MatDialogRef<AddOrSendlinkComponent>) {
@@ -69,10 +70,12 @@ export class AddOrSendlinkComponent implements OnInit {
     let data = this.formAddorSendLink.getRawValue();
     data.clinic_id = this.clinic.clinic_id;
     data.who_invited = this.user.user_id
+    
 
     let desc = "Link enviado com sucesso."
 
     if (this.formAddorSendLink.value.user_phone !== null || this.formAddorSendLink.value.user_email !== null) {
+      this.button_disabled = true
       this.clinicService.sendLinkProfessional(data).subscribe(
         data => {
           console.log(data);
@@ -86,6 +89,8 @@ export class AddOrSendlinkComponent implements OnInit {
             },
           });
           this.dialogRef.close(true);
+        }, err => {
+          this.button_disabled = false
         }
       )
     }else{

@@ -1,0 +1,81 @@
+.border-menu {
+  margin-bottom: 10px;
+  border-style: solid;
+  background-color: white;
+  border-color: #DADCE0;
+  border-width: 1px;
+  border-radius: 6px;
+
+}
+
+
+
+.rcorners1 {
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6) url('../../../../../assets/images/fundo-branco.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: darken;
+  width: 100%;
+  color: white;
+  min-height: 150px;
+}
+
+.rcorners1 .img {
+  filter: brightness(60%);
+}
+
+
+.avatar-upload {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border: 6px solid #fff;
+
+}
+
+
+.margem {
+  margin: 10px;
+}
+
+
+.menu-div-principal {
+
+  width: 250px;
+  margin: 20px;
+  background-color: #fff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+}
+
+.menu-div-filha {
+
+  padding: 10px;
+  width: 250px;
+  height: 50px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  max-width: 250px;
+
+}
+
+.menu-div-filha2 {
+
+  height: 80px;
+  font-size: xx-large;
+  max-width: 250px;
+  border-style: solid;
+  border-color: #DADCE0;
+  border-width: 1px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.icon-menu {
+  color: white;
+}

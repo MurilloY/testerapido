@@ -17,7 +17,7 @@ export class HeaderProfessionalComponent implements OnInit {
   @Input() showUser: boolean = false;
   @Input() fixedHeader: boolean = true;
   @Input() menu: boolean = false;
-  @Input() logo: string = '';
+  @Input() logo?: string;
 
   @Output() closeEvent = new EventEmitter<string>();
 

@@ -34,9 +34,9 @@ export class CentralNotificationComponent implements OnInit {
   getNotification() {
     this.professionalService.getNotification(this.user?.user_id).subscribe(
       data => {
-        this.notifications = data.notification;
-
-
+        this.notifications = data.notification.sort((a, b) => {
+          return new Date(b.not_time).getTime() - new Date(a.not_time).getTime();
+        });
       },
       err => {
 

@@ -76,7 +76,6 @@ export class AddChatAnamneseComponent implements OnInit {
     this.appointmentService.getVerifyUrl(this.url).subscribe(
       data => {
 
-        console.log(data)
 
         this.token = data.token
         this.pc_id = data.appointment.pc_id;

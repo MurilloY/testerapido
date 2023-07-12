@@ -1,0 +1,56 @@
+#pagamento {
+    display: inline;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+.example-full-width {
+    width: 100%;
+}
+
+.formulario {
+    display: flex;
+    justify-content: space-between;
+
+    .form-a {
+        margin-right: 5px;
+    }
+    .form-b {
+        margin-left: 5px;
+    }
+
+    .form-c {
+        width: 75%;
+    }
+
+    .form-d {
+        width: 22%;
+    }
+}
+
+@media screen and (max-width: 730px) {
+        .formulario {
+            .form-c {
+                width: 70%;
+            }
+
+            .form-d {
+                width: 27%;
+            }
+        }
+}
+
+@media screen and (max-width: 600px) {
+        .formulario {
+            flex-wrap: wrap;
+
+            .form-a,
+            .form-b,
+            .form-c,
+            .form-d {
+                width: 100%;
+            }
+        }
+}

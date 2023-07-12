@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   clinic_subdomain: string;
   clinic?: Clinic;
   clinic_url: string;
+  password: string;
 
 
   constructor(private clinicService: ClinicService, private router: Router, private route: ActivatedRoute) {
@@ -53,6 +54,9 @@ export class LoginComponent implements OnInit {
     
 
   }
+
+  
+
   onSubmit() {
 
     if (this.loginForm.valid) {
@@ -65,6 +69,8 @@ export class LoginComponent implements OnInit {
 
           localStorage.setItem('UserClinicObject', JSON.stringify(data.user));
           localStorage.setItem('clinicToken', data.token);
+          document.body.classList.remove('login-page');    
+
 
           this.router.navigate([`/clinica/${this.clinic?.clinic_subdomain}/consultas`]);
 

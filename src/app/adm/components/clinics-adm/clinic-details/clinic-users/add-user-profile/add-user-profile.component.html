@@ -55,7 +55,7 @@
                         (click)="removeUploadedFile()"></label>
                 </div>
                 <div class="avatar-preview">
-                    <img id="imagePreview" style="height: 120px; width: 120px;" [attr.src]="imageUrl">
+                    <img id="imagePreview" style="height: 120px; width: 120px;" [attr.src]="imageUrl | secure | async">
                 </div>
 
             </div>

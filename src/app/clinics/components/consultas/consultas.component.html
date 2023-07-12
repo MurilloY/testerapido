@@ -138,7 +138,6 @@
             </button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="editPagamento(consulta)">Editar pagamento</button>
-                <button mat-menu-item>Ver detalhes</button>
                 <button mat-menu-item *ngIf="consulta.status != 3" (click)="cancelarAgendamento(consulta)">Cancelar Consulta</button>
             </mat-menu>
         </div>

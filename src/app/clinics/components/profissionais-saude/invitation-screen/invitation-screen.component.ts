@@ -48,6 +48,7 @@ export class InvitationScreenComponent implements OnInit {
   cities?: string[];
   url: string;
   clinic: Clinicurl;
+  token: string
   show = false
 
 
@@ -85,7 +86,7 @@ export class InvitationScreenComponent implements OnInit {
       ua_district: new FormControl('', [Validators.required]),
       ua_name_street: new FormControl('', [Validators.required]),
       ua_house_number: new FormControl('', [Validators.required]),
-      user_phone: new FormControl(),
+      user_phone: new FormControl('', [Validators.required]),
       user_email: new FormControl('', [Validators.email]),
       user_photo: new FormControl(this.photobase64, [Validators.required]),
 
@@ -100,7 +101,7 @@ export class InvitationScreenComponent implements OnInit {
 
       });
 
-    this.user = JSON.parse(localStorage.getItem("UserClinicObject")!);
+    //this.user = JSON.parse(localStorage.getItem("UserClinicObject")!);
 
 
 
@@ -109,23 +110,21 @@ export class InvitationScreenComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap
       .subscribe(params => {
-        this.url = params.get('clinic_id')!;
-
+        this.url = params.get('invitation_url')!;
+        this.verifyUrl();
       }
-
       );
-    
-    this.verifyUrl();
-    this.convertToB64();
-    this.getCategories();
-    this.getRegisters();
   }
 
   verifyUrl() {
     this.clinicService.verifyLinkProfessional(this.url).subscribe(data => {
       this.clinic = data.clinic
-      console.log(this.clinic)
+      this.token = data.token
+      console.log(data)
       this.show = true
+      this.convertToB64();
+      this.getCategories();
+      this.getRegisters();
 
       
       
@@ -316,7 +315,7 @@ export class InvitationScreenComponent implements OnInit {
 
   getSpecialities(cat_id: string, pos: number) {
 
-    this.clinicService.getSpecialitiesByCategory(cat_id).subscribe(data => {
+    this.clinicService.getSpecialitiesByCategory2(cat_id, this.token).subscribe(data => {
 
       if (data.refreshToken) {
         localStorage.setItem("admToken", data.refreshToken)
@@ -330,11 +329,7 @@ export class InvitationScreenComponent implements OnInit {
 
   getRegisters() {
 
-    this.clinicService.getRegisterTypes().subscribe(data => {
-
-      if (data.refreshToken) {
-        localStorage.setItem("admToken", data.refreshToken)
-      }
+    this.clinicService.getRegisterTypes2(this.token).subscribe(data => {
 
       this.register_types = data.register_types;
 
@@ -345,11 +340,7 @@ export class InvitationScreenComponent implements OnInit {
 
   getCategories() {
 
-    this.clinicService.getCategories().subscribe(data => {
-
-      if (data.refreshToken) {
-        localStorage.setItem("admToken", data.refreshToken)
-      }
+    this.clinicService.getCategories2(this.token).subscribe(data => {
 
       this.categories = data.categories;
 
@@ -434,9 +425,6 @@ export class InvitationScreenComponent implements OnInit {
   }
 
   step3() {
-    if (this.secondFormGroup.valid) {
-      this.nextStep();
-    }
 
     if (this.thirdFormGroup.valid) {
 
@@ -449,7 +437,8 @@ export class InvitationScreenComponent implements OnInit {
 
         console.log(this.CadastroProfessionalForm.value.birth_data)
 
-        data.who_user = this.user.user_id;
+        data.who_user = this.user ? this.user.user_id : null;
+        console.log(data.who_user)
         data.clinic_id = this.clinic.clinic_id;
         data.specialities = this.secondFormGroup.value['specialities'];
         data.disponibilities = this.thirdFormGroup.value['disponibilities'];
@@ -458,7 +447,7 @@ export class InvitationScreenComponent implements OnInit {
         data.photoisdefault = this.photodefault
         console.log(data)
 
-        this.clinicService.insertProfessionalVerify(data).subscribe(data => {
+        this.clinicService.insertProfessionalVerify2(data, this.token).subscribe(data => {
 
           if (data.refreshToken) {
             localStorage.setItem("admToken", data.refreshToken)
@@ -481,6 +470,7 @@ export class InvitationScreenComponent implements OnInit {
           });
 
           this.updateLinkProfessional(this.url)
+          this.nextStep()
 
           dialogRef.afterClosed().subscribe(dialogResult => {
 
@@ -595,7 +585,7 @@ export class InvitationScreenComponent implements OnInit {
 
   getProfessional(numberCPf: string) {
 
-    this.clinicService.getProfCPFVerify(this.url, numberCPf).subscribe(data => {
+    this.clinicService.getProfCPFVerify2(this.clinic.clinic_id, numberCPf, this.token).subscribe(data => {
 
       this.showCpf = false;
       this.showForm = true

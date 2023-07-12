@@ -76,6 +76,10 @@ export class EditarPagamentoComponent implements OnInit {
     }
   }
 
+  updateAppointmentTpid(data:any){
+    this.clinicService.updateAppointmentTpid(this.appointment.app_id, data).subscribe()
+  }
+
   onConfirmClick(): void {
     // this.dialogRef.close(true);
 

@@ -52,7 +52,7 @@ export class NovaConsultaComponent implements OnInit {
 
   buttonsendemail = false;
 
-  clinic: Clinic
+  clinic?: Clinic
 
   subdomain: string;
   photodefault = true;
@@ -115,6 +115,7 @@ export class NovaConsultaComponent implements OnInit {
       titular_same_address: new FormControl(),
       titular_cpf: new FormControl(),
       titular_name: new FormControl(),
+      titular_gender: new FormControl(),
       titular_birthdate: new FormControl(),
       titular_rg: new FormControl(),
       titular_cep: new FormControl(),
@@ -211,6 +212,7 @@ export class NovaConsultaComponent implements OnInit {
 
 
     this.CadastroPacienteForm.controls['titular_name'].setValue(null);
+    this.CadastroPacienteForm.controls['titular_gender'].setValue(null);
     this.CadastroPacienteForm.controls['titular_phone'].setValue(null);
     this.CadastroPacienteForm.controls['titular_email'].setValue(null);
     this.CadastroPacienteForm.controls['titular_same_address'].setValue(null);
@@ -315,7 +317,7 @@ export class NovaConsultaComponent implements OnInit {
 
   }
 
-  sendReminderAppointment(){
+  sendReminderAppointment() {
 
     let phone = (this.appointment.pacient.pc_phone).replace(/[^A-Z0-9]/ig, '')
 
@@ -324,29 +326,29 @@ export class NovaConsultaComponent implements OnInit {
 
     let url = `https://api.whatsapp.com/send?phone=55${phone}&text=${encodeURIComponent(texto)}`;
     window.open(url, '_blank')?.focus();
-    
+
 
   }
 
   dateFormat(inputDate: Date) {
     let date, month, year;
-  
+
     date = inputDate.getDate();
     month = inputDate.getMonth() + 1;
     year = inputDate.getFullYear();
-  
-      date = date
-          .toString()
-          .padStart(2, '0');
-  
-      month = month
-          .toString()
-          .padStart(2, '0');
-  
+
+    date = date
+      .toString()
+      .padStart(2, '0');
+
+    month = month
+      .toString()
+      .padStart(2, '0');
+
     return `${date}/${month}/${year}`;
   }
 
-  formStep(){
+  formStep() {
 
 
     this.findInvalidControls()
@@ -368,7 +370,7 @@ export class NovaConsultaComponent implements OnInit {
 
       this.buttonsendemail = true
 
-      data.clinic_id = this.clinic.clinic_id;
+      data.clinic_id = this.clinic?.clinic_id;
       data.prof_id = this.professionalSelected.prof_id;
       data.date = this.convertToDb(this.dateSelected);
       data.start_time = this.selectedHour?.start_time;
@@ -429,7 +431,7 @@ export class NovaConsultaComponent implements OnInit {
 
   getInsurances() {
 
-    this.clinicService.getInsurancesByClinic(this.clinic.clinic_id).subscribe(
+    this.clinicService.getInsurancesByClinic(this.clinic?.clinic_id!).subscribe(
       data => {
         console.log(data)
         this.insurances = data.insurances;
@@ -490,6 +492,7 @@ export class NovaConsultaComponent implements OnInit {
             console.log(data.user)
 
             this.CadastroPacienteForm.controls['titular_name'].setValue(data.user.user_name);
+            this.CadastroPacienteForm.controls['titular_gender'].setValue(data.user.user_gender);
             this.CadastroPacienteForm.controls['titular_phone'].setValue(data.user.user_phone);
             this.CadastroPacienteForm.controls['titular_email'].setValue(data.user.user_email);
             this.CadastroPacienteForm.controls['titular_birthdate'].setValue(data.user.birth_data);
@@ -497,6 +500,15 @@ export class NovaConsultaComponent implements OnInit {
             this.CadastroPacienteForm.controls['titular_cpf'].setValue(data.user.user_cpf);
             this.CadastroPacienteForm.controls['titular_cep'].setValue(data.user.address.ua_cep);
             this.CadastroPacienteForm.controls['titular_uf'].setValue(data.user.address.ua_uf);
+
+            if (data.user.address.ua_uf != null){
+              
+              this.CadastroPacienteForm.controls['titular_same_address'].setValue('0');
+            }
+            else{
+              this.CadastroPacienteForm.controls['titular_same_address'].setValue('1');
+              
+            }
 
             this.selectedStateTitular(data.user.address.ua_uf);
 
@@ -509,7 +521,38 @@ export class NovaConsultaComponent implements OnInit {
 
 
 
-          })
+          },
+            err => {
+
+              if (err.status == 404) {
+
+                this.showFormTitular = true;
+                this.showErrorCPFTitular = false;
+
+                this.CadastroPacienteForm.controls['titular_name'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_gender'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_phone'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_email'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_same_address'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_birthdate'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_rg'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_cep'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_uf'].setValue(null);
+
+                this.CadastroPacienteForm.controls['titular_same_address'].setValue('0');
+
+
+
+                this.CadastroPacienteForm.controls['titular_city'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_district'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_name_street'].setValue(null);
+                this.CadastroPacienteForm.controls['titular_house_number'].setValue(null);
+
+              }
+
+
+
+            })
 
         }
 
@@ -526,12 +569,13 @@ export class NovaConsultaComponent implements OnInit {
       this.errorCPFMsg = "Digite um CPF válido";
 
       this.CadastroPacienteForm.controls['titular_name'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_gender'].setValue(null);
       this.CadastroPacienteForm.controls['titular_phone'].setValue(null);
       this.CadastroPacienteForm.controls['titular_email'].setValue(null);
       this.CadastroPacienteForm.controls['titular_same_address'].setValue(null);
       this.CadastroPacienteForm.controls['titular_birthdate'].setValue(null);
       this.CadastroPacienteForm.controls['titular_rg'].setValue(null);
-      // this.CadastroPacienteForm.controls['titular_cpf'].setValue(null);
+
       this.CadastroPacienteForm.controls['titular_cep'].setValue(null);
       this.CadastroPacienteForm.controls['titular_uf'].setValue(null);
 
@@ -570,7 +614,7 @@ export class NovaConsultaComponent implements OnInit {
 
   radioChangeTitularAddress(event: MatRadioChange) {
 
-    if (event.value == '0') {
+    if (event.value == '1') {
 
       this.CadastroPacienteForm.controls['titular_cep'].setValue(null);
       this.CadastroPacienteForm.controls['titular_uf'].setValue(null);
@@ -619,6 +663,7 @@ export class NovaConsultaComponent implements OnInit {
     if (event.value == '0') {
 
       this.CadastroPacienteForm.controls['titular_name'].setValue(null);
+      this.CadastroPacienteForm.controls['titular_gender'].setValue(null);
       this.CadastroPacienteForm.controls['titular_phone'].setValue(null);
       this.CadastroPacienteForm.controls['titular_email'].setValue(null);
       this.CadastroPacienteForm.controls['titular_same_address'].setValue(null);
@@ -638,6 +683,8 @@ export class NovaConsultaComponent implements OnInit {
       //Validators
       this.CadastroPacienteForm.controls['titular_name'].setValidators(null);
       this.CadastroPacienteForm.controls['titular_name'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_gender'].setValidators(null);
+      this.CadastroPacienteForm.controls['titular_gender'].updateValueAndValidity();
       this.CadastroPacienteForm.controls['titular_phone'].setValidators(null);
       this.CadastroPacienteForm.controls['titular_phone'].updateValueAndValidity();
       this.CadastroPacienteForm.controls['titular_email'].setValidators(null);
@@ -662,6 +709,8 @@ export class NovaConsultaComponent implements OnInit {
       //Validators
       this.CadastroPacienteForm.controls['titular_name'].setValidators(Validators.required);
       this.CadastroPacienteForm.controls['titular_name'].updateValueAndValidity();
+      this.CadastroPacienteForm.controls['titular_gender'].setValidators(Validators.required);
+      this.CadastroPacienteForm.controls['titular_gender'].updateValueAndValidity();
       this.CadastroPacienteForm.controls['titular_phone'].setValidators(Validators.required);
       this.CadastroPacienteForm.controls['titular_phone'].updateValueAndValidity();
       this.CadastroPacienteForm.controls['titular_email'].setValidators(Validators.required);
@@ -692,9 +741,9 @@ export class NovaConsultaComponent implements OnInit {
 
       if (cpf.isValid(numberCPf)) {
         this.showErrorCPF = false;
-        
 
-        this.clinicService.getUserorPacientclinicCPF(this.clinic.clinic_id, numberCPf).subscribe(data => {
+
+        this.clinicService.getUserorPacientclinicCPF(this.clinic?.clinic_id!, numberCPf).subscribe(data => {
           this.showCpf = false;
           this.showForm = true
 
@@ -709,7 +758,7 @@ export class NovaConsultaComponent implements OnInit {
             this.CadastroPacienteForm.controls['ua_cep'].setValue(data.user.address.ua_cep);
             this.CadastroPacienteForm.controls['ua_uf'].setValue(data.user.address.ua_uf);
             this.CadastroPacienteForm.controls['user_gender'].setValue(data.user.user_gender);
-            this.CadastroPacienteForm.controls['companion'].setValue(data.user.companion === null? '0' : '1')
+            this.CadastroPacienteForm.controls['companion'].setValue(data.user.companion === null ? '0' : '1')
 
             this.selectedState(data.user.address.ua_uf);
 
@@ -720,16 +769,17 @@ export class NovaConsultaComponent implements OnInit {
 
             if (data.user.companion != null) {
               this.showFormTitular = true
-            
+
               this.CadastroPacienteForm.controls['titular_cpf'].setValue(data.user.companion.user_cpf);
               this.CadastroPacienteForm.controls['titular_name'].setValue(data.user.companion.user_name);
+              this.CadastroPacienteForm.controls['titular_gender'].setValue(data.user.companion.user_gender);
               this.CadastroPacienteForm.controls['titular_birthdate'].setValue(data.user.companion.birth_data);
               this.CadastroPacienteForm.controls['titular_rg'].setValue(data.user.companion.user_rg);
               this.CadastroPacienteForm.controls['titular_phone'].setValue(data.user.companion.user_phone);
               this.CadastroPacienteForm.controls['titular_email'].setValue(data.user.companion.user_email);
-            
+
               this.selectedStateTitular(data.user.companion.address.ua_uf);
-            
+
               this.CadastroPacienteForm.controls['titular_same_address'].setValue(data.user);
               this.CadastroPacienteForm.controls['titular_cep'].setValue(data.user.companion.address.ua_cep);
               this.CadastroPacienteForm.controls['titular_uf'].setValue(data.user.companion.address.ua_uf);
@@ -740,7 +790,7 @@ export class NovaConsultaComponent implements OnInit {
             }
 
 
-            
+
           } else { // paciente da clinica
             this.photopatient = data.patient_clinic.user_photo
             console.log(data.patient_clinic.ins_id)
@@ -760,24 +810,25 @@ export class NovaConsultaComponent implements OnInit {
             this.CadastroPacienteForm.controls['ua_district'].setValue(data.patient_clinic.ua_district);
             this.CadastroPacienteForm.controls['ua_name_street'].setValue(data.patient_clinic.ua_name_street);
             this.CadastroPacienteForm.controls['ua_house_number'].setValue(data.patient_clinic.ua_house_number);
-            this.CadastroPacienteForm.controls['has_insurance'].setValue(data.patient_clinic.ins_id === null? '0' : '1');
+            this.CadastroPacienteForm.controls['has_insurance'].setValue(data.patient_clinic.ins_id === null ? '0' : '1');
             this.CadastroPacienteForm.controls['ins_id'].setValue(data.patient_clinic.ins_id);
-            this.CadastroPacienteForm.controls['companion'].setValue(data.patient_clinic.companion === null? '0' : '1')
-            
+            this.CadastroPacienteForm.controls['companion'].setValue(data.patient_clinic.companion === null ? '0' : '1')
+
             // TITULAR
-            
+
             if (data.patient_clinic.companion != null) {
               this.showFormTitular = true
-            
+
               this.CadastroPacienteForm.controls['titular_cpf'].setValue(data.patient_clinic.companion.user_cpf);
               this.CadastroPacienteForm.controls['titular_name'].setValue(data.patient_clinic.companion.user_name);
+              this.CadastroPacienteForm.controls['titular_gender'].setValue(data.patient_clinic.companion.user_gender);
               this.CadastroPacienteForm.controls['titular_birthdate'].setValue(data.patient_clinic.companion.birth_data);
               this.CadastroPacienteForm.controls['titular_rg'].setValue(data.patient_clinic.companion.user_rg);
               this.CadastroPacienteForm.controls['titular_phone'].setValue(data.patient_clinic.companion.user_phone);
               this.CadastroPacienteForm.controls['titular_email'].setValue(data.patient_clinic.companion.user_email);
-            
+
               this.selectedStateTitular(data.patient_clinic.companion.address.ua_uf);
-            
+
               this.CadastroPacienteForm.controls['titular_same_address'].setValue('0');
               this.CadastroPacienteForm.controls['titular_cep'].setValue(data.patient_clinic.companion.address.ua_cep);
               this.CadastroPacienteForm.controls['titular_uf'].setValue(data.patient_clinic.companion.address.ua_uf);
@@ -830,7 +881,7 @@ export class NovaConsultaComponent implements OnInit {
 
   selectedProfessionalSpeciality(step: number) {
 
-    this.clinicService.getProfessionalByCategory(this.clinic.clinic_id, this.especialidade, this.convertToDb(this.dateSelected), this.modalidade).subscribe(
+    this.clinicService.getProfessionalByCategory(this.clinic?.clinic_id!, this.especialidade, this.convertToDb(this.dateSelected), this.modalidade).subscribe(
       data => {
 
         console.log(data)
@@ -852,7 +903,7 @@ export class NovaConsultaComponent implements OnInit {
 
   getCategories() {
 
-    this.clinicService.getCategoriesByClinic(this.clinic.clinic_id).subscribe(
+    this.clinicService.getCategoriesByClinic(this.clinic?.clinic_id!).subscribe(
       data => {
 
         this.categories = data.categories;
@@ -870,7 +921,7 @@ export class NovaConsultaComponent implements OnInit {
 
     this.professionalSelected = prof;
 
-    this.clinicService.getProfessionalFreeTime(this.clinic.clinic_id, this.professionalSelected.prof_id, this.convertToDb(this.dateSelected), this.modalidade).subscribe(
+    this.clinicService.getProfessionalFreeTime(this.clinic?.clinic_id!, this.professionalSelected.prof_id, this.convertToDb(this.dateSelected), this.modalidade).subscribe(
       data => {
 
         console.log(data)
@@ -885,26 +936,6 @@ export class NovaConsultaComponent implements OnInit {
     );
 
   }
-
-
-  // selectHour() {
-
-  //   if (
-  //     (this.startAppointment >= this.free_time_selected?.start_time! && this.startAppointment < this.free_time_selected?.end_time!)
-  //     &&
-  //     (this.endAppointment <= this.free_time_selected?.end_time! && this.endAppointment > this.free_time_selected?.start_time!)
-  //     &&
-  //     (this.endAppointment > this.startAppointment)) {
-  //     console.log('ok')
-  //     this.nextStep();
-  //   }
-  //   else {
-  //     console.log('erro')
-  //   }
-
-
-
-  // }
 
 
   dateLessThan(from: string, to: string) {
@@ -935,7 +966,7 @@ export class NovaConsultaComponent implements OnInit {
     this.dialogRef.close(true);
   }
 
-  howToGet(lat_lng:string) {
+  howToGet(lat_lng: string) {
     window.open(`http://www.google.com/maps/place/${lat_lng}`);
 
   }
@@ -951,15 +982,15 @@ export class NovaConsultaComponent implements OnInit {
 
   toggleSelection(item: Agenda, index: number): void {
 
-    if(item.available){
-      if (this.selectedHour?.hour === item.hour){
+    if (item.available) {
+      if (this.selectedHour?.hour === item.hour) {
         this.selectedHour = null
       }
-      else{
-        this.selectedHour = { available: item.available,  hour: item.hour,  index: index, start_time: item.start_time, end_time: item.end_time}
+      else {
+        this.selectedHour = { available: item.available, hour: item.hour, index: index, start_time: item.start_time, end_time: item.end_time }
       }
     }
-   
+
   }
 
   public findInvalidControls() {

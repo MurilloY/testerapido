@@ -15,7 +15,7 @@ import { InvitationScreenComponent } from './components/profissionais-saude/invi
 
 
 const routes: Routes = [
-  { path: 'profissional/cadastro/:clinic_id', component: InvitationScreenComponent},
+  { path: 'profissional/cadastro/:invitation_url', component: InvitationScreenComponent},
   { path: ':clinic_name/login', component: LoginComponent },
   { path: 'cadastro', component: CadastroComponent },
   { path: ':clinic_name/recuperar-senha', component: RecuperarSenhaComponent },
@@ -53,22 +53,6 @@ const routes: Routes = [
       }
     ]
   },
-
-  // {path: 'area-do-cliente', component: AreaClinicaComponent},
-
-  // {path: 'central-notificacao', component: CentralNotificacaoComponent},
-
-  // {path: 'cancelar-consulta', component: CancelarConsultaComponent},
-  // {path: 'cancelar-consulta-motivo', component: CancelarConsultaComponent},
-
-  // {path: 'consultas', component: ConsultasComponent},
-  // {path: 'pacientes', component: PacientesComponent},
-  // {path: 'profissionais-saude', component: ProfissionaisSaudeComponent},
-
-  // {path: 'identifique-paciente', component: IdentifiquePacienteComponent},
-  // {path: 'informacoes-paciente', component: InformacoesPacienteComponent},
-
-  // {path: 'doctor-chat', component: DoctorChatComponent},
 ];
 
 

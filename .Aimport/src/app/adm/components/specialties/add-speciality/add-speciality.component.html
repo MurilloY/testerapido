@@ -1,0 +1,53 @@
+<div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">    
+
+    <h2 mat-dialog-title>{{dialogTitle}}</h2>
+  
+    <form [formGroup]="formAddSpeciality" >
+
+
+        <div style="margin-top: 20px; margin-bottom: 20px;" fxLayout="row" fxLayoutAlign="start center">
+            <mat-radio-group formControlName="speciality_status">
+                <mat-radio-button value="0">Desativado</mat-radio-button>
+                <mat-radio-button value="1">Ativado</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline" >
+                <mat-label>Categoria</mat-label>
+                <mat-select  formControlName="category_id">
+                    <mat-option *ngFor="let category of categories" [value]="category.category_id">
+                        {{category.category_name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="checkError('category_id', 'required')">
+                    Campo obrigatório
+                </mat-error>
+                
+            </mat-form-field>
+        </div>
+  
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Especialidade</mat-label>
+                <input matInput type="text" placeholder="Especialidade" formControlName="speciality_name">
+                <mat-error *ngIf="checkError('speciality_name', 'required')">
+                Campo obrigatório
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+  
+        <div mat-dialog-actions style="text-align: right;">
+            <button mat-raised-button color="primary" type="submit" (click)="onSubmit();">{{ dialogButton }}</button>
+            
+            <span class="spacer"></span>
+            <button mat-button (click)="onDismiss()">Cancelar</button>
+        </div>
+  
+  
+  
+    </form>
+  
+  
+  </div>

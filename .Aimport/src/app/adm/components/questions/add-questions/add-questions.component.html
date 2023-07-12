@@ -1,0 +1,46 @@
+<div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">    
+
+    <h2 mat-dialog-title>{{dialogTitle}}</h2>
+  
+    <form [formGroup]="formAddQuestion" >
+
+
+        <div style="margin-top: 20px; margin-bottom: 20px;" fxLayout="row" fxLayoutAlign="start center">
+            <mat-radio-group formControlName="cq_status">
+                <mat-radio-button value="0">Desativada</mat-radio-button>
+                <mat-radio-button value="1">Ativada</mat-radio-button>
+            </mat-radio-group>
+        </div>
+  
+        <div class="text-inside">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nome da pergunta</mat-label>
+                <input matInput type="text" placeholder="Nome da pergunta" formControlName="cq_name">
+                <mat-error *ngIf="checkError('cq_name', 'required')">
+                Campo obrigatório
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div style="margin-top: 20px; margin-bottom: 20px;" fxLayout="row" fxLayoutAlign="start center">
+            <mat-radio-group formControlName="cq_type">
+                <mat-radio-button value="1">Paciente</mat-radio-button>
+                <mat-radio-button value="2">Secretaria</mat-radio-button>
+                <mat-radio-button value="3">Profissional</mat-radio-button>
+                <mat-radio-button value="4">Todos</mat-radio-button>
+            </mat-radio-group>
+        </div>
+  
+        <div mat-dialog-actions style="text-align: right;">
+            <button mat-raised-button color="primary" type="submit" (click)="onSubmit();">{{ dialogButton }}</button>
+            
+            <span class="spacer"></span>
+            <button mat-button (click)="onDismiss()">Cancelar</button>
+        </div>
+  
+  
+  
+    </form>
+  
+  
+  </div>

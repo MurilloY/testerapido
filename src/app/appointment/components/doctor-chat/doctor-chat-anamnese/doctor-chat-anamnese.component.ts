@@ -52,7 +52,6 @@ export class DoctorChatAnamneseComponent implements OnInit {
   }
 
   openAlertDialog(anamnese: any) {
-    console.log(anamnese['anam_id'])
 
 
     const dialogRef1 = this.dialog.open(AddChatAnamneseComponent, {
@@ -80,7 +79,6 @@ export class DoctorChatAnamneseComponent implements OnInit {
     this.appointmentService.getVerifyUrl(this.url).subscribe(
       data => {
 
-        console.log(data)
 
         this.token = data.token
         this.appointment = data.appointment;

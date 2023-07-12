@@ -1,0 +1,38 @@
+.paginacao-geral {
+    .paginas {
+        ::ng-deep .ngx-pagination .current {background: #485DFF;}
+
+        ::ng-deep .ngx-pagination a, ::ng-deep .ngx-pagination button {
+            color: rgba(65, 65, 65, 0.4);
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+}
+
+.contato {width: 200px; padding: 5px;}
+.nome {width: 100px; padding: 5px;}
+
+.pagamento {
+    button {
+        color: #E4E6EF;
+        width: 120px;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 20px;
+        text-align: center;
+        letter-spacing: 0.02em;
+        padding: 8px 12px;
+        border-radius: 100px;
+        .ponto {font-size: 25px; margin-right: 2px; display: inline-block;}
+    }
+
+    .active {
+        button {color: #50CD89; background: rgba(37, 211, 102, 0.08);}
+    }
+
+    .inactive {
+        button {color: #FF2252; background: rgba(255, 34, 82, 0.08);}
+    }
+
+}

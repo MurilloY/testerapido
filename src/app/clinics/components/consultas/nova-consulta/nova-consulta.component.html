@@ -1,4 +1,4 @@
-<app-header-nova-consulta [fixedHeader]="true" [progress]="progress" [showProgress]="true" [showBtnClose]="true"
+<app-header-nova-consulta [fixedHeader]="true" [progress]="progress" [showProgress]="true" [showBtnClose]="true" [logo]="clinic?.clinic_logo"
     (closeEvent)="onDismiss()"></app-header-nova-consulta>
 
 <section id="nova-consulta" class="container container2">
@@ -486,7 +486,7 @@
                         <div class="formulario">
                             <div class="form-a">
                                 <mat-form-field>
-                                    <input matInput formControlName="ua_cep" placeholder="CEP">
+                                    <input matInput formControlName="ua_cep" placeholder="CEP" mask="00.000-000" [dropSpecialCharacters]="false">
                                 </mat-form-field>
                             </div>
                             <div class="form-b">
@@ -607,8 +607,7 @@
                             </mat-error>
                         </div>
 
-                        <ng-container
-                            *ngIf="CadastroPacienteForm.value.companion == '1' ||  CadastroPacienteForm.value.of_age == '1'">
+                        <ng-container *ngIf="CadastroPacienteForm.value.companion == '1' ||  CadastroPacienteForm.value.of_age == '1'">
 
                             <h2>Dados do Titular</h2>
 
@@ -631,12 +630,24 @@
 
                             <div *ngIf="showFormTitular">
 
-                                <div>
-                                    <mat-form-field>
-                                        <input matInput formControlName="titular_name" placeholder="Nome Completo"
+                                <div class="formulario">
+                                    <div class="form-a">
+                                        <mat-form-field>
+                                            <input matInput formControlName="titular_name" placeholder="Nome Completo"
                                             required>
-                                    </mat-form-field>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-b">
+                                        <mat-form-field>
+                                            <mat-select formControlName="titular_gender" placeholder="Gênero">
+                                                <mat-option value="F">Feminino </mat-option>
+                                                <mat-option value="M">Masculino</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+        
+                                    </div>
                                 </div>
+
                                 <div class="formulario">
                                     <div class="form-a">
                                         <mat-form-field>
@@ -657,7 +668,7 @@
                                 <div class="formulario">
                                     <div class="form-a">
                                         <mat-form-field>
-                                            <input matInput formControlName="titular_phone"
+                                            <input matInput formControlName="titular_phone" [dropSpecialCharacters]="false" mask="(00) 0000-0000||(00) 0 0000-0000"
                                                 placeholder="Telefone/WhatsApp" required>
                                         </mat-form-field>
                                     </div>
@@ -688,7 +699,7 @@
                                     <div class="formulario">
                                         <div class="form-a">
                                             <mat-form-field>
-                                                <input matInput formControlName="titular_cep" placeholder="CEP"
+                                                <input matInput formControlName="titular_cep" placeholder="CEP" mask="00.000-000" [dropSpecialCharacters]="false"
                                                     required>
                                             </mat-form-field>
                                         </div>
@@ -819,13 +830,13 @@
                     <li *ngIf="modalidade == 1">
                         <span><img src="assets/images/icone-localizacao.svg" alt=""></span>
 
-                        {{clinic.clinic_address}}, {{clinic.clinic_number}} &bull; {{clinic.clinic_city}},
-                        {{clinic.clinic_state}}
+                        {{clinic?.clinic_address}}, {{clinic?.clinic_number}} &bull; {{clinic?.clinic_city}},
+                        {{clinic?.clinic_state}}
                     </li>
                     <li *ngIf="modalidade == 1">
                         <span></span>
                         <button mat-button class="btn-como-chegar"
-                            (click)="howToGet(clinic.lat_long)">
+                            (click)="howToGet(clinic?.lat_long!)">
                             Como chegar
                         </button>
                     </li>

@@ -8,6 +8,8 @@ import { UserProfile } from 'src/app/adm/returns/users_profile.return';
 import { AdmService } from 'src/app/adm/services/adm.service';
 import Swal from 'sweetalert2';
 import { AddUserProfileComponent } from './add-user-profile/add-user-profile.component';
+import { Clinica } from 'src/app/adm/returns/clinicbyid_return';
+import { Profile } from 'src/app/adm/returns/profiles.return';
 
 @Component({
   selector: 'app-clinic-users',
@@ -23,6 +25,9 @@ export class ClinicUsersComponent implements OnInit {
   clinic_id?: string;
   clinic?: Clinic
   users_profile?: UserProfile[];
+  clinic_info: Clinica
+  profiles?: Profile[];
+  updatestatus: any
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +41,33 @@ export class ClinicUsersComponent implements OnInit {
       this.clinic_id = params['clinic_id']
 
       this.getClinic();
+      this.getClinica()
+      this.getProfiles()
     });
+  }
+
+  updateStatusUserProfile(data:any) {
+    let dados = {
+      up_status: data["up_status"] === 1 ? 0 : 1
+    }
+    this.admService.updateStatusUserProfile(data["up_id"], dados).subscribe(data => {
+      this.updatestatus = data
+      this.getUsersProfile()
+    })
+  }
+
+  getClinica() {
+    this.admService.clinicByid(this.clinic_id!).subscribe(
+      data => {
+        this.clinic_info = data.clinic;
+        console.log(this.clinic_info);
+
+
+      },
+      err => {
+
+      }
+    );
   }
 
   getClinic() {
@@ -68,6 +99,20 @@ export class ClinicUsersComponent implements OnInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
+
+  getProfiles(){
+
+    this.admService.getProfiles('1', this.clinic_id!).subscribe(data => {
+
+      if(data.refreshToken) {
+        localStorage.setItem("admToken", data.refreshToken)
+      }
+
+      this.profiles = data.profile;
+      this.dataSource.paginator = this.paginator;
+    
+    }
+  )}
   
 
   getUsersProfile(){
@@ -79,6 +124,7 @@ export class ClinicUsersComponent implements OnInit {
       }
 
       this.users_profile = data.UserProfiles;
+      console.log(this.users_profile)
 
       this.dataSource = new MatTableDataSource<UserProfile>(this.users_profile);
       this.dataSource.paginator = this.paginator;
@@ -110,25 +156,34 @@ export class ClinicUsersComponent implements OnInit {
   }
 
   
-  addUser(){
-    const dialogRef = this.dialog.open(AddUserProfileComponent, {
-      panelClass: 'my-full-screen-dialog',
-      disableClose: false,
-      data: {
-        clinic_id: this.clinic_id,
-        user: null
-      }
-    });
-
-
-    dialogRef.afterClosed().subscribe(dialogResult => {
-
-      if (dialogResult) {
-
-        this.getUsersProfile();
-      }
-
-    });
+  addUser() {
+    if (this.profiles?.length !== 0) {
+      const dialogRef = this.dialog.open(AddUserProfileComponent, {
+        panelClass: 'my-full-screen-dialog',
+        disableClose: false,
+        data: {
+          clinic_id: this.clinic_id,
+          user: null
+        }
+      });
+  
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if (dialogResult) {
+          this.getUsersProfile();
+        }
+      });
+    } else {
+      Swal.fire({
+        heightAuto: false,
+        title: 'Aviso',
+        text: 'Por favor, cadastre um perfil primeiro.',
+        icon: 'warning',
+        iconColor: '#01AEEF',
+        showCancelButton: false,
+        confirmButtonColor: '#01AEEF',
+        confirmButtonText: 'OK'
+      });
+    }
   }
 
   editUser(data:any){
@@ -153,5 +208,12 @@ export class ClinicUsersComponent implements OnInit {
     });
 
   }
+
+  delete(data:any){
+
+    console.log(data)
+
+  }
+
 
 }

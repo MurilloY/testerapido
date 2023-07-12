@@ -1,0 +1,89 @@
+<section id="nav-prontuario">
+    <div class="container">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon" style="border-radius: 8px; background-color: #485DFF;" (click)="backRoute()" matTooltip="Voltar para agendamentos">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <div class="logo">
+            <img class="img-logo-clinic" src="assets/images/logotipo.png">
+        </div>
+        <div class="menu" (click)="showMenu = !showMenu">
+            <mat-icon>menu</mat-icon>
+        </div>
+        <div class="acoes" [class.show]="showMenu">
+            <nav>
+                <a routerLink="/profissional/agendamento/{{app_id}}/paciente/{{pc_id}}/anamnese" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                    <img src="assets/images/icone-anamnese.svg" alt=""> 
+                    Anamnese
+                </a>
+                <a routerLink="/profissional/agendamento/{{app_id}}/paciente/{{pc_id}}/receituario" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                    <img src="assets/images/icone-receituario.svg" alt=""> 
+                    Receituário
+                </a>
+                <a routerLink="/profissional/agendamento/{{app_id}}/paciente/{{pc_id}}/atestado" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                    <img src="assets/images/icone-atestado.svg" alt=""> 
+                    Atestado
+                </a>
+                <a routerLink="/profissional/agendamento/{{app_id}}/paciente/{{pc_id}}/anexos" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                    <img src="assets/images/icone-anexos.svg" alt=""> 
+                    Anexos
+                </a>
+                <a *ngIf="consultaOnline" routerLink="/profissional/agendamento/{{app_id}}/paciente/{{pc_id}}/mensagens" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                    <img src="assets/images/icone-conversas.svg" alt=""> 
+                    Conversas
+                </a>
+            </nav>
+            <div class="acoes-menu">
+                <div class="usuario">
+                    <span class="nome">Dr(a). {{user.user_name}}</span>
+    
+                    <div class="acao">
+                        <button mat-button [matMenuTriggerFor]="navAccount" class="acao-usuario">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </button>
+                        <mat-menu #navAccount="matMenu">
+                            <button mat-menu-item (click)="meuPerfil()">Meu perfil</button>
+                            <!-- <button mat-menu-item>Notificações</button> -->
+                            <button mat-menu-item (click)="logOut()">Sair</button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sessao-prontuario" class="container container2">
+    
+    <aside class="sidebar-prontuario">
+        <h2 class="subtitulo" style="font-size: 25px;">Prontuário</h2>
+
+        <div class="sidebar">
+            <div class="img">
+                <img [attr.src]="appointment?.pacient?.user_photo ? (appointment?.pacient?.user_photo! | secure | async) : 'assets/images/user.png'" style="height: 94px; border-radius: 50%; width: 94px; object-fit: cover;">
+                <div class="btn">
+                    <img src="assets/images/icone-editar.svg" alt="">                    
+                </div>
+            </div>
+
+            <p class="nome">{{appointment?.pacient?.pc_name}}</p>
+            <p>{{calculateAge(appointment?.pacient?.birth_data!)}} anos &bull; {{appointment?.pacient?.birth_data | date: 'dd/MM/yyyy'}}</p>
+            <p>{{appointment?.pacient?.user_address?.ua_city}}, {{appointment?.pacient?.user_address?.ua_uf}}</p>
+            <p>{{appointment?.pacient?.user_address?.ua_name_street}}, {{appointment?.pacient?.user_address?.ua_house_number}}</p>
+
+            <h3>Consulta Selecionada</h3>
+            <div>
+                <p>{{appointment?.professional?.clinic_name | slice:0:18}}...</p>
+                <p>{{appointment?.appointment?.date| date: 'dd/MM/yyyy'}} , às {{appointment?.appointment?.start_time}} horas</p>
+                <p>{{appointment?.appointment?.app_type_name}}</p>
+            </div>
+        </div>
+    </aside>
+    <!-- <router-outlet></router-outlet> -->
+
+    <section class="prontuario-informacoes">
+        <router-outlet></router-outlet>
+    </section>
+
+</section>
+
+

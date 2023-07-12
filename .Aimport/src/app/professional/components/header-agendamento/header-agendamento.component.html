@@ -1,0 +1,99 @@
+<div id="validar-conta" *ngIf="validarConta">
+    <a href="#">
+        <span class="material-symbols-outlined">error</span>
+        Enviamos um SMS com um código de segurança para o seu celular. Validar conta
+    </a>
+</div>
+
+<div id="header-site-ghost" [class.validar-conta]="validarConta"></div>
+<header id="header-site" [class.validar-conta]="validarConta" [class.scrollPage]="scrollPage">
+    <div class="header">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon"
+                style="border-radius: 8px; background-color: #485DFF; margin-right: 35px;" (click)="backRoute()"
+                matTooltip="Voltar para pacientes" *ngIf="buttonBack">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        <div class="logo">
+            <img class="img-logo-clinic" src="assets/images/logotipo.png">
+        </div>
+        <nav class="nav-site">
+            <ul>
+                <li>
+                    <div class="home" *ngIf="showBtnHome">
+                        <button mat-button>
+                            <img src="assets/images/icone-home.svg" alt="">
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <button mat-button class="main-nav" *ngIf="showInfo" [routerLink]="['/profissional/agendamentos']"
+                        routerLinkActive="active">
+                        Agendamentos
+                    </button>
+                </li>
+                <li>
+                    <button mat-button class="main-nav" *ngIf="showInfo" [routerLink]="['/profissional/pacientes']"
+                        routerLinkActive="active">Pacientes</button>
+                </li>
+
+                <li>
+                    <button mat-button class="main-nav notifications has-notification" *ngIf="showInfo"
+                        (click)="notifications()" matTooltip="Ver notificações das consultas">
+                        <span class="material-symbols-outlined">notifications_active</span>
+                        <span class="alert-notification"></span>
+                    </button>
+                </li>
+                <li>
+                    <div class="main-nav notifications has-notification" *ngIf="showBtnClose">
+                        <button mat-button (click)="closeDialog()"><span
+                                class="material-symbols-outlined">close</span></button>
+                    </div>
+                </li>
+
+            </ul>
+        </nav>
+
+        <section id="nav-prontuario" *ngIf="consultaPaciente">
+            <div class="container">
+                <h1 class="titulo-perfil">
+                    Consultas
+                </h1>
+                <div class="menu" (click)="showMenu = !showMenu">
+                    <mat-icon>menu</mat-icon>
+                </div>
+                <div class="acoes" [class.show]="showMenu">
+                </div>
+            </div>
+        </section>
+
+        <div class="acoes-menu" *ngIf="showPerfil">
+            <div class="mobile">
+                <button mat-icon-button [matMenuTriggerFor]="navMobile">
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <mat-menu #navMobile="matMenu">
+                    <button mat-menu-item [routerLink]="['/profissional/agendamentos']"
+                        routerLinkActive="active">Agendamentos</button>
+                    <button mat-menu-item>Pacientes</button>
+                </mat-menu>
+
+            </div>
+
+            <div class="usuario">
+                <span class="nome">Dr(a). {{user.user_name}}</span>
+
+                <div class="acao">
+                    <button mat-button [matMenuTriggerFor]="navAccount" class="acao-usuario">
+                        <span class="material-symbols-outlined">account_circle</span>
+                    </button>
+                    <mat-menu #navAccount="matMenu">
+                        <button mat-menu-item (click)="meuPerfil()">Meu perfil</button>
+                        <!-- <button mat-menu-item>Notificações</button> -->
+                        <button mat-menu-item (click)="logOut()">Sair</button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

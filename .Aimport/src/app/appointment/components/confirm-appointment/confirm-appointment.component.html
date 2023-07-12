@@ -1,0 +1,94 @@
+<app-header-appointment></app-header-appointment>
+
+<section id="nova-consulta" class="container container2">
+    <ng-container>
+        <h1 class="titulo-acao">Confirmar presença!</h1>
+
+        <div class="agendamento-detalhes">
+            <div class="detalhes">
+                <h2>Dr(a). {{appointment?.professional?.prof_name}}</h2>
+                <p>O atendimeto {{appointment!.appointment.app_type_id == 1 ? 'presencial' : 'online'}} está agendado
+                    conforme as informações listadas abaixo</p>
+
+                <ul>
+                    <li>
+                        <span><img src="assets/images/icone-calendario.svg" alt=""></span>
+                        Dia {{appointment!.appointment.date | date: 'd'}} de {{appointment!.appointment.date | date:
+                        'MMMM'}} de {{appointment!.appointment.date | date: 'y'}} às
+                        {{appointment!.appointment.start_time}} horas
+                    </li>
+                    <div *ngIf="appointment!.appointment.app_type_id == 1" class="lembrete">
+                        <li>
+                            <span><img src="assets/images/icone-localizacao.svg" alt=""></span>
+
+                            {{appointment!.professional.clinic_address}}, {{appointment!.professional.clinic_number}}
+                            &bull; {{this.appointment!.professional.clinic_town}},
+                            {{appointment!.professional.clinic_state}}
+                        </li>
+                        <li>
+                            <span></span>
+                            <button mat-button class="btn-como-chegar"
+                                (click)="howToGet(appointment!.professional.lat_long)">
+                                Como chegar
+                            </button>
+                        </li>
+
+                    </div>
+                </ul>
+            </div>
+            <div class="detalhes">
+                <h2>{{appointment!.pacient.pc_name}}</h2>
+                <p>Informações do paciente</p>
+
+                <ul>
+                    <li>
+                        <span><img src="assets/images/icone-email.svg" alt=""></span>
+                        {{appointment!.pacient.pc_email}}
+                    </li>
+                    <li>
+                        <span><img src="assets/images/icone-celular.svg" alt=""></span>
+                        {{appointment!.pacient.pc_phone}}
+                    </li>
+                </ul>
+            </div>
+            <div class="lembrete" *ngIf="appointment!.appointment.status_id == 1">
+                <div class="info">
+                    Confirme as informações e clique no botão para confirmar sua presença
+                </div>
+                <div class="btn">
+                    <button mat-button class="btn-padrao" (click)="confirmAppointment()">
+                        Confirmar presença
+                    </button>
+
+                </div>
+
+                <div class="btn">
+                    <button mat-button class="btn-cancelar" (click)="cancelAlert()">
+                        Cancelar agendamento
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="appointment!.appointment.status_id == 3" class="lembrete">
+                <div class="info" style="color: red;">
+                    Sua consulta foi cancelada.
+                </div>
+            </div>
+
+            <div *ngIf="appointment!.appointment.status_id == 4" class="lembrete">
+                <div class="info" style="color: #485DFF;">
+                    Agora que sua consulta já está confirmada, coloque na agenda para não esquecer.
+                </div>
+                <div class="btn">
+                    <button mat-button class="btn-cancelar" (click)="cancelAlert()">
+                        Cancelar agendamento
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+
+    </ng-container>
+
+</section>

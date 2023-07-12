@@ -41,6 +41,8 @@ export class AddUserProfileComponent implements OnInit {
   pro_id?: string;
   status: string = '1';
   birth_data: string
+  photodefault = true;
+  photobase64: any;
 
   cpf?: string;
 
@@ -87,7 +89,7 @@ export class AddUserProfileComponent implements OnInit {
 
 
     this.firstFormGroup = this._formBuilder.group({
-      user_photo: new FormControl(this.user_photo),
+      user_photo: new FormControl(this.photobase64),
       user_name: new FormControl(this.user_name, [Validators.required]),
       user_email: new FormControl(this.user_email, [Validators.required, Validators.email]),
       user_phone: new FormControl(this.user_phone, [Validators.required]),
@@ -147,6 +149,7 @@ export class AddUserProfileComponent implements OnInit {
       data1.user_password = (Math.floor(100000 + Math.random() * 900000)).toString();
       data1.user_photo = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
       data1.user_status = 1;
+      data1.photoisdefault = this.photodefault
 
       if(this.user != null){
 
@@ -198,8 +201,7 @@ export class AddUserProfileComponent implements OnInit {
         if (this.userInsert) {
 
           this.admService.insertUser(data1).subscribe(
-            data => {
-  
+            data => {              
   
               let data2 = {
                 user_id: data['user_id'],
@@ -344,7 +346,7 @@ export class AddUserProfileComponent implements OnInit {
       // When file uploads set it to file formcontrol
       reader.onload = () => {
         this.imageUrl = reader.result;
-
+        this.photodefault = false;
         this.editFile = false;
         this.removeUpload = true;
       }
@@ -356,11 +358,12 @@ export class AddUserProfileComponent implements OnInit {
   // Function to remove uploaded file
   removeUploadedFile() {
     let newFileList = Array.from(this.el!.nativeElement.files);
-    this.imageUrl = '/assets/img/user.png';
+    this.imageUrl = '/assets/images/user.png';
     this.editFile = true;
     this.removeUpload = false;
+    this.photodefault = true
     this.firstFormGroup.patchValue({
-      photo: ""
+      photo: this.photobase64
     });
   }
 
@@ -368,7 +371,7 @@ export class AddUserProfileComponent implements OnInit {
 
     // this.firstFormGroup.reset();
 
-    this.imageUrl = '/assets/img/user.png';
+    this.imageUrl = '/assets/images/user.png';
 
 
     if (cpf.isValid(this.cpf!)) {

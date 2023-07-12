@@ -1,0 +1,216 @@
+<mat-toolbar class="example-spacer">
+    <button mat-icon-button (click)="onDismiss()" class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>close</mat-icon>
+    </button>
+    <span>{{dialogTitle}}</span>
+    <span class="example-spacer"></span>
+    <button mat-button type="submit" (click)="onSubmit()" form="ngForm">
+        SALVAR
+    </button>
+</mat-toolbar>
+
+<div style="margin: 20px; padding-top: 60px;">
+
+    <form [formGroup]="clinicFormGroup" id="ngForm" #documentEditForm="ngForm">
+
+
+
+        <div style="margin-top: 20px; margin-bottom: 20px;" fxLayout="row" fxLayoutAlign="center center">
+            <mat-radio-group formControlName="clinic_status">
+                <mat-radio-button value="0">Desativado</mat-radio-button>
+                <mat-radio-button value="1">Ativado</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="avatar-upload">
+            <div class="avatar-edit">
+                <input formControlName="clinic_logo" type='file' id="imageUpload" accept=".png, .jpg, .jpeg"
+                    (change)="uploadFile($event)" #fileInput />
+
+                <label for="imageUpload" *ngIf="editFile" [ngClass]="['custom-label', 'upload-image']"></label>
+                <label *ngIf="removeUpload" [ngClass]="['custom-label', 'remove-image']"
+                    (click)="removeUploadedFile()"></label>
+            </div>
+            <div class="avatar-preview">
+                <img id="imagePreview" style="height: 120px; width: 120px;" [src]="clinic_logo">
+            </div>
+            <mat-error *ngIf="checkError('clinic_logo', 'required')">
+                Foto obrigatória
+            </mat-error>
+        </div>
+
+
+
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" fxLayout.xs="column">
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nome da clínica</mat-label>
+                <input matInput formControlName="clinic_name" required>
+                <mat-error *ngIf="checkError('clinic_name', 'required')">
+                    campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>CNPJ</mat-label>
+                <input matInput formControlName="clinic_cnpj" mask="00.000.000/0000-00" [dropSpecialCharacters]="false"
+                    required>
+                <mat-error *ngIf="checkError('clinic_cnpj', 'required')">
+                    Campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" fxLayout.xs="column">
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Endereço</mat-label>
+                <input matInput formControlName="clinic_address" required>
+                <mat-error *ngIf="checkError('clinic_address', 'required')">
+                    campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Número</mat-label>
+                <input matInput formControlName="clinic_number" required>
+                <mat-error *ngIf="checkError('clinic_number', 'required')">
+                    Campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Bairro</mat-label>
+                <input matInput formControlName="clinic_neighborhood" required>
+                <mat-error *ngIf="checkError('clinic_neighborhood', 'required')">
+                    Campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" fxLayout.xs="column">
+
+                <mat-form-field appearance="outline" class="example-full-width" >
+                    <input matInput formControlName="clinic_cep" placeholder="CEP" mask="00.000-000" [dropSpecialCharacters]="false" required>
+                    <mat-error *ngIf="checkError('clinic_cep', 'required')">
+                        Campo obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Estado</mat-label>
+                <mat-select matNativeControl formControlName="clinic_state"
+                    (selectionChange)="selectedState($event.value)" required>
+                    <mat-option value="AC">Acre</mat-option>
+                    <mat-option value="AL">Alagoas</mat-option>
+                    <mat-option value="AP">Amapá</mat-option>
+                    <mat-option value="AM">Amazonas</mat-option>
+                    <mat-option value="BA">Bahia</mat-option>
+                    <mat-option value="CE">Ceará</mat-option>
+                    <mat-option value="DF">Distrito Federal</mat-option>
+                    <mat-option value="ES">Espírito Santo</mat-option>
+                    <mat-option value="GO">Goiás</mat-option>
+                    <mat-option value="MA">Maranhão</mat-option>
+                    <mat-option value="MT">Mato Grosso</mat-option>
+                    <mat-option value="MS">Mato Grosso do Sul</mat-option>
+                    <mat-option value="MG">Minas Gerais</mat-option>
+                    <mat-option value="PA">Pará</mat-option>
+                    <mat-option value="PB">Paraíba</mat-option>
+                    <mat-option value="PR">Paraná</mat-option>
+                    <mat-option value="PE">Pernambuco</mat-option>
+                    <mat-option value="PI">Piauí</mat-option>
+                    <mat-option value="RJ">Rio de Janeiro</mat-option>
+                    <mat-option value="RN">Rio Grande do Norte</mat-option>
+                    <mat-option value="RS">Rio Grande do Sul</mat-option>
+                    <mat-option value="RO">Rondônia</mat-option>
+                    <mat-option value="RR">Roraima</mat-option>
+                    <mat-option value="SC">Santa Catarina</mat-option>
+                    <mat-option value="SP">São Paulo</mat-option>
+                    <mat-option value="SE">Sergipe</mat-option>
+                    <mat-option value="TO">Tocantins</mat-option>
+                </mat-select>
+                <mat-error *ngIf="checkError('clinic_state', 'required')">
+                    Campo requerido
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Cidade</mat-label>
+                <mat-select placeholder="Using array of objects" formControlName="clinic_city">
+                    <mat-option *ngFor="let item of cities" [value]="item">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="checkError('clinic_city', 'required')">
+                    Campo requerido
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+
+
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" fxLayout.xs="column">
+
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="clinic_email" required>
+                <mat-error *ngIf="checkError('clinic_email', 'required')">
+                    Campo obrigatório
+                </mat-error>
+                <mat-error *ngIf="checkError('clinic_email', 'email')">
+                    Digite um e-mail válido
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Telefone</mat-label>
+                <input matInput formControlName="clinic_phone" mask="(00) 0000-0000||(00) 0 0000-0000" required>
+                <mat-error *ngIf="checkError('clinic_phone', 'required')">
+                    Campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Site</mat-label>
+                <input matInput formControlName="clinic_site" required>
+                <mat-error *ngIf="checkError('clinic_site', 'required')">
+                    Campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+
+
+
+        </div>
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center" fxLayout.xs="column">
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Subdomínio</mat-label>
+                <input matInput formControlName="subdomain" required>
+                <mat-error *ngIf="checkError('subdomain', 'required')">
+                    campo obrigatório
+                </mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Coordenadas</mat-label>
+                <input matInput formControlName="lat_long">
+            </mat-form-field>
+
+
+        </div>
+
+
+    </form>
+</div>

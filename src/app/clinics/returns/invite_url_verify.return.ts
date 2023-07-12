@@ -1,7 +1,7 @@
 export interface ReturnClinicUrlVerify {
     message: string
     clinic: Clinicurl
-    refreshToken: string
+    token: string
   }
   
   export interface Clinicurl {

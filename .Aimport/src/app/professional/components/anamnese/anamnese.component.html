@@ -1,0 +1,67 @@
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: baseline;">
+    <h2 class="subtitulo">Anamneses</h2>
+    <div class="btn">
+        <button mat-button class="btn-padrao" (click)="openAlertDialog2()">Emitir anamnese</button>
+    </div>
+</div>
+
+<div class="relatorio-anexos">
+    <div class="relatorio-receitas">
+        <div class="info">
+            <div class="qtd">{{sortedData.length}}</div>
+            <p>
+                Anamnese(s)<br>
+                anexada(s)
+            </p>
+        </div>
+    </div>
+
+    <!-- <div class="upload">
+                <input type="file" #upload name="">
+                <div class="img">
+                    <img src="assets/images/icone-upload.svg" alt="">
+                </div>
+                <p class="txt1">Arraste e solte ou clique para anexar</p>
+                <p class="txt2">Arquivos suportados: PDF, JPG e PNG</p>
+            </div> -->
+</div>
+
+<h2 class="subtitulo">Anamneses</h2>
+
+<div class="receitas"
+    *ngFor="let item of sortedData | paginate: { itemsPerPage: totalItens, currentPage: p }; let idx = index">
+    <div class="info">Anamnese {{ getAnamneseNumber(idx) }}</div>
+    <div class="data">
+        {{ item.date | date: 'dd/MM/yyyy' }}
+    </div>
+    <div class="profissional">
+        {{ item.clinic_name | slice:0:18}}...
+    </div>
+    <div class="btn">
+        <button mat-button (click)="openAlertDialog(item)" matTooltip="Visualizar anamnese">
+            <span class="material-symbols-outlined">visibility</span>
+            <!-- <img src="assets/images/icone-editar2.svg" alt=""> -->
+        </button>
+    </div>
+</div>
+
+<div class="paginacao">
+
+    <div class="exibindo">
+        <mat-menu #total="matMenu">
+            <button mat-menu-item (click)="totalItens = 4">4</button>
+            <button mat-menu-item (click)="totalItens = 10">10</button>
+            <button mat-menu-item (click)="totalItens = 50">50</button>
+            <button mat-menu-item (click)="totalItens = 100">100</button>
+        </mat-menu>
+    </div>
+
+    <div class="paginas" *ngIf="sortedData.length > 0">
+        <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
+    </div>
+    <div class="paginacao-geral" *ngIf="sortedData.length === 0">
+        <div class="paginas">
+            <h2 class="piscar" style="color: #485DFF;">Não possui anamneses</h2>
+        </div>
+    </div>
+</div>

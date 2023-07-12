@@ -1,0 +1,431 @@
+<app-paciente-header-consulta [fixedHeader]="true" [progress]="progress" [showProgress]="true" [showBtnClose]="true"
+    (closeEvent)="onDismiss()"></app-paciente-header-consulta>
+
+<section id="nova-consulta" class="container container2">
+
+    <!-- Início Etapa 1 -->
+    <ng-container *ngIf="etapa == 1">
+        <h1 class="titulo-acao">Escolha a modalidade do atendimento</h1>
+
+        <mat-radio-group name="modalidade" [(ngModel)]="modalidade">
+            <mat-radio-button value="2">Atendimento Online</mat-radio-button>
+            <mat-radio-button value="1">Atendimento Presencial</mat-radio-button>
+        </mat-radio-group>
+
+        <div class="info-atendimento-online" *ngIf="modalidade == 2">
+            <span class="material-symbols-outlined">videocam</span>
+            O atendimento será pelo seu aparelho celular ou computador pessoal do paciente.
+        </div>
+
+        <div class="info-error" *ngIf="modalidade == 0">
+            <span class="material-symbols-outlined">error</span>
+            Escolha uma modalidade para continuar com o atendimento.
+        </div>
+
+        <div class="info-atendimento-online" *ngIf="modalidade == 1">
+            <mat-select placeholder="Cidades para atendimento" [(ngModel)]="selectedCity"
+                (selectionChange)="getCategories()">
+                <mat-option *ngFor="let city of cities" [value]="city.clinic_town">
+                    {{city.clinic_town}} • {{city.clinic_state}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+
+        <div class="form-acoes">
+            <div class="acoes">
+
+                <div class="btn-continuar">
+                    <button mat-button class="btn-padrao"
+                        [disabled]="modalidade == 0 || (modalidade == 1 && (!selectedCity || selectedCity.trim() === ''))"
+                        (click)="nextStep()">
+                        Continuar <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <!-- Fim Etapa 1 -->
+
+    <!-- Início Etapa 2 -->
+    <ng-container *ngIf="etapa == 2">
+        <h1 class="titulo-acao">Você está procurando por profissional ou uma cliníca</h1>
+
+        <mat-radio-group name="type" [(ngModel)]="type">
+            <mat-radio-button value="2">Profissional</mat-radio-button>
+            <mat-radio-button value="1">Cliníca</mat-radio-button>
+        </mat-radio-group>
+
+        <div class="form-acoes">
+            <div class="acoes">
+
+                <div class="btn-continuar">
+                    <button mat-button class="btn-padrao"
+                        [disabled]="modalidade == 0 || (modalidade == 1 && (!selectedCity || selectedCity.trim() === ''))"
+                        (click)="nextStep()">
+                        Continuar <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <!-- Fim Etapa 2 -->
+
+    <!-- Início Etapa 3 -->
+    <ng-container *ngIf="etapa == 3">
+        <h1 class="titulo-acao">Escolha uma especialidade para este atendimento</h1>
+
+        <div class="box-select">
+            <mat-select placeholder="Especialidades para atendimento" [(ngModel)]="selectedCat"
+                (selectionChange)="selectedProfessionalSpeciality()">
+
+                <mat-option *ngFor="let category of categories" [value]="category.cat_id">
+                    {{category.cat_name}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+        <div class="info-error" *ngIf="selectedCat == ''">
+            <span class="material-symbols-outlined">error</span>
+            Escolha uma especialidade para continuar com o atendimento.
+        </div>
+
+        <div class="form-acoes">
+            <div class="acoes">
+                <div class="btn-acao-voltar">
+                    <button mat-button class="btn-voltar" (click)="previousStep()">
+                        <span class="material-symbols-outlined">chevron_left</span> Voltar
+                    </button>
+                </div>
+
+                <div class="btn-continuar">
+                    <button mat-button class="btn-padrao" [disabled]="selectedCat == ''" (click)="nextStep()">
+                        Continuar <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <!-- Fim Etapa 3 -->
+
+    <!-- Início Etapa 3 -->
+    <ng-container *ngIf="etapa == 3">
+        <h1 class="titulo-acao">Escolha o profissional para o atendimento</h1>
+
+        <h2 class="txt-total-profissionais">{{professionalsAll.length}} profissional(is) credenciado(s)</h2>
+
+        <div class="bloco-pesquisa">
+            <div class="box-pesquisa">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" placeholder="Busque pelo nome do profissional" (keyup)="onKeypressEvent($event)">
+            </div>
+
+            <div class="btn-calendario">
+                <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="dateSelected"
+                    (dateChange)="handleDOBChange($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </div>
+
+        </div>
+
+        <div class="box-profissional" *ngFor="let prof of professionalsAgenda">
+
+            <div class="img">
+                <img [attr.src]="prof.user_photo | secure | async" alt="" style="height: 84px; width: 84px; object-fit: cover;">
+            </div>
+
+            <div class="profissional">
+                <h2>Dr(a). {{prof.user_name}}</h2>
+                <div class="funcao" *ngFor="let spec of prof.specialties">
+                    {{spec.cat_name}} • {{spec.spe_name}}
+                </div>
+                <div class="crm" *ngFor="let spec of prof.specialties">
+                    N.º {{spec.rt_number}}
+                </div>
+            </div>
+
+            <div class="endereco">
+                <p>Clinica: {{prof.clinic.clinic_name| slice:0:18}}...</p>
+                <p>{{prof.clinic.clinic_city}}, {{prof.clinic.clinic_state}}</p>
+                <p>{{prof.clinic.clinic_address}}, {{prof.clinic.clinic_number}}</p>
+                <div class="avaliacoes">
+                    <div class="stars">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star2.svg" alt="">
+                    </div>
+                    <div class="txt">64 avaliações</div>
+                </div>
+            </div>
+
+            <div class="btn-agendar">
+                <button mat-button (click)="selectProfessional(prof)" [disabled]="prof.availability == 0">
+                    Agendar
+                </button>
+            </div>
+        </div>
+
+
+
+        <div class="form-acoes">
+            <div class="acoes">
+                <div class="btn-acao-voltar">
+                    <button mat-button class="btn-voltar" (click)="previousStep()">
+                        <span class="material-symbols-outlined">chevron_left</span> Voltar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <!-- Fim Etapa 3 -->
+
+    <!-- Início Etapa 4 -->
+    <ng-container *ngIf="etapa == 4">
+        <h1 class="titulo-acao">Escolha o dia e horário para o atendimento</h1>
+
+        <h2 class="txt-total-profissionais">Profissional selecionado</h2>
+
+        <div class="box-profissional">
+
+            <div class="img">
+                <img [attr.src]="professionalSelected.user_photo| secure | async" alt="" style="height: 94px; width: 94px; object-fit: cover;">
+            </div>
+
+            <div class="profissional">
+                <h2>Dr(a). {{professionalSelected.user_name}} </h2>
+                <div class="funcao" *ngFor="let spec of professionalSelected.specialties">
+                    {{spec.cat_name}} • {{spec.spe_name}}
+                </div>
+                <div class="crm" *ngFor="let spec of professionalSelected.specialties">
+                    N.º {{spec.rt_number}}
+                </div>
+
+            </div>
+
+            <div class="endereco">
+                <p>{{professionalSelected.clinic.clinic_city}}, {{professionalSelected.clinic.clinic_state}}</p>
+                <p>{{professionalSelected.clinic.clinic_address}}, {{professionalSelected.clinic.clinic_number}}</p>
+                <div class="avaliacoes">
+                    <div class="stars">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star2.svg" alt="">
+                    </div>
+                    <div class="txt">64 avaliações</div>
+                </div>
+            </div>
+
+            <div class="acao"></div>
+        </div>
+
+        <div class="type-appointment">
+                <mat-radio-button value="1" class="adad">Nova consulta</mat-radio-button>
+                <mat-radio-button value="0" class="adad">Retorno</mat-radio-button>
+        </div>
+
+        <div class="info-error" *ngIf="free_time_selected == null">
+            <span class="material-symbols-outlined">error</span>
+            Selecione um período
+        </div>
+        <div>
+            <div class="range">
+                <label>Selecione um período</label>
+            </div>
+
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle (change)="onValChange($event.value)" *ngFor="let ft of free_time; let i = index"
+                    [value]="i">{{ft.start_time}} às {{ft.end_time}}</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+
+        <div class="calendario-acoes m-top">
+            <div class="data">
+                <label>Data do atendimento</label>
+                <mat-form-field appearance="fill">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="dateSelected" disabled>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="!disabledHour" class="horarios">
+                <div class="inicio">
+                    <label>Começo do atendimento</label>
+                    <div class="time">
+                        <input type="time" matInput [(ngModel)]="startAppointment" required [disabled]="disabledHour">
+                    </div>
+                    <mat-error *ngIf="startAppointment < free_time_selected?.start_time!">
+                        Não pode ser menor que {{free_time_selected?.start_time!}}
+                    </mat-error>
+                    <mat-error *ngIf="startAppointment >= free_time_selected?.end_time!">
+                        Tem que ser menor que {{free_time_selected?.end_time!}}
+                    </mat-error>
+                    <mat-error *ngIf="startAppointment == null">
+                        Selecione um horário
+                    </mat-error>
+                </div>
+                <div class="fim">
+                    <label>Final do atendimento</label>
+                    <div class="time">
+                        <input type="time" [(ngModel)]="endAppointment" matInput required [disabled]="disabledHour">
+                    </div>
+                    <mat-error *ngIf="endAppointment > free_time_selected?.end_time!">
+                        Não pode ser maior que {{free_time_selected?.end_time!}}
+                    </mat-error>
+                    <mat-error *ngIf="endAppointment < free_time_selected?.start_time!">
+                        Não pode ser menor que {{free_time_selected?.start_time!}}
+                    </mat-error>
+                    <mat-error *ngIf="endAppointment <= startAppointment">
+                        Tem que ser maior que o inicio
+                    </mat-error>
+                    <mat-error *ngIf="endAppointment == null">
+                        Selecione um horário
+                    </mat-error>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-acoes">
+            <div class="acoes">
+                <div class="btn-acao-voltar">
+                    <button mat-button class="btn-voltar" (click)="previousStep()">
+                        <span class="material-symbols-outlined">chevron_left</span> Voltar
+                    </button>
+                </div>
+
+                <div class="btn-continuar">
+                    <button mat-button class="btn-padrao" (click)="selectHour()">
+                        Continuar <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <!-- Fim Etapa 4 -->
+
+    <!-- Início Etapa 5 -->
+    <ng-container *ngIf="etapa == 5">
+
+        <h1 class="titulo-acao">Para quem é este agendamento?</h1>
+
+        <mat-radio-group name="titular" [(ngModel)]="titular">
+            <mat-radio-button value="1">Para {{user.user_name}}</mat-radio-button>
+            <mat-radio-button value="2">Dependente</mat-radio-button>
+        </mat-radio-group>
+
+        <div class="info-atendimento-online" *ngIf="titular == 2">
+            <mat-select placeholder="Cidades para atendimento" [(ngModel)]="selectedHolders"
+                (selectionChange)="getHolders()">
+                <mat-option *ngFor="let holder of holders" [value]="holder.user_name">
+                    {{holder.user_phone}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+        <div class="info-error" *ngIf="titular == 0">
+            <span class="material-symbols-outlined">error</span>
+            Escolha uma modalidade para continuar com o atendimento.
+        </div>
+
+        <div class="form-acoes">
+            <div class="acoes">
+
+                <div class="btn-continuar">
+                    <button mat-button class="btn-padrao"
+                        [disabled]="modalidade == 0 || (modalidade == 1 && (!selectedCity || selectedCity.trim() === ''))"
+                        (click)="nextStep()">
+                        Continuar <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <!-- Fim Etapa 5 -->
+
+    <!-- Início Etapa 6 -->
+    <ng-container *ngIf="etapa == 6">
+        <h1 class="titulo-acao">Agendamento quase pronto!</h1>
+
+        <div class="agendamento-detalhes">
+            <div class="detalhes">
+                <h2>Dr(a). {{professionalSelected.user_name}}</h2>
+                <p>O atendimeto {{modalidade == 1 ? 'presencial' : 'online'}} está agendado conforme as informações listadas abaixo</p>
+
+                <ul>
+                    <li>
+                        <span><img src="assets/images/icone-calendario.svg" alt=""></span>
+                        Dia {{dateSelected | date: 'd'}} de {{dateSelected | date: 'MMMM'}} de {{dateSelected | date: 'y'}} às {{startAppointment}} horas
+                    </li>
+                    <li>
+                        <span><img src="assets/images/icone-localizacao.svg" alt=""></span>
+
+                    {{professionalSelected.clinic.clinic_address}}, {{professionalSelected.clinic.clinic_number}} &bull; {{professionalSelected.clinic.clinic_city}}, {{professionalSelected.clinic.clinic_state}}
+                    </li>
+                    <li>
+                        <span></span>
+                        <button mat-button class="btn-como-chegar" (click)="howToGet(appointment.professional.lat_long)">
+                            Como chegar
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="detalhes">
+                <h2>{{user.user_name}}</h2>
+                <p>O paciente será notificado pelos contatos listados abaixo</p>
+
+                <ul>
+                    <li>
+                        <span><img src="assets/images/icone-email.svg" alt=""></span>
+                        {{user.user_email}}
+                    </li>
+                    <li>
+                        <span><img src="assets/images/icone-celular.svg" alt=""></span>
+                        {{user.user_phone}}
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="lembrete">
+                <div class="info">
+                    Mantenha seu paciente informado sobre todos os detalhes da consulta
+                </div>
+                <div class="btn">
+                    <button mat-button class="btn-whatsapp">
+                        <img src="assets/images/icone-whatsapp.svg" alt="">
+                        Enviar lembrete pelo WhatsApp
+                    </button>
+                    <div class="txt-enviado" *ngIf="lembreteEnviado">
+                        <img src="assets/images/icone-check-green.svg" alt="">
+                        Lembrete encaminhado
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="form-acoes">
+            <div class="acoes">
+                <div class="btn-continuar">
+                    <button mat-button class="btn-padrao" (click)="sendForm()">
+                        Finalizar <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <!-- Fim Etapa 6 -->
+
+</section>
+
+<!-- <app-footer></app-footer> -->

@@ -1,0 +1,100 @@
+<app-header-nova-consulta [fixedHeader]="true" [showProgress]="true" [showBtnClose]="true"
+    (closeEvent)="onDismiss()"></app-header-nova-consulta>
+
+<section id="nova-consulta" class="container container2">
+
+    <!-- Início Etapa 3 -->
+    <ng-container>
+        <h2 class="txt-total-profissionais">Editar Consulta</h2>
+
+        <div class="box-profissional">
+
+            <div class="img">
+                <img [src]="consulta.prof_photo" alt="" style="height: 64px;">
+            </div>
+
+            <div class="profissional">
+                <h2>Dr(a). {{consulta.prof_name}}</h2>
+                <div class="funcao" *ngFor="let spec of profClinic?.professional?.specialties">
+                    {{spec.cat_name}} • {{spec.spe_name}}
+                </div>
+                <div class="crm" *ngFor="let spec of profClinic?.professional?.specialties">
+                    N.º {{spec.rt_number}}
+                </div>
+            </div>
+
+            <div class="endereco">
+                <!-- <p>{{clinic?.clinic_name}}, {{clinic?.clinic_state}}</p>
+                <p>{{clinic?.clinic_address}}, {{clinic?.clinic_number}}</p> -->
+                <!-- <div class="avaliacoes">
+                    <div class="stars">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star2.svg" alt="">
+                    </div>
+                    <div class="txt">64 avaliações</div>
+                </div> -->
+            </div>
+
+            <!-- <div class="btn-agendar">
+                <button mat-button (click)="selectProfessional(prof)" [disabled]="prof.availability == 0">
+                    Agendar
+                </button>
+            </div> -->
+        </div>
+        
+        <div class="box-profissional">
+
+            <div class="img">
+                <img [src]="consulta.pacient_photo" alt="" style="height: 64px;">
+            </div>
+
+            <div class="profissional">
+                <h2>{{consulta.pc_name}}</h2>
+                <div class="funcao">
+                    Paciente
+                </div>
+            </div>
+
+            <div class="endereco">
+                <!-- <p>{{clinic?.clinic_name}}, {{clinic?.clinic_state}}</p>
+                <p>{{clinic?.clinic_address}}, {{clinic?.clinic_number}}</p>
+                <div class="avaliacoes">
+                    <div class="stars">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star.svg" alt="">
+                        <img src="assets/images/star2.svg" alt="">
+                    </div>
+                    <div class="txt">64 avaliações</div>
+                </div> -->
+            </div>
+
+            <!-- <div class="btn-agendar">
+                <button mat-button (click)="selectProfessional(prof)" [disabled]="prof.availability == 0">
+                    Agendar
+                </button>
+            </div> -->
+        </div>
+
+
+
+        <!-- <div class="form-acoes">
+            <div class="acoes">
+                <div class="btn-acao-voltar">
+                    <button mat-button class="btn-voltar" (click)="previousStep()">
+                        <span class="material-symbols-outlined">chevron_left</span> Voltar
+                    </button>
+                </div>
+            </div>
+        </div> -->
+
+    </ng-container>
+    <!-- Fim Etapa 3 -->
+
+</section>
+
+<!-- <app-footer></app-footer> -->

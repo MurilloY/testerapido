@@ -23,6 +23,7 @@ import { ReturnSpecialities } from '../returns/specialities.return';
 import { ReturnUserCpf } from '../returns/user-cpf.return';
 import { ReturnUserType } from '../returns/user-type.return';
 import { ReturnUsersProfile } from '../returns/users_profile.return';
+import { ReturnClinicinfo } from '../returns/clinicbyid_return';
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,12 @@ export class AdmService {
     
   }
 
+  clinicByid(clinic_id: string): Observable<ReturnClinicinfo> {
+    let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'ADM' });
+    return this.http.get<any>(`${environment.api}/clinic/${clinic_id}`, {headers: headerOptions });
+    
+  }
+
   getDashClinic(clinic_id: string): Observable<ReturnDashClinic> {
     let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'ADM' });
     return this.http.get<any>(`${environment.api}/dashclinic/${clinic_id}`, {headers: headerOptions });
@@ -109,6 +116,12 @@ export class AdmService {
   updateHealthPlan(clinic_id:string, data:any): Observable<any> {
     let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'ADM' });
     return this.http.put<any>(`${environment.api}/health_plan/edit/${clinic_id}`, data, {headers: headerOptions });
+    
+  }
+
+  updateStatusUserProfile(up_id:string, data:any): Observable<any> {
+    let headerOptions = new HttpHeaders({ 'No-Auth':'False', 'Token-Type': 'ADM' });
+    return this.http.put<any>(`${environment.api}/profile/update/status/${up_id}`, data, {headers: headerOptions });
     
   }
 

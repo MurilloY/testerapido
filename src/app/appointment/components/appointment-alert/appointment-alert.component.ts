@@ -57,11 +57,9 @@ export class AppointmentAlertComponent implements OnInit {
         this.router.navigate([`agendamento/sala/${this.url}`])
         this.appointment = data.appointment;
 
-        console.log(data)
 
       },
       err => {
-        console.log(err)
         this.appointment = err.error.appointment;
         if (err.error.error === 0) {
           this.showAdvanced = true;
