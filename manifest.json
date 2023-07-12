@@ -5,7 +5,7 @@
   "display": "standalone",
   "name": "i9 Care",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/index.html",
   "short_name": "i9 Care",
   "start_url": ".",
   "theme_color": "#30d6e5",
